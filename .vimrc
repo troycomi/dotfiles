@@ -37,6 +37,10 @@ filetype plugin indent on
 " see :h vundle for more details or wiki for FAQ
 " NOTE: comments after Bundle command are not allowed..
 
+set nocompatible   " Disable vi-compatibility
+set laststatus=2   " Always show the statusline
+set encoding=utf-8 " Necessary to show unicode glyphs
+
 " Colors **********************************************************************
 set t_Co=256 " 256 colors
 set background=dark
