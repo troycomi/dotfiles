@@ -15,6 +15,7 @@ Bundle 'Lokaltog/vim-powerline'
 Bundle 'fholgado/minibufexpl.vim'
 Bundle 'petdance/vim-perl'
 Bundle 'wgibbs/vim-irblack'
+Bundle 'scrooloose/nerdtree'
 "Bundle 'tpope/vim-fugitive'
 "Bundle 'Lokaltog/vim-easymotion'
 "Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
@@ -58,3 +59,5 @@ set expandtab    "Insert spaces instead of tabs in insert mode. Use spaces for i
 set tabstop=4    "Number of spaces that a <Tab> in the file counts for"
 set shiftwidth=4 "Number of spaces to use for each step of (auto)indent"
 set textwidth=0
+
+map <leader>n :NERDTreeToggle<CR>
