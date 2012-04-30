@@ -12,6 +12,9 @@ Bundle 'gmarik/vundle'
 "
 " original repos on github
 Bundle 'Lokaltog/vim-powerline'
+Bundle 'fholgado/minibufexpl.vim'
+Bundle 'petdance/vim-perl'
+Bundle 'wgibbs/vim-irblack'
 "Bundle 'tpope/vim-fugitive'
 "Bundle 'Lokaltog/vim-easymotion'
 "Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
@@ -20,11 +23,11 @@ Bundle 'Lokaltog/vim-powerline'
 " vim-scripts repos
 "Bundle 'L9'
 "Bundle 'FuzzyFinder'
+Bundle 'desert256.vim'
 
 " non github repos
 "Bundle 'git://git.wincent.com/command-t.git'
 " ...
-
 
 filetype plugin indent on
 "
@@ -44,8 +47,9 @@ set encoding=utf-8 " Necessary to show unicode glyphs
 " Colors **********************************************************************
 set t_Co=256 " 256 colors
 set background=dark
+filetype on
 syntax on " syntax highlighting
-colorscheme ir_black
+colorscheme desert256
 
 set number       "Dsiplay line numbers"
 set autoindent   "Always set auto-indenting on"
@@ -54,5 +58,3 @@ set expandtab    "Insert spaces instead of tabs in insert mode. Use spaces for i
 set tabstop=4    "Number of spaces that a <Tab> in the file counts for"
 set shiftwidth=4 "Number of spaces to use for each step of (auto)indent"
 set textwidth=0
-
-
