@@ -1,4 +1,5 @@
 set nocompatible               " be iMproved
+filetype on
 filetype off                   " required!
 
 set rtp+=~/.vim/bundle/vundle/
@@ -41,7 +42,6 @@ filetype plugin indent on
 " see :h vundle for more details or wiki for FAQ
 " NOTE: comments after Bundle command are not allowed..
 
-set nocompatible   " Disable vi-compatibility
 set laststatus=2   " Always show the statusline
 set encoding=utf-8 " Necessary to show unicode glyphs
 
