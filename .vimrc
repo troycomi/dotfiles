@@ -18,7 +18,7 @@ Bundle 'petdance/vim-perl'
 Bundle 'wgibbs/vim-irblack'
 Bundle 'scrooloose/nerdtree'
 "Bundle 'tpope/vim-fugitive'
-"Bundle 'Lokaltog/vim-easymotion'
+Bundle 'Lokaltog/vim-easymotion'
 "Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 "Bundle 'tpope/vim-rails.git'
 
