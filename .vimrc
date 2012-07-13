@@ -30,6 +30,7 @@ Bundle 'desert256.vim'
 " non github repos
 "Bundle 'git://git.wincent.com/command-t.git'
 " ...
+"Bundle 'git://repo.or.cz/vcscommand.git'
 
 filetype plugin indent on
 "
@@ -52,7 +53,7 @@ filetype on
 syntax on " syntax highlighting
 colorscheme desert256
 
-set number       "Dsiplay line numbers"
+set number       "Display line numbers"
 set autoindent   "Always set auto-indenting on"
 set smartindent
 set expandtab    "Insert spaces instead of tabs in insert mode. Use spaces for indents"
@@ -60,4 +61,7 @@ set tabstop=4    "Number of spaces that a <Tab> in the file counts for"
 set shiftwidth=4 "Number of spaces to use for each step of (auto)indent"
 set textwidth=0
 
+" NerdTREE setup
 map <leader>n :NERDTreeToggle<CR>
+" Close if NerdTREE is only buffer left
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
