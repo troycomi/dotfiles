@@ -1,0 +1,12 @@
+[user]
+	name = Lance Parsons
+	email = lparsons@princeton.edu
+[github]
+	user = lparsons
+    token = 6532d4849288f0ff19fb0dc7a56889dd
+[color]
+    diff = auto
+    status = auto
+    branch = auto
+[include]
+        path = .github.gitconfig
