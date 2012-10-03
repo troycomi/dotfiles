@@ -28,6 +28,7 @@ Bundle 'klen/python-mode'
 "Bundle 'L9'
 "Bundle 'FuzzyFinder'
 Bundle 'desert256.vim'
+Bundle 'bufkill.vim'
 
 " non github repos
 "Bundle 'git://git.wincent.com/command-t.git'
