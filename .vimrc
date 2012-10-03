@@ -22,7 +22,6 @@ Bundle 'tpope/vim-surround'
 Bundle 'Lokaltog/vim-easymotion'
 "Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 "Bundle 'tpope/vim-rails.git'
-Bundle 'klen/python-mode'
 
 " vim-scripts repos
 "Bundle 'L9'
