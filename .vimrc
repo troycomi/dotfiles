@@ -14,7 +14,7 @@ Bundle 'gmarik/vundle'
 " original repos on github
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'fholgado/minibufexpl.vim'
-Bundle 'petdance/vim-perl'
+Bundle 'vim-perl/vim-perl'
 Bundle 'wgibbs/vim-irblack'
 Bundle 'scrooloose/nerdtree'
 "Bundle 'tpope/vim-fugitive'
@@ -28,6 +28,7 @@ Bundle 'Lokaltog/vim-easymotion'
 "Bundle 'FuzzyFinder'
 Bundle 'desert256.vim'
 Bundle 'bufkill.vim'
+Bundle 'perl-support.vim'
 
 " non github repos
 "Bundle 'git://git.wincent.com/command-t.git'
