@@ -29,6 +29,7 @@ Bundle 'Lokaltog/vim-easymotion'
 Bundle 'desert256.vim'
 Bundle 'bufkill.vim'
 Bundle 'perl-support.vim'
+Bundle 'JavaScript-Indent'
 
 " non github repos
 "Bundle 'git://git.wincent.com/command-t.git'
