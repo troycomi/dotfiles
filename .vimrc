@@ -24,6 +24,7 @@ Bundle 'Lokaltog/vim-easymotion'
 "Bundle 'tpope/vim-rails.git'
 Bundle 'plasticboy/vim-markdown'
 Bundle 'klen/python-mode'
+"Bundle 'LaTeX-Box-Team/LaTeX-Box'
 
 " vim-scripts repos
 "Bundle 'L9'
@@ -57,12 +58,13 @@ set t_Co=256 " 256 colors
 set background=dark
 filetype on
 syntax on " syntax highlighting
+"let g:solarized_termcolors=256
 colorscheme desert256
 
 set number       "Display line numbers"
 set autoindent   "Always set auto-indenting on"
 set smartindent
-set expandtab    "Insert spaces instead of tabs in insert mode. Use spaces for indents"
+"set expandtab    \"Insert spaces instead of tabs in insert mode. Use spaces for indents\"
 set tabstop=4    "Number of spaces that a <Tab> in the file counts for"
 set shiftwidth=4 "Number of spaces to use for each step of (auto)indent"
 set textwidth=0
