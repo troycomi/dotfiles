@@ -1,0 +1,16 @@
+[ui]
+username = Lance Parsons <lparsons@princeton.edu>
+ssh = ssh -C
+
+[merge-tools]
+vimdiff.executable = vim
+vimdiff.args = -d $base $local $output $other +close +close
+
+[mq]
+secret = True
+
+[extensions]
+hgext.convert =
+hgext.mq =
+hgext.graphlog = 
+hgext.color =
