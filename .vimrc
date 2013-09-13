@@ -31,6 +31,7 @@ Bundle 'SirVer/ultisnips'
 Bundle 'davidhalter/jedi-vim'
 Bundle 'scrooloose/syntastic'
 Bundle 'kien/ctrlp.vim'
+Bundle 'LaTeX-Box-Team/LaTeX-Box'
 
 " vim-scripts repos
 "Bundle 'L9'
@@ -118,3 +119,6 @@ EOF
 
 " Setup Syntastic 
 let g:syntastic_python_checkers=['flake8']
+
+" LatexBox Setup
+let g:LatexBox_Folding=1
