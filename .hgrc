@@ -9,6 +9,9 @@ vimdiff.args = -d $base $local $output $other +close +close
 [mq]
 secret = True
 
+[diff]
+git = True
+
 [extensions]
 hgext.convert =
 hgext.mq =
