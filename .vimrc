@@ -25,7 +25,6 @@ Bundle 'Lokaltog/vim-easymotion'
 "Bundle 'plasticboy/vim-markdown'
 Bundle 'tpope/vim-markdown'
 "Bundle 'klen/python-mode'
-"Bundle 'LaTeX-Box-Team/LaTeX-Box'
 "Bundle 'msanders/snipmate.vim'
 Bundle 'SirVer/ultisnips'
 Bundle 'davidhalter/jedi-vim'
@@ -94,7 +93,8 @@ set foldlevel=99
 " let perl_fold=1
 
 " NerdTREE setup
-map <leader>n :NERDTreeToggle<CR>
+"map <leader>n :NERDTreeToggle<CR>
+map <F2> :NERDTreeToggle<CR>
 " Close if NerdTREE is only buffer left
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
@@ -122,3 +122,6 @@ let g:syntastic_python_checkers=['flake8']
 
 " LatexBox Setup
 let g:LatexBox_Folding=1
+
+" Setup Python syntax for Snakefiles
+au BufNewFile,BufRead Snakefile set syntax=python
