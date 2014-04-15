@@ -31,6 +31,7 @@ Bundle 'davidhalter/jedi-vim'
 Bundle 'scrooloose/syntastic'
 Bundle 'kien/ctrlp.vim'
 Bundle 'LaTeX-Box-Team/LaTeX-Box'
+Bundle 'tmhedberg/SimpylFold'
 
 " vim-scripts repos
 "Bundle 'L9'
@@ -85,9 +86,16 @@ map <c-k> <c-w>k
 map <c-l> <c-w>l
 map <c-h> <c-w>h
 
+" Spell Check
+set spelllang=en
+autocmd BufRead,BufNewFile *.md setlocal spell
+autocmd BufRead,BufNewFile *.rst setlocal spell
+autocmd BufRead,BufNewFile *.txt setlocal spell
+autocmd FileType gitcommit setlocal spell
+
 " Python Folding (should set this for only python files somehow)
-set foldmethod=indent
-set foldlevel=99
+"set foldmethod=indent
+"set foldlevel=99
 
 " Perl Folding
 " let perl_fold=1
@@ -125,3 +133,5 @@ let g:LatexBox_Folding=1
 
 " Setup Python syntax for Snakefiles
 au BufNewFile,BufRead Snakefile set syntax=python
+
+
