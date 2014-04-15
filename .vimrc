@@ -12,7 +12,8 @@ Bundle 'gmarik/vundle'
 " My Bundles here:
 "
 " original repos on github
-Bundle 'Lokaltog/vim-powerline'
+"Bundle 'Lokaltog/vim-powerline'
+Bundle 'bling/vim-airline'
 Bundle 'fholgado/minibufexpl.vim'
 Bundle 'vim-perl/vim-perl'
 Bundle 'wgibbs/vim-irblack'
@@ -27,11 +28,14 @@ Bundle 'tpope/vim-markdown'
 "Bundle 'klen/python-mode'
 "Bundle 'msanders/snipmate.vim'
 Bundle 'SirVer/ultisnips'
-Bundle 'davidhalter/jedi-vim'
+Bundle 'honza/vim-snippets'
+"Bundle 'davidhalter/jedi-vim'
+Bundle 'Valloric/YouCompleteMe'
 Bundle 'scrooloose/syntastic'
 Bundle 'kien/ctrlp.vim'
 Bundle 'LaTeX-Box-Team/LaTeX-Box'
 Bundle 'tmhedberg/SimpylFold'
+Bundle 'jmcantrell/vim-virtualenv'
 
 " vim-scripts repos
 "Bundle 'L9'
@@ -134,4 +138,8 @@ let g:LatexBox_Folding=1
 " Setup Python syntax for Snakefiles
 au BufNewFile,BufRead Snakefile set syntax=python
 
+" UltiSnips Trigger (works with YouCompleteMe)
+let g:UltiSnipsExpandTrigger="<c-j>"
 
+" Populate the g:airline_symbols dictionary with powerline symbols
+let g:airline_powerline_fonts = 1
