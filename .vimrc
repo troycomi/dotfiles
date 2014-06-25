@@ -1,67 +1,84 @@
-set nocompatible               " be iMproved
-filetype on
-filetype off                   " required!
+set nocompatible              " be iMproved, required
+filetype off                  " required
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
 
-" let Vundle manage Vundle
-" required! 
-Bundle 'gmarik/vundle'
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
 
-" My Bundles here:
+" My Plugins here:
 "
 " original repos on github
-"Bundle 'Lokaltog/vim-powerline'
-Bundle 'bling/vim-airline'
-Bundle 'fholgado/minibufexpl.vim'
-Bundle 'vim-perl/vim-perl'
-Bundle 'wgibbs/vim-irblack'
-Bundle 'scrooloose/nerdtree'
-"Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-surround'
-Bundle 'Lokaltog/vim-easymotion'
-"Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
-"Bundle 'tpope/vim-rails.git'
-"Bundle 'plasticboy/vim-markdown'
-Bundle 'tpope/vim-markdown'
-"Bundle 'klen/python-mode'
-"Bundle 'msanders/snipmate.vim'
-Bundle 'SirVer/ultisnips'
-Bundle 'honza/vim-snippets'
-"Bundle 'davidhalter/jedi-vim'
-Bundle 'Valloric/YouCompleteMe'
-Bundle 'scrooloose/syntastic'
-Bundle 'kien/ctrlp.vim'
-Bundle 'LaTeX-Box-Team/LaTeX-Box'
-Bundle 'tmhedberg/SimpylFold'
-Bundle 'jmcantrell/vim-virtualenv'
+"Plugin 'Lokaltog/vim-powerline'
+Plugin 'bling/vim-airline'
+Plugin 'fholgado/minibufexpl.vim'
+Plugin 'vim-perl/vim-perl'
+Plugin 'wgibbs/vim-irblack'
+Plugin 'scrooloose/nerdtree'
+"Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
+Plugin 'Lokaltog/vim-easymotion'
+"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+"Plugin 'tpope/vim-rails.git'
+"Plugin 'plasticboy/vim-markdown'
+Plugin 'tpope/vim-markdown'
+"Plugin 'klen/python-mode'
+"Plugin 'msanders/snipmate.vim'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+"Plugin 'davidhalter/jedi-vim'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'scrooloose/syntastic'
+Plugin 'kien/ctrlp.vim'
+Plugin 'LaTeX-Box-Team/LaTeX-Box'
+Plugin 'tmhedberg/SimpylFold'
+Plugin 'jmcantrell/vim-virtualenv'
 
 " vim-scripts repos
-"Bundle 'L9'
-"Bundle 'FuzzyFinder'
-Bundle 'desert256.vim'
-Bundle 'bufkill.vim'
-Bundle 'perl-support.vim'
-Bundle 'JavaScript-Indent'
-Bundle 'TaskList.vim'
-Bundle 'sjl/gundo.vim'
+"Plugin 'L9'
+"Plugin 'FuzzyFinder'
+Plugin 'desert256.vim'
+Plugin 'bufkill.vim'
+Plugin 'perl-support.vim'
+Plugin 'JavaScript-Indent'
+Plugin 'TaskList.vim'
+Plugin 'sjl/gundo.vim'
 
-" non github repos
-"Bundle 'git://git.wincent.com/command-t.git'
-" ...
-"Bundle 'git://repo.or.cz/vcscommand.git'
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+"Plugin 'tpope/vim-fugitive'
+" plugin from http://vim-scripts.org/vim/scripts.html
+"Plugin 'L9'
+" Git plugin not hosted on GitHub
+"Plugin 'git://git.wincent.com/command-t.git'
+" git repos on your local machine (i.e. when working on your own plugin)
+"Plugin 'file:///home/gmarik/path/to/plugin'
+" The sparkup vim script is in a subdirectory of this repo called vim.
+" Pass the path to set the runtimepath properly.
+"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" Avoid a name conflict with L9
+"Plugin 'user/L9', {'name': 'newL9'}
 
-filetype plugin indent on
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
 "
 " Brief help
-" :BundleList          - list configured bundles
-" :BundleInstall(!)    - install(update) bundles
-" :BundleSearch(!) foo - search(or refresh cache first) for foo
-" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+" :PluginList          - list configured plugins
+" :PluginInstall(!)    - install (update) plugins
+" :PluginSearch(!) foo - search (or refresh cache first) for foo
+" :PluginClean(!)      - confirm (or auto-approve) removal of unused plugins
 "
 " see :h vundle for more details or wiki for FAQ
-" NOTE: comments after Bundle command are not allowed..
+" Put your non-Plugin stuff after this line
+
 
 set laststatus=2   " Always show the statusline
 set encoding=utf-8 " Necessary to show unicode glyphs
@@ -140,6 +157,7 @@ au BufNewFile,BufRead Snakefile set syntax=python
 
 " UltiSnips Trigger (works with YouCompleteMe)
 let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsListSnippets="<c-J>"
 
 " Populate the g:airline_symbols dictionary with powerline symbols
 let g:airline_powerline_fonts = 1
