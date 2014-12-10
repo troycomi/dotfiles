@@ -35,7 +35,7 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/syntastic'
 Plugin 'kien/ctrlp.vim'
 Plugin 'LaTeX-Box-Team/LaTeX-Box'
-Plugin 'tmhedberg/SimpylFold'
+"Plugin 'tmhedberg/SimpylFold'
 Plugin 'jmcantrell/vim-virtualenv'
 
 " vim-scripts repos
@@ -111,7 +111,7 @@ map <c-h> <c-w>h
 set spelllang=en
 autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd BufRead,BufNewFile *.rst setlocal spell
-autocmd BufRead,BufNewFile *.txt setlocal spell
+"autocmd BufRead,BufNewFile *.txt setlocal spell
 autocmd FileType gitcommit setlocal spell
 
 " Python Folding (should set this for only python files somehow)
@@ -156,7 +156,7 @@ let g:LatexBox_Folding=1
 au BufNewFile,BufRead Snakefile set syntax=python
 
 " UltiSnips Trigger (works with YouCompleteMe)
-let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsExpandTrigger="<c-l>"
 let g:UltiSnipsListSnippets="<c-J>"
 
 " Populate the g:airline_symbols dictionary with powerline symbols
