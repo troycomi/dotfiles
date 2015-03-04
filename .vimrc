@@ -156,8 +156,10 @@ let g:LatexBox_Folding=1
 au BufNewFile,BufRead Snakefile set syntax=python
 
 " UltiSnips Trigger (works with YouCompleteMe)
-let g:UltiSnipsExpandTrigger="<c-l>"
-let g:UltiSnipsListSnippets="<c-J>"
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsListSnippets="<c-s-tab>"
+let g:snips_email="lparsons@princeton.edu"
+let g:snips_github="https://github.com/lparsons"
 
 " Populate the g:airline_symbols dictionary with powerline symbols
 let g:airline_powerline_fonts = 1
