@@ -13,29 +13,21 @@ Plugin 'gmarik/Vundle.vim'
 " My Plugins here:
 "
 " original repos on github
-"Plugin 'Lokaltog/vim-powerline'
 Plugin 'bling/vim-airline'
 Plugin 'fholgado/minibufexpl.vim'
 Plugin 'vim-perl/vim-perl'
 Plugin 'wgibbs/vim-irblack'
 Plugin 'scrooloose/nerdtree'
-"Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'Lokaltog/vim-easymotion'
-"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-"Plugin 'tpope/vim-rails.git'
-"Plugin 'plasticboy/vim-markdown'
 Plugin 'tpope/vim-markdown'
-"Plugin 'klen/python-mode'
-"Plugin 'msanders/snipmate.vim'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
-"Plugin 'davidhalter/jedi-vim'
-Plugin 'Valloric/YouCompleteMe'
+Plugin 'davidhalter/jedi-vim'
+"Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/syntastic'
 Plugin 'kien/ctrlp.vim'
 Plugin 'LaTeX-Box-Team/LaTeX-Box'
-"Plugin 'tmhedberg/SimpylFold'
 Plugin 'jmcantrell/vim-virtualenv'
 
 " vim-scripts repos
