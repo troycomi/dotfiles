@@ -29,6 +29,7 @@ Plugin 'scrooloose/syntastic'
 Plugin 'kien/ctrlp.vim'
 Plugin 'LaTeX-Box-Team/LaTeX-Box'
 Plugin 'jmcantrell/vim-virtualenv'
+Plugin 'altercation/vim-colors-solarized'
 
 " vim-scripts repos
 "Plugin 'L9'
@@ -81,7 +82,8 @@ set background=dark
 filetype on
 syntax on " syntax highlighting
 "let g:solarized_termcolors=256
-colorscheme desert256
+"colorscheme desert256
+colorscheme solarized
 
 set number       "Display line numbers"
 set autoindent   "Always set auto-indenting on"
@@ -91,7 +93,7 @@ set tabstop=4    "Number of spaces that a <Tab> in the file counts for"
 set shiftwidth=4 "Number of spaces to use for each step of (auto)indent"
 set textwidth=0
 
-autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4	
+autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4
 
 " Set Ctrl+movement for moving between windows
 map <c-j> <c-w>j
@@ -138,7 +140,7 @@ if 'VIRTUAL_ENV' in os.environ:
     execfile(activate_this, dict(__file__=activate_this))
 EOF
 
-" Setup Syntastic 
+" Setup Syntastic
 let g:syntastic_python_checkers=['flake8']
 
 " LatexBox Setup
@@ -155,3 +157,5 @@ let g:snips_github="https://github.com/lparsons"
 
 " Populate the g:airline_symbols dictionary with powerline symbols
 let g:airline_powerline_fonts = 1
+" Fix wrapping statusline in iTerm
+" set ambiwidth=double
