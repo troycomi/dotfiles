@@ -149,9 +149,12 @@ let g:LatexBox_Folding=1
 " Setup Python syntax for Snakefiles
 au BufNewFile,BufRead Snakefile set syntax=python
 
+" Setup TT2HTML syntax for .tt2 files
+autocmd BufNewFile,BufRead *.tt2 setf tt2html
+
 " UltiSnips Trigger (works with YouCompleteMe)
 let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsListSnippets="<c-s-tab>"
+let g:UltiSnipsListSnippets="<F6>"
 let g:snips_email="lparsons@princeton.edu"
 let g:snips_github="https://github.com/lparsons"
 
