@@ -30,6 +30,7 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'LaTeX-Box-Team/LaTeX-Box'
 Plugin 'jmcantrell/vim-virtualenv'
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'tpope/vim-fugitive'
 
 " vim-scripts repos
 "Plugin 'L9'
