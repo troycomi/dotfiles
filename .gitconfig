@@ -8,4 +8,4 @@
 [include]
         path = .github.gitconfig
 [push]
-	default = simple
+    default = matching
