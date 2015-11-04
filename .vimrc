@@ -58,6 +58,8 @@ Plugin 'sjl/gundo.vim'
 " Avoid a name conflict with L9
 "Plugin 'user/L9', {'name': 'newL9'}
 
+Plugin 'https://bitbucket.org/lance_parsons/snakemake.git', {'rtp': 'misc/vim/'}
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -165,3 +167,9 @@ let g:snips_github="https://github.com/lparsons"
 let g:airline_powerline_fonts = 1
 " Fix wrapping statusline in iTerm
 " set ambiwidth=double
+
+" Setup syntax highlighting for Snakemake snakefiles
+au BufNewFile,BufRead Snakefile set syntax=snakemake
+au BufNewFile,BufRead *.rules set syntax=snakemake
+au BufNewFile,BufRead *.snakefile set syntax=snakemake
+au BufNewFile,BufRead *.snake set syntax=snakemake
