@@ -13,7 +13,8 @@ Plugin 'gmarik/Vundle.vim'
 " My Plugins here:
 "
 " original repos on github
-Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'fholgado/minibufexpl.vim'
 Plugin 'vim-perl/vim-perl'
 Plugin 'wgibbs/vim-irblack'
@@ -161,9 +162,6 @@ let g:syntastic_enable_perl_checker = 1
 
 " LatexBox Setup
 let g:LatexBox_Folding=1
-
-" Setup Python syntax for Snakefiles
-au BufNewFile,BufRead Snakefile set syntax=python
 
 " Setup TT2HTML syntax for .tt2 files
 autocmd BufNewFile,BufRead *.tt2 setf tt2html
