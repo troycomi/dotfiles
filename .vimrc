@@ -13,7 +13,8 @@ Plugin 'gmarik/Vundle.vim'
 " My Plugins here:
 "
 " original repos on github
-Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'fholgado/minibufexpl.vim'
 Plugin 'vim-perl/vim-perl'
 Plugin 'wgibbs/vim-irblack'
@@ -31,6 +32,7 @@ Plugin 'LaTeX-Box-Team/LaTeX-Box'
 Plugin 'jmcantrell/vim-virtualenv'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'tpope/vim-fugitive'
+Plugin 'JamshedVesuna/vim-markdown-preview'
 
 " vim-scripts repos
 "Plugin 'L9'
@@ -161,9 +163,6 @@ let g:syntastic_enable_perl_checker = 1
 " LatexBox Setup
 let g:LatexBox_Folding=1
 
-" Setup Python syntax for Snakefiles
-au BufNewFile,BufRead Snakefile set syntax=python
-
 " Setup TT2HTML syntax for .tt2 files
 autocmd BufNewFile,BufRead *.tt2 setf tt2html
 
@@ -183,3 +182,6 @@ au BufNewFile,BufRead Snakefile set syntax=snakemake
 au BufNewFile,BufRead *.rules set syntax=snakemake
 au BufNewFile,BufRead *.snakefile set syntax=snakemake
 au BufNewFile,BufRead *.snake set syntax=snakemake
+
+" Setup keyboard shortcut for Markdown preview
+let vim_markdown_preview_hotkey='<C-m>'
