@@ -83,7 +83,7 @@ set encoding=utf-8 " Necessary to show unicode glyphs
 
 " Colors **********************************************************************
 set t_Co=256 " 256 colors
-set background=dark
+set background=light
 filetype on
 syntax on " syntax highlighting
 "let g:solarized_termcolors=256
