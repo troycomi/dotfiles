@@ -33,6 +33,8 @@ Plugin 'jmcantrell/vim-virtualenv'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'tpope/vim-fugitive'
 Plugin 'JamshedVesuna/vim-markdown-preview'
+Plugin 'tmux-plugins/vim-tmux-focus-events'
+Plugin 'tmux-plugins/vim-tmux'
 
 " vim-scripts repos
 "Plugin 'L9'
