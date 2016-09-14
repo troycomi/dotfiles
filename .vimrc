@@ -62,7 +62,7 @@ Plugin 'sjl/gundo.vim'
 " Avoid a name conflict with L9
 "Plugin 'user/L9', {'name': 'newL9'}
 
-Plugin 'https://bitbucket.org/johanneskoester/snakemake.git', {'rtp': 'misc/vim/'}
+Plugin 'https://bitbucket.org/snakemake/snakemake.git', {'rtp': 'misc/vim/'}
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
