@@ -11,3 +11,8 @@
     default = matching
 [alias]
 	lg = log --color --graph --pretty=format:'%C(auto)%h -%d %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	d = difftool
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
