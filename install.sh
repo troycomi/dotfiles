@@ -5,24 +5,29 @@
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # vim
-ln -s ${BASEDIR}/.vimrc ~/.vimrc
+ln -sf ${BASEDIR}/.vimrc ~/.vimrc
 # ln -s ${BASEDIR}/vim/ ~/.vim
 
 # bash
-ln -s ${BASEDIR}/.inputrc ~/.inputrc
+ln -sf ${BASEDIR}/.inputrc ~/.inputrc
 
 # git
-ln -s ${BASEDIR}/.gitconfig ~/.gitconfig
+ln -sf ${BASEDIR}/.gitconfig ~/.gitconfig
 
 # hg
-ln -s ${BASEDIR}/.hgrc ~/.hgrc
+ln -sf ${BASEDIR}/.hgrc ~/.hgrc
 
 # git
-ln -s ${BASEDIR}/.tmux.conf ~/.tmux.conf
-ln -s ${BASEDIR}/.tmux-osx.conf ~/.tmux-osx.conf
+ln -sf ${BASEDIR}/.tmux.conf ~/.tmux.conf
+ln -sf ${BASEDIR}/.tmux-osx.conf ~/.tmux-osx.conf
 
 
 # Setup Vundle
 mkdir -p "${HOME}/.vim"
 git clone https://github.com/VundleVim/Vundle.vim.git "${HOME}/.vim/bundle/Vundle.vim"
 vim +PluginUpdate +qall
+
+# Setup shell prompt
+SHELL_PROMPT_SCRIPT="${HOME}/.shell_prompt.sh"
+mv "${SHELL_PROMPT_SCRIPT}" "${SHELL_PROMPT_SCRIPT}.old"
+vim "+PromptlineSnapshot ${SHELL_PROMPT_SCRIPT} airline" +qall
