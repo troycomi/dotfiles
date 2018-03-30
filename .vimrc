@@ -36,6 +36,7 @@ Plugin 'JamshedVesuna/vim-markdown-preview'
 Plugin 'tmux-plugins/vim-tmux-focus-events'
 Plugin 'tmux-plugins/vim-tmux'
 Plugin 'edkolev/promptline.vim'
+Plugin 'editorconfig/editorconfig-vim'
 
 " vim-scripts repos
 "Plugin 'L9'
