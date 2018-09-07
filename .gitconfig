@@ -1,6 +1,7 @@
 [user]
 	name = Lance Parsons
 	email = lparsons@princeton.edu
+	signingkey = 5070B3FC6BD18EA3
 [color]
     diff = auto
     status = auto
@@ -16,3 +17,7 @@
 	tool = vimdiff
 [difftool]
 	prompt = false
+[commit]
+	gpgsign = true
+[gpg]
+	program = gpg2
