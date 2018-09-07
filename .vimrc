@@ -32,6 +32,7 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'LaTeX-Box-Team/LaTeX-Box'
 Plugin 'jmcantrell/vim-virtualenv'
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'crusoexia/vim-monokai'
 Plugin 'tpope/vim-fugitive'
 Plugin 'JamshedVesuna/vim-markdown-preview'
 Plugin 'tmux-plugins/vim-tmux-focus-events'
@@ -93,7 +94,7 @@ filetype on
 syntax on " syntax highlighting
 "let g:solarized_termcolors=256
 "colorscheme desert256
-colorscheme solarized
+colorscheme monokai
 
 set number       "Display line numbers"
 set autoindent   "Always set auto-indenting on"
