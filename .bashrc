@@ -20,4 +20,6 @@ alias ....='cd ../../../'
 # startup commands
 export LC_ALL=en_US.utf-8
 export LANG=en_US.utf-8
-PS1="\W\$ "
+PS1="[\W] \$ "
+export DISPLAY=:0.0
+export PATH=$PATH:/home/tcomi/miniconda3/bin
