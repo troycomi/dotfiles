@@ -1,7 +1,3 @@
-[ui]
-username = Lance Parsons <lparsons@princeton.edu>
-ssh = ssh -C
-
 [merge-tools]
 vimdiff.executable = vim
 vimdiff.args = -d $base $local $output $other +close +close

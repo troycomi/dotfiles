@@ -9,7 +9,7 @@ ln -sf ${BASEDIR}/.vimrc ~/.vimrc
 # ln -s ${BASEDIR}/vim/ ~/.vim
 
 # bash
-ln -sf ${BASEDIR}/.inputrc ~/.inputrc
+ln -sf ${BASEDIR}/.bashrc ~/.bashrc
 
 # git
 ln -sf ${BASEDIR}/.gitconfig ~/.gitconfig
@@ -19,7 +19,6 @@ ln -sf ${BASEDIR}/.hgrc ~/.hgrc
 
 # git
 ln -sf ${BASEDIR}/.tmux.conf ~/.tmux.conf
-ln -sf ${BASEDIR}/.tmux-osx.conf ~/.tmux-osx.conf
 
 
 # Setup Vundle
