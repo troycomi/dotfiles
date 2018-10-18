@@ -16,10 +16,18 @@ alias .='pwd'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../../'
+alias ~='cd ~'
+function mkcd
+{
+  command mkdir -pv $1 && cd $1 && echo "Now in `pwd`"
+}
 
 # startup commands
 export LC_ALL=en_US.utf-8
 export LANG=en_US.utf-8
 PS1="[\W] \$ "
 export DISPLAY=:0.0
-export PATH=$PATH:/home/tcomi/miniconda3/bin
+
+# added by Miniconda3 installer
+export PATH="/home/tcomi/miniconda3/bin:$PATH"
+export PATH="$PATH:~/pycharm-community-2018.2.4/bin"
