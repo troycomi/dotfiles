@@ -13,6 +13,7 @@ Plugin 'gmarik/Vundle.vim'
 " My Plugins here:
 "
 " original repos on github
+Plugin 'vim-syntastic/syntastic'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'fholgado/minibufexpl.vim'
@@ -26,7 +27,6 @@ Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'davidhalter/jedi-vim'
 "Plugin 'Valloric/YouCompleteMe'
-"Plugin 'vim-syntastic/syntastic'
 Plugin 'w0rp/ale'
 Plugin 'kien/ctrlp.vim'
 Plugin 'LaTeX-Box-Team/LaTeX-Box'
@@ -39,6 +39,8 @@ Plugin 'tmux-plugins/vim-tmux-focus-events'
 Plugin 'tmux-plugins/vim-tmux'
 Plugin 'edkolev/promptline.vim'
 Plugin 'editorconfig/editorconfig-vim'
+
+Plugin 'lepture/vim-jinja'
 
 " vim-scripts repos
 "Plugin 'L9'
@@ -171,6 +173,7 @@ let g:LatexBox_Folding=1
 
 " Setup TT2HTML syntax for .tt2 files
 autocmd BufNewFile,BufRead *.tt2 setf tt2html
+autocmd BufNewFile * startinsert
 
 " UltiSnips Trigger (works with YouCompleteMe)
 let g:UltiSnipsExpandTrigger="<c-j>"

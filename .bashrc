@@ -12,7 +12,6 @@ fi
 alias df='df -H'
 alias du='du -ch'
 alias l='ls -lhtr'
-alias .='pwd'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../../'
@@ -28,6 +27,7 @@ export LANG=en_US.utf-8
 PS1="[\W] \$ "
 export DISPLAY=:0.0
 
-# added by Miniconda3 installer
-export PATH="/home/tcomi/miniconda3/bin:$PATH"
 export PATH="$PATH:~/pycharm-community-2018.2.4/bin"
+
+source /home/tcomi/miniconda3/etc/profile.d/conda.sh
+conda activate base
