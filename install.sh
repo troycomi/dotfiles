@@ -11,6 +11,9 @@ ln -sf ${BASEDIR}/.vimrc ~/.vimrc
 # bash
 ln -sf ${BASEDIR}/.bashrc ~/.bashrc
 
+# input
+ln -sf ${BASEDIR}/.inputrc ~/.inputrc
+
 # git
 ln -sf ${BASEDIR}/.gitconfig ~/.gitconfig
 

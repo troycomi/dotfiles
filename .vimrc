@@ -43,30 +43,11 @@ Plugin 'editorconfig/editorconfig-vim'
 Plugin 'lepture/vim-jinja'
 
 " vim-scripts repos
-"Plugin 'L9'
-"Plugin 'FuzzyFinder'
 Plugin 'desert256.vim'
 Plugin 'bufkill.vim'
-Plugin 'perl-support.vim'
 Plugin 'JavaScript-Indent'
 Plugin 'TaskList.vim'
 Plugin 'sjl/gundo.vim'
-
-" The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
-"Plugin 'tpope/vim-fugitive'
-" plugin from http://vim-scripts.org/vim/scripts.html
-"Plugin 'L9'
-" Git plugin not hosted on GitHub
-"Plugin 'git://git.wincent.com/command-t.git'
-" git repos on your local machine (i.e. when working on your own plugin)
-"Plugin 'file:///home/gmarik/path/to/plugin'
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Avoid a name conflict with L9
-"Plugin 'user/L9', {'name': 'newL9'}
 
 Plugin 'https://bitbucket.org/snakemake/snakemake.git', {'rtp': 'misc/vim/'}
 
@@ -94,8 +75,6 @@ set t_Co=256 " 256 colors
 set background=dark
 filetype on
 syntax on " syntax highlighting
-"let g:solarized_termcolors=256
-"colorscheme desert256
 colorscheme monokai
 
 set number       "Display line numbers"
@@ -118,40 +97,18 @@ map <c-h> <c-w>h
 set spelllang=en
 autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd BufRead,BufNewFile *.rst setlocal spell
-"autocmd BufRead,BufNewFile *.txt setlocal spell
 autocmd FileType gitcommit setlocal spell
-
-" Python Folding (should set this for only python files somehow)
-"set foldmethod=indent
-"set foldlevel=99
-
-" Perl Folding
-" let perl_fold=1
 
 " NerdTREE setup
 "map <leader>n :NERDTreeToggle<CR>
 map <F2> :NERDTreeToggle<CR>
 " Close if NerdTREE is only buffer left
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+autocmd VimEnter * NERDTree
+autocmd VimEnter * wincmd p
 
 " Easily open TaskList
 map <leader>td <Plug>TaskList
-
-" Easily open Gundo window
-" map <leader>g :GundoToggle<CR>
-nnoremap <F5> :GundoToggle<CR>
-
-" Add the virtualenv's site-packages to vim path
-"py << EOF
-"import os.path
-"import sys
-"import vim
-"if 'VIRTUAL_ENV' in os.environ:
-"    project_base_dir = os.environ['VIRTUAL_ENV']
-"    sys.path.insert(0, project_base_dir)
-"    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-"    execfile(activate_this, dict(__file__=activate_this))
-"EOF
 
 " Setup Syntastic
 set statusline+=%#warningmsg#
@@ -164,21 +121,12 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 let g:syntastic_python_checkers=['flake8']
-let g:syntastic_perl_checkers=['perl']
-let g:syntastic_enable_perl_checker = 1
-
 
 " LatexBox Setup
 let g:LatexBox_Folding=1
 
 " Setup TT2HTML syntax for .tt2 files
 autocmd BufNewFile,BufRead *.tt2 setf tt2html
-
-" UltiSnips Trigger (works with YouCompleteMe)
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsListSnippets="<F6>"
-let g:snips_email="lparsons@princeton.edu"
-let g:snips_github="https://github.com/lparsons"
 
 " Populate the g:airline_symbols dictionary with powerline symbols
 let g:airline_powerline_fonts = 1
@@ -193,6 +141,8 @@ au BufNewFile,BufRead *.snake set syntax=snakemake
 
 " Setup keyboard shortcut for Markdown preview
 let vim_markdown_preview_hotkey='<C-m>'
+let vim_markdown_preview_github=1
+let vim_markdown_preview_browser='Google Chrome'
 
 " Promptline
 " sections (a, b, c, x, y, z, warn) are optional
@@ -205,4 +155,4 @@ let g:promptline_preset = {
         \'warn' : [ promptline#slices#last_exit_code() ]}
 
 autocmd BufNewFile * startinsert
-:set iskeyword-=_
+inoremap jj <ESC>
