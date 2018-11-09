@@ -104,8 +104,6 @@ autocmd FileType gitcommit setlocal spell
 map <F2> :NERDTreeToggle<CR>
 " Close if NerdTREE is only buffer left
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-autocmd VimEnter * NERDTree
-autocmd VimEnter * wincmd p
 
 " Easily open TaskList
 map <leader>td <Plug>TaskList
