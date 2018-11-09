@@ -9,6 +9,7 @@ ln -sf ${BASEDIR}/.vimrc ~/.vimrc
 # ln -s ${BASEDIR}/vim/ ~/.vim
 
 # bash
+cp ~/.bashrc ~/.bashrc_dotfile_bak
 ln -sf ${BASEDIR}/.bashrc ~/.bashrc
 
 # input
