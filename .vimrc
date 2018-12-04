@@ -48,6 +48,8 @@ Plugin 'bufkill.vim'
 Plugin 'JavaScript-Indent'
 Plugin 'TaskList.vim'
 Plugin 'sjl/gundo.vim'
+Plugin 'Vimjas/vim-python-pep8-indent'
+Plugin 'scrooloose/nerdcommenter'
 
 Plugin 'https://bitbucket.org/snakemake/snakemake.git', {'rtp': 'misc/vim/'}
 
@@ -98,6 +100,8 @@ set spelllang=en
 autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd BufRead,BufNewFile *.rst setlocal spell
 autocmd FileType gitcommit setlocal spell
+autocmd FileType gitcommit call setpos('.', [0, 1, 1, 0])
+autocmd FileType gitcommit exec 'au VimEnter * startinsert'
 
 " NerdTREE setup
 "map <leader>n :NERDTreeToggle<CR>
@@ -138,9 +142,9 @@ au BufNewFile,BufRead *.snakefile set syntax=snakemake
 au BufNewFile,BufRead *.snake set syntax=snakemake
 
 " Setup keyboard shortcut for Markdown preview
-let vim_markdown_preview_hotkey='<C-m>'
 let vim_markdown_preview_github=1
 let vim_markdown_preview_browser='Google Chrome'
+let vim_markdown_preview_hotkey='<C-m>'
 
 " Promptline
 " sections (a, b, c, x, y, z, warn) are optional
