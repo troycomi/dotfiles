@@ -159,3 +159,5 @@ let g:promptline_preset = {
 
 autocmd BufNewFile * startinsert
 inoremap jj <ESC>
+highlight Folded ctermfg=White
+set foldmethod=syntax
