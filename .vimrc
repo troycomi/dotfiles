@@ -50,6 +50,7 @@ Plugin 'TaskList.vim'
 Plugin 'sjl/gundo.vim'
 Plugin 'Vimjas/vim-python-pep8-indent'
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'tmhedberg/SimpylFold'
 
 Plugin 'https://bitbucket.org/snakemake/snakemake.git', {'rtp': 'misc/vim/'}
 
