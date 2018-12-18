@@ -51,6 +51,7 @@ Plugin 'sjl/gundo.vim'
 Plugin 'Vimjas/vim-python-pep8-indent'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'tmhedberg/SimpylFold'
+Plugin 'Konfekt/FastFold'
 
 Plugin 'https://bitbucket.org/snakemake/snakemake.git', {'rtp': 'misc/vim/'}
 
@@ -161,3 +162,8 @@ autocmd BufNewFile * startinsert
 inoremap jj <ESC>
 highlight Folded ctermfg=White
 set foldmethod=syntax
+
+nmap zuz <Plug>(FastFoldUpdate)
+let g:fastfold_savehook = 1
+let g:fastfold_fold_command_suffixes =  ['x','X','a','A','o','O','c','C']
+let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
