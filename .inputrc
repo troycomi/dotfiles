@@ -4,8 +4,8 @@
 "\e[A":history-search-backward
 "\e[B":history-search-forward
 
-"\e[1;5C": forward-word
-"\e[1;5D": backward-word
+"\eOD": backward-word
+"\eOC": forward-word
 
 set show-all-if-ambiguous On
 set show-all-if-unmodified On

@@ -48,6 +48,13 @@ Plugin 'bufkill.vim'
 Plugin 'JavaScript-Indent'
 Plugin 'TaskList.vim'
 Plugin 'sjl/gundo.vim'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'Vimjas/vim-python-pep8-indent'
+Plugin 'tmhedberg/SimpylFold'
+Plugin 'Konfekt/FastFold'
+Plugin 'tpope/vim-unimpaired'
+Plugin 'tpope/vim-repeat'
+Plugin 'mattn/emmet-vim'
 
 Plugin 'https://bitbucket.org/snakemake/snakemake.git', {'rtp': 'misc/vim/'}
 
@@ -79,7 +86,6 @@ colorscheme monokai
 
 set number       "Display line numbers"
 set autoindent   "Always set auto-indenting on"
-set smartindent
 set expandtab    "Insert spaces instead of tabs in insert mode. Use spaces for indents"
 set tabstop=4    "Number of spaces that a <Tab> in the file counts for"
 set shiftwidth=4 "Number of spaces to use for each step of (auto)indent"
@@ -98,14 +104,17 @@ set spelllang=en
 autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd BufRead,BufNewFile *.rst setlocal spell
 autocmd FileType gitcommit setlocal spell
+autocmd FileType gitcommit call setpos('.', [0, 1, 1, 0])
+autocmd FileType gitcommit exec 'au VimEnter * startinsert'
 
 " NerdTREE setup
 "map <leader>n :NERDTreeToggle<CR>
 map <F2> :NERDTreeToggle<CR>
 " Close if NerdTREE is only buffer left
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-autocmd VimEnter * NERDTree
-autocmd VimEnter * wincmd p
+
+"autocmd VimEnter * NERDTree
+"autocmd VimEnter * wincmd p
 
 " Easily open TaskList
 map <leader>td <Plug>TaskList
@@ -115,12 +124,14 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 0
-let g:syntastic_auto_loc_list = 0
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+let g:syntastic_check_on_wq = 1
+let g:syntastic_error_symbol = "✗"
 
 let g:syntastic_python_checkers=['flake8']
+let g:syntastic_yaml_checkers=['yamllint']
 
 " LatexBox Setup
 let g:LatexBox_Folding=1
@@ -156,3 +167,31 @@ let g:promptline_preset = {
 
 autocmd BufNewFile * startinsert
 inoremap jj <ESC>
+highlight Folded ctermfg=White
+set foldmethod=syntax
+set foldcolumn=3
+set colorcolumn=80
+let g:SimpylFold_docstring_preview = 1
+
+nmap zuz <Plug>(FastFoldUpdate)
+let g:fastfold_savehook = 1
+let g:fastfold_fold_command_suffixes =  ['x','X','a','A','o','O','c','C']
+let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
+
+let g:jedi#smart_auto_mappings = 0
+let g:jedi#popup_on_dot = 0
+
+let g:user_emmet_install_global = 0
+autocmd FileType html,css EmmetInstall
+
+augroup python
+        autocmd!
+            autocmd FileType python
+                            \   syn keyword pythonBuiltin self
+            augroup end
+
+function! SyntasticCheckHook(errors)
+    if !empty(a:errors)
+        let g:syntastic_loc_list_height = min([len(a:errors)+1, 10])
+    endif
+endfunction

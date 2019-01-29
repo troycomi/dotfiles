@@ -23,4 +23,4 @@
 	safecrlf = true
     editor = /usr/bin/vim
 [credential]
-    helper = cache --timeout 300
+    helper = cache --timeout 6000
