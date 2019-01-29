@@ -113,9 +113,6 @@ map <F2> :NERDTreeToggle<CR>
 " Close if NerdTREE is only buffer left
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-"autocmd VimEnter * NERDTree
-"autocmd VimEnter * wincmd p
-
 " Easily open TaskList
 map <leader>td <Plug>TaskList
 
@@ -151,9 +148,9 @@ au BufNewFile,BufRead *.snakefile set syntax=snakemake
 au BufNewFile,BufRead *.snake set syntax=snakemake
 
 " Setup keyboard shortcut for Markdown preview
-let vim_markdown_preview_hotkey='<C-m>'
 let vim_markdown_preview_github=1
 let vim_markdown_preview_browser='Google Chrome'
+let vim_markdown_preview_hotkey='<C-m>'
 
 " Promptline
 " sections (a, b, c, x, y, z, warn) are optional
