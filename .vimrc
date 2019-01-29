@@ -48,10 +48,13 @@ Plugin 'bufkill.vim'
 Plugin 'JavaScript-Indent'
 Plugin 'TaskList.vim'
 Plugin 'sjl/gundo.vim'
-Plugin 'Vimjas/vim-python-pep8-indent'
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'Vimjas/vim-python-pep8-indent'
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'Konfekt/FastFold'
+Plugin 'tpope/vim-unimpaired'
+Plugin 'tpope/vim-repeat'
+Plugin 'mattn/emmet-vim'
 
 Plugin 'https://bitbucket.org/snakemake/snakemake.git', {'rtp': 'misc/vim/'}
 
@@ -119,12 +122,14 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 0
-let g:syntastic_auto_loc_list = 0
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+let g:syntastic_check_on_wq = 1
+let g:syntastic_error_symbol = "✗"
 
 let g:syntastic_python_checkers=['flake8']
+let g:syntastic_yaml_checkers=['yamllint']
 
 " LatexBox Setup
 let g:LatexBox_Folding=1
@@ -162,6 +167,9 @@ autocmd BufNewFile * startinsert
 inoremap jj <ESC>
 highlight Folded ctermfg=White
 set foldmethod=syntax
+set foldcolumn=3
+set colorcolumn=80
+let g:SimpylFold_docstring_preview = 1
 
 nmap zuz <Plug>(FastFoldUpdate)
 let g:fastfold_savehook = 1
@@ -174,3 +182,20 @@ augroup python
     autocmd FileType python
                 \   syn keyword pythonBuiltin self
 augroup end
+let g:jedi#smart_auto_mappings = 0
+let g:jedi#popup_on_dot = 0
+
+let g:user_emmet_install_global = 0
+autocmd FileType html,css EmmetInstall
+
+augroup python
+        autocmd!
+            autocmd FileType python
+                            \   syn keyword pythonBuiltin self
+            augroup end
+
+function! SyntasticCheckHook(errors)
+    if !empty(a:errors)
+        let g:syntastic_loc_list_height = min([len(a:errors)+1, 10])
+    endif
+endfunction
