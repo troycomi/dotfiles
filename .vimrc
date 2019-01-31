@@ -55,6 +55,7 @@ Plugin 'Konfekt/FastFold'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-repeat'
 Plugin 'mattn/emmet-vim'
+Plugin 'christoomey/vim-tmux-navigator'
 
 Plugin 'https://bitbucket.org/snakemake/snakemake.git', {'rtp': 'misc/vim/'}
 
@@ -94,10 +95,23 @@ set textwidth=0
 autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4
 
 " Set Ctrl+movement for moving between windows
-map <c-j> <c-w>j
-map <c-k> <c-w>k
-map <c-l> <c-w>l
-map <c-h> <c-w>h
+"map <c-j> <c-w>j
+execute "set <M-j>=\ej"
+execute "set <M-k>=\ek"
+execute "set <M-l>=\el"
+execute "set <M-h>=\eh"
+map <M-j> <c-w>j
+map <M-k> <c-w>k
+map <M-l> <c-w>l
+map <M-h> <c-w>h
+
+let g:tmux_navigator_no_mappings = 1
+
+nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <M-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
+nnoremap <silent> <M-\> :TmuxNavigatePrevious<cr>
 
 " Spell Check
 set spelllang=en
@@ -180,12 +194,19 @@ let g:jedi#popup_on_dot = 0
 
 let g:user_emmet_install_global = 0
 autocmd FileType html,css EmmetInstall
+let g:user_emmet_leader_key=','
+
+augroup snake_syn
+    autocmd!
+        autocmd Syntax snakemake syn keyword pythonStatement group singularity
+        autocmd Syntax snakemake syn keyword pythonStatement onstart
+        autocmd Syntax snakemake syn keyword pythonBuiltin config paths
+augroup end
 
 augroup python
-        autocmd!
-            autocmd FileType python
-                            \   syn keyword pythonBuiltin self
-            augroup end
+    autocmd!
+        autocmd FileType python syn keyword pythonBuiltin self
+augroup end
 
 function! SyntasticCheckHook(errors)
     if !empty(a:errors)
