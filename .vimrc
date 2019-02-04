@@ -92,6 +92,7 @@ set expandtab    "Insert spaces instead of tabs in insert mode. Use spaces for i
 set tabstop=4    "Number of spaces that a <Tab> in the file counts for"
 set shiftwidth=4 "Number of spaces to use for each step of (auto)indent"
 set textwidth=0
+let mapleader = "\<Space>"
 
 autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4
 
@@ -200,8 +201,9 @@ let g:jedi#smart_auto_mappings = 0
 let g:jedi#popup_on_dot = 0
 
 let g:user_emmet_install_global = 0
-autocmd FileType html,css EmmetInstall
+autocmd FileType html,css,jinja.html EmmetInstall
 let g:user_emmet_leader_key=','
+inoremap jf <Esc>f>a
 
 augroup snake_syn
     autocmd!
