@@ -13,7 +13,7 @@
 "\eOD": backward-word
 "\eOC": forward-word
 
-set show-all-if-ambiguous On
+set show-all-if-ambiguous Off
 set show-all-if-unmodified On
 
 set colored-stats On

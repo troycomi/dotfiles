@@ -56,6 +56,7 @@ Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-repeat'
 Plugin 'mattn/emmet-vim'
 Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'chrisbra/csv.vim'
 
 Plugin 'https://bitbucket.org/snakemake/snakemake.git', {'rtp': 'misc/vim/'}
 
@@ -109,6 +110,11 @@ map <M-h> <c-w>h
 
 let g:tmux_navigator_no_mappings = 1
 
+inoremap <silent> <M-h> <ESC> :TmuxNavigateLeft<cr>
+inoremap <silent> <M-j> <ESC> :TmuxNavigateDown<cr>
+inoremap <silent> <M-k> <ESC> :TmuxNavigateUp<cr>
+inoremap <silent> <M-l> <ESC> :TmuxNavigateRight<cr>
+
 nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
 nnoremap <silent> <M-j> :TmuxNavigateDown<cr>
 nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
@@ -122,6 +128,11 @@ autocmd BufRead,BufNewFile *.rst setlocal spell
 autocmd FileType gitcommit setlocal spell
 autocmd FileType gitcommit call setpos('.', [0, 1, 1, 0])
 autocmd FileType gitcommit exec 'au VimEnter * startinsert'
+
+let g:miniBufExplorerAutoStart = 0
+
+let g:csv_autocmd_arrange = 1
+let g:csv_autocmd_arrange_size = 1024*1024
 
 " NerdTREE setup
 "map <leader>n :NERDTreeToggle<CR>
@@ -137,14 +148,16 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
+let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 1
 let g:syntastic_error_symbol = "✗"
 
 let g:syntastic_python_checkers=['flake8']
 let g:syntastic_yaml_checkers=['yamllint']
+
+map <leader>c :SyntasticCheck<CR>
 
 " LatexBox Setup
 let g:LatexBox_Folding=1
@@ -201,14 +214,15 @@ let g:jedi#smart_auto_mappings = 0
 let g:jedi#popup_on_dot = 0
 
 let g:user_emmet_install_global = 0
-autocmd FileType html,css,jinja.html EmmetInstall
+autocmd FileType html,css,jinja.html set tabstop=2 | set shiftwidth=2 | EmmetInstall
 let g:user_emmet_leader_key=','
 inoremap jf <Esc>f>a
 
 augroup snake_syn
     autocmd!
         autocmd Syntax snakemake syn keyword pythonStatement group singularity
-        autocmd Syntax snakemake syn keyword pythonStatement onstart
+        autocmd Syntax snakemake syn keyword pythonStatement onstart conda
+        autocmd Syntax snakemake syn keyword pythonStatement ancient pipe
         autocmd Syntax snakemake syn keyword pythonBuiltin config paths
 augroup end
 
