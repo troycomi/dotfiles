@@ -97,28 +97,28 @@ let mapleader = "\<Space>"
 
 autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4
 
+" cycle through tabs
+nnoremap <Tab> gt
+nnoremap <S-Tab> gT
+
 " Set Ctrl+movement for moving between windows
 "map <c-j> <c-w>j
-execute "set <M-j>=\ej"
-execute "set <M-k>=\ek"
-execute "set <M-l>=\el"
-execute "set <M-h>=\eh"
-map <M-j> <c-w>j
-map <M-k> <c-w>k
-map <M-l> <c-w>l
-map <M-h> <c-w>h
+map j <c-w>j
+map k <c-w>k
+map l <c-w>l
+map h <c-w>h
 
 let g:tmux_navigator_no_mappings = 1
 
-inoremap <silent> <M-h> <ESC> :TmuxNavigateLeft<cr>
-inoremap <silent> <M-j> <ESC> :TmuxNavigateDown<cr>
-inoremap <silent> <M-k> <ESC> :TmuxNavigateUp<cr>
-inoremap <silent> <M-l> <ESC> :TmuxNavigateRight<cr>
+inoremap <silent> j <ESC> :TmuxNavigateDown<cr>
+inoremap <silent> k <ESC> :TmuxNavigateUp<cr>
+inoremap <silent> l <ESC> :TmuxNavigateRight<cr>
+inoremap <silent> h <ESC> :TmuxNavigateLeft<cr>
 
-nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
-nnoremap <silent> <M-j> :TmuxNavigateDown<cr>
-nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
-nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
+nnoremap <silent> j :TmuxNavigateDown<cr>
+nnoremap <silent> k :TmuxNavigateUp<cr>
+nnoremap <silent> l :TmuxNavigateRight<cr>
+nnoremap <silent> h :TmuxNavigateLeft<cr>
 nnoremap <silent> <M-\> :TmuxNavigatePrevious<cr>
 
 " Spell Check
@@ -192,7 +192,7 @@ let g:promptline_preset = {
         \'warn' : [ promptline#slices#last_exit_code() ]}
 
 autocmd BufNewFile * startinsert
-inoremap jj <ESC>
+" inoremap jj <ESC>
 highlight Folded ctermfg=White
 set foldmethod=syntax
 set foldcolumn=3
@@ -236,3 +236,15 @@ function! SyntasticCheckHook(errors)
         let g:syntastic_loc_list_height = min([len(a:errors)+1, 10])
     endif
 endfunction
+
+command! Shuf 2,$!shuf
+
+" macros
+" python docstring
+let @c="o''''''"
+" join lines
+let @j='Jr'
+" break args
+let @a='0f,lr'
+" add None return to end of line
+let @n='$i -> None'
