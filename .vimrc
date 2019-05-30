@@ -57,6 +57,7 @@ Plugin 'tpope/vim-repeat'
 Plugin 'mattn/emmet-vim'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'chrisbra/csv.vim'
+Plugin 'craigemery/vim-autotag'
 
 Plugin 'https://bitbucket.org/snakemake/snakemake.git', {'rtp': 'misc/vim/'}
 
@@ -86,7 +87,7 @@ filetype on
 syntax on " syntax highlighting
 colorscheme monokai
 
-set number       "Display line numbers"
+set number relativenumber       "Display line numbers"
 set autoindent   "Always set auto-indenting on"
 filetype plugin indent on
 set expandtab    "Insert spaces instead of tabs in insert mode. Use spaces for indents"
@@ -94,6 +95,16 @@ set tabstop=4    "Number of spaces that a <Tab> in the file counts for"
 set shiftwidth=4 "Number of spaces to use for each step of (auto)indent"
 set textwidth=0
 let mapleader = "\<Space>"
+
+augroup FastEscape
+    autocmd!
+    au InsertEnter * set timeoutlen=10
+    au InsertLeave * set timeoutlen=1000
+augroup End
+
+inoremap <C-L> <C-X><C-F>
+
+let g:autotagCtagsCmd="ctags -R --python-kinds=-i"
 
 autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4
 
@@ -151,7 +162,7 @@ set statusline+=%*
 let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 1
+let g:syntastic_check_on_wq = 0
 let g:syntastic_error_symbol = "✗"
 
 let g:syntastic_python_checkers=['flake8']
@@ -217,12 +228,15 @@ let g:user_emmet_install_global = 0
 autocmd FileType html,css,jinja.html set tabstop=2 | set shiftwidth=2 | EmmetInstall
 let g:user_emmet_leader_key=','
 inoremap jf <Esc>f>a
+"make undo U
+"nnoremap U u
+"map u <Nop>
 
 augroup snake_syn
     autocmd!
-        autocmd Syntax snakemake syn keyword pythonStatement group singularity
-        autocmd Syntax snakemake syn keyword pythonStatement onstart conda
-        autocmd Syntax snakemake syn keyword pythonStatement ancient pipe
+        autocmd Syntax snakemake syn keyword pythonStatement
+                    \ group singularity onstart conda ancient pipe 
+                    \ dynamic checkpoint
         autocmd Syntax snakemake syn keyword pythonBuiltin config paths
 augroup end
 
@@ -239,12 +253,21 @@ endfunction
 
 command! Shuf 2,$!shuf
 
+set path+=**
+set wildmenu
+
 " macros
 " python docstring
-let @c="o''''''"
+let @c="o''''''O"
 " join lines
-let @j='Jr'
+let @j=':s/ \+$//eJr:noh'
 " break args
 let @a='0f,lr'
 " add None return to end of line
 let @n='$i -> None'
+" remove space from blank line
+let @b='cc'
+" add self at start of word
+let @s='viwoiself.'
+" paste and increment first letter
+let @i='Yp'
