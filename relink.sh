@@ -19,6 +19,10 @@ ln -sf ${BASEDIR}/.bashrc ~/.bashrc
 # git
 rm ~/.gitconfig
 ln -sf ${BASEDIR}/.gitconfig ~/.gitconfig
+rm ~/.gittemplate
+ln -sf ${BASEDIR}/.gittemplate ~/.gittemplate
+rm ~/.gitignore_global
+ln -sf ${BASEDIR}/.gitignore_global ~/.gitignore_global
 
 # hg
 rm ~/.hgrc

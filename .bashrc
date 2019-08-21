@@ -57,20 +57,14 @@ tmuxsplit () {
 
 umask 002
 
-if [[ $- == *i* ]]
-then
-    module load anaconda3
-    conda activate
-    conda activate mybase
-fi
-
 PATH="$PATH:$HOME/.local/bin"
 PATH="$PATH:$HOME/scripts"
 
-seffwatch () { watch -cn 300 reportseff --sort; }
+seffwatch () { watch -cn 300 reportseff --modified-sort; }
+seffstatus () { watch -cn 300 reportseff --user $USER --modified-sort; }
 weather () { while true; do
     /usr/bin/clear;
     date +"%A, %B %d, %Y  %r"
     curl -s wttr.in/princeton;
-    sleep 1800;
+    sleep 3600;
 done }
