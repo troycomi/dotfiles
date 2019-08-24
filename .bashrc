@@ -5,12 +5,10 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
-# Uncomment the following line if you don't like systemctl's auto-paging feature:
-# export SYSTEMD_PAGER=
-
 # User specific aliases and functions
 alias df='df -H'
 alias du='du -ch'
+alias ls='ls --color=auto'
 alias l='ls -lhtr'
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -33,12 +31,9 @@ function mkcd
 # startup commands
 export LC_ALL=en_US.utf-8
 export LANG=en_US.utf-8
-#PS1="\W \[\e[31m\]❯\[\e[m\]\[\e[33m\]❯\[\e[m\]\[\e[32m\]❯\[\e[m\] "
 PS1='$(printf ''%-11.10s'' ${PWD##*/})\[\e[31m\]❯\[\e[m\]\[\e[33m\]❯\[\e[m\]\[\e[32m\]❯\[\e[m\] '
 export DISPLAY=:0.0
 export LESS="-R -S"
-
-alias som-src="cd /tigress/AKEY/akey_vol2/GTExSomaticMutations/src"
 
 sq () { printf "\t%d -- Jobs Running\n" $(squeue -u tcomi -h | wc -l); squeue -u tcomi -S $1; }
 export -f sq
@@ -55,19 +50,29 @@ tmuxsplit () {
     tmux split-window -v
 }
 
-umask 002
-
 if [[ $- == *i* ]]
 then
-    module load anaconda3
+    . /home/troy/miniconda3/etc/profile.d/conda.sh
     conda activate
-    conda activate mybase
 fi
 
 PATH="$PATH:$HOME/.local/bin"
-PATH="$PATH:$HOME/scripts"
+PATH="$PATH:$HOME/projects/scripts"
 
 seffwatch () { watch -cn 300 reportseff --sort; }
+PS1='$(printf ''%-11.10s'' ${PWD##*/})\[\e[31m\]❯\[\e[m\]\[\e[33m\]❯\[\e[m\]\[\e[32m\]❯\[\e[m\] '
+export DISPLAY=:0.0
+export LESS="-R -S"
+
+tmuxsplit () { 
+    tmux split-window -h
+    tmux selectp -t 0 
+    tmux split-window -h
+    tmux split-window -v
+    tmux selectp -t 0 
+    tmux split-window -v
+}
+
 weather () { while true; do
     /usr/bin/clear;
     date +"%A, %B %d, %Y  %r"
