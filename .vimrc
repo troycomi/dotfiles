@@ -133,12 +133,11 @@ nnoremap <silent> h :TmuxNavigateLeft<cr>
 nnoremap <silent> <M-\> :TmuxNavigatePrevious<cr>
 
 " Spell Check
-set spelllang=en
+set spelllang=en_us
 autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd BufRead,BufNewFile *.rst setlocal spell
 autocmd FileType gitcommit setlocal spell
 autocmd FileType gitcommit call setpos('.', [0, 1, 1, 0])
-autocmd FileType gitcommit exec 'au VimEnter * startinsert'
 
 let g:miniBufExplorerAutoStart = 0
 
@@ -167,6 +166,7 @@ let g:syntastic_error_symbol = "✗"
 
 let g:syntastic_python_checkers=['flake8']
 let g:syntastic_yaml_checkers=['yamllint']
+let g:syntastic_cpp_compiler_options=' -std=c++11'
 
 map <leader>c :SyntasticCheck<CR>
 
@@ -260,7 +260,7 @@ set wildmenu
 " python docstring
 let @c="o''''''O"
 " join lines
-let @j=':s/ \+$//eJr:noh'
+let @j=':s/ \+$//eJr:noh'
 " break args
 let @a='0f,lr'
 " add None return to end of line

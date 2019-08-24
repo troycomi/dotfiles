@@ -59,23 +59,13 @@ fi
 PATH="$PATH:$HOME/.local/bin"
 PATH="$PATH:$HOME/projects/scripts"
 
-seffwatch () { watch -cn 300 reportseff --sort; }
 PS1='$(printf ''%-11.10s'' ${PWD##*/})\[\e[31m\]❯\[\e[m\]\[\e[33m\]❯\[\e[m\]\[\e[32m\]❯\[\e[m\] '
 export DISPLAY=:0.0
 export LESS="-R -S"
-
-tmuxsplit () { 
-    tmux split-window -h
-    tmux selectp -t 0 
-    tmux split-window -h
-    tmux split-window -v
-    tmux selectp -t 0 
-    tmux split-window -v
-}
 
 weather () { while true; do
     /usr/bin/clear;
     date +"%A, %B %d, %Y  %r"
     curl -s wttr.in/princeton;
-    sleep 1800;
+    sleep 3600;
 done }
