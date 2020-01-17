@@ -26,3 +26,7 @@
     editor = /usr/bin/vim
 [credential]
     helper = cache --timeout 6000
+[commit]
+    template = ~/.gittemplate
+[pager]
+	branch = false

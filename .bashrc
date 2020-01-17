@@ -16,6 +16,19 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../../'
 alias ~='cd ~'
+alias calc='bc -l'
+alias tmux='TERM=xterm-256color tmux'
+alias vpn='globalprotect connect -p vpntest.princeton.edu -u tcomi'
+
+alias todo='vim ~/todo.txt'
+function tless()
+{
+    if (( $# == 0 )) ; then
+        column -t -s $'\t' /dev/stdin | less --chop-long-lines
+    else
+        column -t -s $'\t' $1 | less --chop-long-lines
+    fi
+}
 function mkcd
 {
   command mkdir -pv $1 && cd $1 && echo "Now in `pwd`"

@@ -40,6 +40,7 @@ Plugin 'tmux-plugins/vim-tmux'
 Plugin 'edkolev/promptline.vim'
 Plugin 'editorconfig/editorconfig-vim'
 
+Plugin 'vim-python/python-syntax'
 Plugin 'lepture/vim-jinja'
 
 " vim-scripts repos
@@ -58,7 +59,7 @@ Plugin 'mattn/emmet-vim'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'chrisbra/csv.vim'
 
-Plugin 'https://bitbucket.org/snakemake/snakemake.git', {'rtp': 'misc/vim/'}
+Plugin 'https://github.com/snakemake/snakemake.git', {'rtp': 'misc/vim/'}
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -94,6 +95,17 @@ set tabstop=4    "Number of spaces that a <Tab> in the file counts for"
 set shiftwidth=4 "Number of spaces to use for each step of (auto)indent"
 set textwidth=0
 let mapleader = "\<Space>"
+
+set ttimeoutlen=10
+augroup FastEscape
+    autocmd!
+    au InsertEnter * set timeoutlen=200
+    au InsertLeave * set timeoutlen=1000
+augroup End
+
+inoremap <C-L> <C-X><C-F>
+
+let g:autotagCtagsCmd="ctags -R --python-kinds=-i"
 
 autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4
 
@@ -154,6 +166,8 @@ let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 1
 let g:syntastic_error_symbol = "✗"
 
+let g:python_highlight_all = 1
+let g:python_highlight_builtin_objs = 1
 let g:syntastic_python_checkers=['flake8']
 let g:syntastic_yaml_checkers=['yamllint']
 
