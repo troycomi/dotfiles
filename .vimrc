@@ -16,30 +16,22 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-Plugin 'fholgado/minibufexpl.vim'
-Plugin 'vim-perl/vim-perl'
-Plugin 'wgibbs/vim-irblack'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-surround'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'tpope/vim-markdown'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
-Plugin 'davidhalter/jedi-vim'
-"Plugin 'Valloric/YouCompleteMe'
-Plugin 'w0rp/ale'
+Plugin 'dense-analysis/ale'
 Plugin 'kien/ctrlp.vim'
 Plugin 'LaTeX-Box-Team/LaTeX-Box'
-Plugin 'jmcantrell/vim-virtualenv'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'crusoexia/vim-monokai'
 Plugin 'tpope/vim-fugitive'
 Plugin 'JamshedVesuna/vim-markdown-preview'
 Plugin 'tmux-plugins/vim-tmux-focus-events'
 Plugin 'tmux-plugins/vim-tmux'
-Plugin 'edkolev/promptline.vim'
 Plugin 'editorconfig/editorconfig-vim'
-
 Plugin 'vim-python/python-syntax'
 Plugin 'lepture/vim-jinja'
 
@@ -47,7 +39,6 @@ Plugin 'lepture/vim-jinja'
 Plugin 'desert256.vim'
 Plugin 'bufkill.vim'
 Plugin 'JavaScript-Indent'
-Plugin 'TaskList.vim'
 Plugin 'sjl/gundo.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'Vimjas/vim-python-pep8-indent'
@@ -58,6 +49,7 @@ Plugin 'tpope/vim-repeat'
 Plugin 'mattn/emmet-vim'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'chrisbra/csv.vim'
+Plugin 'craigemery/vim-autotag'
 
 Plugin 'https://github.com/snakemake/snakemake.git', {'rtp': 'misc/vim/'}
 
@@ -87,7 +79,7 @@ filetype on
 syntax on " syntax highlighting
 colorscheme monokai
 
-set number       "Display line numbers"
+set number relativenumber       "Display line numbers"
 set autoindent   "Always set auto-indenting on"
 filetype plugin indent on
 set expandtab    "Insert spaces instead of tabs in insert mode. Use spaces for indents"
@@ -96,10 +88,9 @@ set shiftwidth=4 "Number of spaces to use for each step of (auto)indent"
 set textwidth=0
 let mapleader = "\<Space>"
 
-set ttimeoutlen=10
 augroup FastEscape
     autocmd!
-    au InsertEnter * set timeoutlen=200
+    au InsertEnter * set timeoutlen=10
     au InsertLeave * set timeoutlen=1000
 augroup End
 
@@ -134,15 +125,13 @@ nnoremap <silent> h :TmuxNavigateLeft<cr>
 nnoremap <silent> <M-\> :TmuxNavigatePrevious<cr>
 
 " Spell Check
-set spelllang=en
+set spelllang=en_us
 autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd BufRead,BufNewFile *.rst setlocal spell
 autocmd FileType gitcommit setlocal spell
 autocmd FileType gitcommit call setpos('.', [0, 1, 1, 0])
-autocmd FileType gitcommit exec 'au VimEnter * startinsert'
 
-let g:miniBufExplorerAutoStart = 0
-
+let g:airline_theme='simple'
 let g:csv_autocmd_arrange = 1
 let g:csv_autocmd_arrange_size = 1024*1024
 
@@ -163,15 +152,20 @@ set statusline+=%*
 let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 1
+let g:syntastic_check_on_wq = 0
 let g:syntastic_error_symbol = "✗"
 
 let g:python_highlight_all = 1
 let g:python_highlight_builtin_objs = 1
 let g:syntastic_python_checkers=['flake8']
 let g:syntastic_yaml_checkers=['yamllint']
+let g:syntastic_cpp_compiler_options=' -std=c++11'
 
 map <leader>c :SyntasticCheck<CR>
+
+let g:UltiSnipsExpandTrigger="<leader><tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " LatexBox Setup
 let g:LatexBox_Folding=1
@@ -195,16 +189,6 @@ let vim_markdown_preview_github=1
 let vim_markdown_preview_browser='Google Chrome'
 let vim_markdown_preview_hotkey='<C-m>'
 
-" Promptline
-" sections (a, b, c, x, y, z, warn) are optional
-let g:promptline_preset = {
-        \'a' : [ promptline#slices#host() ],
-        \'b' : [ promptline#slices#user() ],
-        \'c' : [ promptline#slices#cwd() ],
-        \'y' : [ promptline#slices#vcs_branch() ],
-        \'z' : [ promptline#slices#conda_env() ],
-        \'warn' : [ promptline#slices#last_exit_code() ]}
-
 autocmd BufNewFile * startinsert
 " inoremap jj <ESC>
 highlight Folded ctermfg=White
@@ -222,7 +206,7 @@ let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
 augroup python
     autocmd!
     autocmd FileType python
-                \   syn keyword pythonBuiltin self
+                \   syn keyword pythonBuiltinObj self
 augroup end
 let g:jedi#smart_auto_mappings = 0
 let g:jedi#popup_on_dot = 0
@@ -231,18 +215,15 @@ let g:user_emmet_install_global = 0
 autocmd FileType html,css,jinja.html set tabstop=2 | set shiftwidth=2 | EmmetInstall
 let g:user_emmet_leader_key=','
 inoremap jf <Esc>f>a
+autocmd FileType yaml set tabstop=2 | set shiftwidth=2
+"make undo U
+"nnoremap U u
+"map u <Nop>
 
 augroup snake_syn
     autocmd!
-        autocmd Syntax snakemake syn keyword pythonStatement group singularity
-        autocmd Syntax snakemake syn keyword pythonStatement onstart conda
-        autocmd Syntax snakemake syn keyword pythonStatement ancient pipe
-        autocmd Syntax snakemake syn keyword pythonBuiltin config paths
-augroup end
-
-augroup python
-    autocmd!
-        autocmd FileType python syn keyword pythonBuiltin self
+        autocmd Syntax snakemake syn keyword pythonBuiltinObj paths
+        autocmd Syntax snakemake set tabstop=4 | set shiftwidth=4
 augroup end
 
 function! SyntasticCheckHook(errors)
@@ -253,12 +234,21 @@ endfunction
 
 command! Shuf 2,$!shuf
 
+set path+=**
+set wildmenu
+
 " macros
 " python docstring
-let @c="o''''''"
+let @c="o''''''O"
 " join lines
-let @j='Jr'
+let @j=':s/ \+$//eJr:noh'
 " break args
 let @a='0f,lr'
 " add None return to end of line
 let @n='$i -> None'
+" remove space from blank line
+let @b='cc'
+" add self at start of word
+let @s='viwoiself.'
+" paste and increment first letter
+let @i='Yp'

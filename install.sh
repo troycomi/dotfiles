@@ -17,6 +17,8 @@ ln -sf ${BASEDIR}/.inputrc ~/.inputrc
 
 # git
 ln -sf ${BASEDIR}/.gitconfig ~/.gitconfig
+ln -sf ${BASEDIR}/.gittemplate ~/.gittemplate
+ln -sf ${BASEDIR}/.gitignore_global ~/.gitignore_global
 
 # hg
 ln -sf ${BASEDIR}/.hgrc ~/.hgrc
