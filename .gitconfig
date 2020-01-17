@@ -23,10 +23,11 @@
 [gpg]
 	program = gpg2
 [core]
-	autocrlf = input
+	autocrlf = false
 	safecrlf = true
     editor = /usr/bin/vim
     excludesfile = ~/.gitignore_global
+	eol = lf
 [credential]
     helper = cache --timeout 6000
 
