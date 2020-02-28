@@ -13,7 +13,7 @@ export EDITOR=/usr/bin/vim
 alias rm='rm -i'
 alias df='df -H'
 alias du='du -ch'
-alias l='ls -lhtr'
+alias l='ls -lhtr --color'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../../'
@@ -39,7 +39,7 @@ function mkcd
 export LC_ALL=en_US.utf-8
 export LANG=en_US.utf-8
 #PS1="\W \[\e[31m\]❯\[\e[m\]\[\e[33m\]❯\[\e[m\]\[\e[32m\]❯\[\e[m\] "
-PS1='$(printf ''%-11.10s'' ${PWD##*/})\[\e[31m\]❯\[\e[m\]\[\e[33m\]❯\[\e[m\]\[\e[32m\]❯\[\e[m\] '
+PS1='$(printf ''%-11.10s'' "${PWD##*/}")\[\e[31m\]❯\[\e[m\]\[\e[33m\]❯\[\e[m\]\[\e[32m\]❯\[\e[m\] '
 export DISPLAY=:0.0
 export LESS="-R -S"
 
@@ -84,3 +84,25 @@ weather () { while true; do
     curl -s wttr.in/princeton;
     sleep 3600;
 done }
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/tcomi/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/tcomi/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/tcomi/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/tcomi/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/tcomi/google-cloud-sdk/path.bash.inc' ]; then . '/home/tcomi/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/tcomi/google-cloud-sdk/completion.bash.inc' ]; then . '/home/tcomi/google-cloud-sdk/completion.bash.inc'; fi

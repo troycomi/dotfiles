@@ -1,3 +1,4 @@
+" vim: foldmethod=marker
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -10,9 +11,9 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
-" My Plugins here:
+" My Plugins here: {{{1
 "
-" original repos on github
+" plugins
 Plugin 'vim-syntastic/syntastic'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
@@ -56,9 +57,6 @@ Plugin 'https://github.com/snakemake/snakemake.git', {'rtp': 'misc/vim/'}
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
 " Brief help
 " :PluginList          - list configured plugins
 " :PluginInstall(!)    - install (update) plugins
@@ -72,13 +70,14 @@ filetype plugin indent on    " required
 set laststatus=2   " Always show the statusline
 set encoding=utf-8 " Necessary to show unicode glyphs
 
-" Colors **********************************************************************
-set t_Co=256 " 256 colors
+" Colors {{{1
+set t_Co=256 " 256 colors 
 set background=dark
 filetype on
 syntax on " syntax highlighting
 colorscheme monokai
 
+" Basic Config {{{1
 set number relativenumber       "Display line numbers"
 set autoindent   "Always set auto-indenting on"
 filetype plugin indent on
@@ -87,6 +86,7 @@ set tabstop=4    "Number of spaces that a <Tab> in the file counts for"
 set shiftwidth=4 "Number of spaces to use for each step of (auto)indent"
 set textwidth=0
 let mapleader = "\<Space>"
+set hlsearch
 
 augroup FastEscape
     autocmd!
@@ -94,18 +94,25 @@ augroup FastEscape
     au InsertLeave * set timeoutlen=1000
 augroup End
 
-inoremap <C-L> <C-X><C-F>
-
-let g:autotagCtagsCmd="ctags -R --python-kinds=-i"
-
-autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4
+cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 
 " cycle through tabs
 nnoremap <Tab> gt
 nnoremap <S-Tab> gT
 
-" Set Ctrl+movement for moving between windows
-"map <c-j> <c-w>j
+autocmd BufNewFile * startinsert
+highlight Folded ctermfg=White
+set foldmethod=syntax
+set foldcolumn=3
+set colorcolumn=80
+
+command! Shuf 2,$!shuf
+
+set path+=**
+set wildmenu
+
+
+" Set Ctrl+movement for moving between windows {{{1
 map j <c-w>j
 map k <c-w>k
 map l <c-w>l
@@ -124,7 +131,7 @@ nnoremap <silent> l :TmuxNavigateRight<cr>
 nnoremap <silent> h :TmuxNavigateLeft<cr>
 nnoremap <silent> <M-\> :TmuxNavigatePrevious<cr>
 
-" Spell Check
+" Spell Check {{{1
 set spelllang=en_us
 autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd BufRead,BufNewFile *.rst setlocal spell
@@ -135,16 +142,16 @@ let g:airline_theme='simple'
 let g:csv_autocmd_arrange = 1
 let g:csv_autocmd_arrange_size = 1024*1024
 
-" NerdTREE setup
+" NerdTREE setup {{{1
 "map <leader>n :NERDTreeToggle<CR>
 map <F2> :NERDTreeToggle<CR>
 " Close if NerdTREE is only buffer left
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-" Easily open TaskList
+" Easily open TaskList {{{1
 map <leader>td <Plug>TaskList
 
-" Setup Syntastic
+" Setup Syntastic {{{1
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -163,62 +170,26 @@ let g:syntastic_cpp_compiler_options=' -std=c++11'
 
 map <leader>c :SyntasticCheck<CR>
 
+function! SyntasticCheckHook(errors)
+    if !empty(a:errors)
+        let g:syntastic_loc_list_height = min([len(a:errors)+1, 10])
+    endif
+endfunction
+
+" UtiliSnips {{{1
 let g:UltiSnipsExpandTrigger="<leader><tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
-" LatexBox Setup
-let g:LatexBox_Folding=1
 
-" Setup TT2HTML syntax for .tt2 files
-autocmd BufNewFile,BufRead *.tt2 setf tt2html
-
-" Populate the g:airline_symbols dictionary with powerline symbols
+" Populate the g:airline_symbols dictionary with powerline symbols {{{1
 let g:airline_powerline_fonts = 1
-" Fix wrapping statusline in iTerm
-" set ambiwidth=double
 
-" Setup syntax highlighting for Snakemake snakefiles
-au BufNewFile,BufRead Snakefile set syntax=snakemake
-au BufNewFile,BufRead *.rules set syntax=snakemake
-au BufNewFile,BufRead *.snakefile set syntax=snakemake
-au BufNewFile,BufRead *.snake set syntax=snakemake
-
-" Setup keyboard shortcut for Markdown preview
-let vim_markdown_preview_github=1
-let vim_markdown_preview_browser='Google Chrome'
-let vim_markdown_preview_hotkey='<C-m>'
-
-autocmd BufNewFile * startinsert
-" inoremap jj <ESC>
-highlight Folded ctermfg=White
-set foldmethod=syntax
-set foldcolumn=3
-set colorcolumn=80
-let g:SimpylFold_docstring_preview = 1
-
-nmap zuz <Plug>(FastFoldUpdate)
-let g:fastfold_savehook = 1
-let g:fastfold_fold_command_suffixes =  ['x','X','a','A','o','O','c','C']
-let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
-
-" highlight self in python
-augroup python
-    autocmd!
-    autocmd FileType python
-                \   syn keyword pythonBuiltinObj self
-augroup end
-let g:jedi#smart_auto_mappings = 0
-let g:jedi#popup_on_dot = 0
-
-let g:user_emmet_install_global = 0
-autocmd FileType html,css,jinja.html set tabstop=2 | set shiftwidth=2 | EmmetInstall
-let g:user_emmet_leader_key=','
-inoremap jf <Esc>f>a
-autocmd FileType yaml set tabstop=2 | set shiftwidth=2
-"make undo U
-"nnoremap U u
-"map u <Nop>
+" Setup syntax highlighting for Snakemake snakefiles {{{1
+au BufNewFile,BufRead Snakefile set syntax=snakemake filetype=snakemake
+au BufNewFile,BufRead *.rules set syntax=snakemake filetype=snakemake
+au BufNewFile,BufRead *.snakefile set syntax=snakemake filetype=snakemake
+au BufNewFile,BufRead *.snake set syntax=snakemake filetype=snakemake
 
 augroup snake_syn
     autocmd!
@@ -226,18 +197,39 @@ augroup snake_syn
         autocmd Syntax snakemake set tabstop=4 | set shiftwidth=4
 augroup end
 
-function! SyntasticCheckHook(errors)
-    if !empty(a:errors)
-        let g:syntastic_loc_list_height = min([len(a:errors)+1, 10])
-    endif
-endfunction
+" Setup keyboard shortcut for Markdown preview {{{1
+let vim_markdown_preview_github=1
+let vim_markdown_preview_browser='Google Chrome'
+let vim_markdown_preview_hotkey='<C-m>'
 
-command! Shuf 2,$!shuf
+" fastfold {{{1
+nmap zuz <Plug>(FastFoldUpdate)
+let g:fastfold_savehook = 1
+let g:fastfold_fold_command_suffixes =  ['x','X','a','A','o','O','c','C']
+let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
 
-set path+=**
-set wildmenu
+" python {{{1
+let g:autotagCtagsCmd="ctags -R --python-kinds=-i"
+autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4
+let g:SimpylFold_docstring_preview = 1
 
-" macros
+augroup python
+    autocmd!
+    autocmd FileType python
+                \   syn keyword pythonBuiltinObj self
+augroup end
+
+let g:jedi#smart_auto_mappings = 0
+let g:jedi#popup_on_dot = 0
+
+" other filetypes {{{1
+let g:user_emmet_install_global = 0
+autocmd FileType html,css,jinja.html set tabstop=2 | set shiftwidth=2 | EmmetInstall
+let g:user_emmet_leader_key=','
+inoremap jf <Esc>f>a
+autocmd FileType yaml set tabstop=2 | set shiftwidth=2
+
+" macros {{{1
 " python docstring
 let @c="o''''''O"
 " join lines
