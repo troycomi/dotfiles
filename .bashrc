@@ -13,7 +13,7 @@ export EDITOR=/usr/bin/vim
 alias rm='rm -i'
 alias df='df -H'
 alias du='du -ch'
-alias l='ls -lhtr'
+alias l='ls -lhtr --color'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../../'
@@ -36,7 +36,7 @@ function mkcd
 export LC_ALL=en_US.utf-8
 export LANG=en_US.utf-8
 #PS1="\W \[\e[31m\]❯\[\e[m\]\[\e[33m\]❯\[\e[m\]\[\e[32m\]❯\[\e[m\] "
-PS1='$(printf ''%-11.10s'' ${PWD##*/})\[\e[31m\]❯\[\e[m\]\[\e[33m\]❯\[\e[m\]\[\e[32m\]❯\[\e[m\] '
+PS1='$(printf ''%-11.10s'' "${PWD##*/}")\[\e[31m\]❯\[\e[m\]\[\e[33m\]❯\[\e[m\]\[\e[32m\]❯\[\e[m\] '
 export LESS="-R -S"
 
 alias som-src="cd /tigress/AKEY/akey_vol2/GTExSomaticMutations/src"
