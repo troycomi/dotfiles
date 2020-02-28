@@ -32,6 +32,7 @@ Plugin 'JamshedVesuna/vim-markdown-preview'
 Plugin 'tmux-plugins/vim-tmux-focus-events'
 Plugin 'tmux-plugins/vim-tmux'
 Plugin 'editorconfig/editorconfig-vim'
+Plugin 'tpope/vim-commentary'
 
 Plugin 'lepture/vim-jinja'
 
@@ -51,6 +52,7 @@ Plugin 'mattn/emmet-vim'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'chrisbra/csv.vim'
 Plugin 'craigemery/vim-autotag'
+Plugin 'michaeljsmith/vim-indent-object'
 
 Plugin 'https://github.com/snakemake/snakemake.git', {'rtp': 'misc/vim/'}
 
@@ -96,6 +98,7 @@ augroup FastEscape
 augroup End
 
 inoremap <C-L> <C-X><C-F>
+nnoremap <F5> :GundoToggle<CR>
 
 let g:autotagCtagsCmd="ctags -R --python-kinds=-i"
 
@@ -133,6 +136,11 @@ autocmd FileType gitcommit setlocal spell
 autocmd FileType gitcommit call setpos('.', [0, 1, 1, 0])
 
 let g:airline_theme='simple'
+" Populate the g:airline_symbols dictionary with powerline symbols
+let g:airline_powerline_fonts = 1
+let g:airline_section_B=''
+let g:airline_skip_empty_sections = 1
+
 let g:csv_autocmd_arrange = 1
 let g:csv_autocmd_arrange_size = 1024*1024
 
@@ -174,11 +182,6 @@ let g:LatexBox_Folding=1
 " Setup TT2HTML syntax for .tt2 files
 autocmd BufNewFile,BufRead *.tt2 setf tt2html
 
-" Populate the g:airline_symbols dictionary with powerline symbols
-let g:airline_powerline_fonts = 1
-" Fix wrapping statusline in iTerm
-" set ambiwidth=double
-
 " Setup syntax highlighting for Snakemake snakefiles
 au BufNewFile,BufRead Snakefile set syntax=snakemake
 au BufNewFile,BufRead *.rules set syntax=snakemake
@@ -191,7 +194,7 @@ let vim_markdown_preview_browser='Google Chrome'
 let vim_markdown_preview_hotkey='<C-m>'
 
 autocmd BufNewFile * startinsert
-" inoremap jj <ESC>
+
 highlight Folded ctermfg=White
 set foldmethod=syntax
 set foldcolumn=3
@@ -213,18 +216,15 @@ let g:jedi#smart_auto_mappings = 0
 let g:jedi#popup_on_dot = 0
 
 let g:user_emmet_install_global = 0
-autocmd FileType html,css,jinja.html set tabstop=2 | set shiftwidth=2 | EmmetInstall
+autocmd FileType html,css,jinja.html setlocal tabstop=2 shiftwidth=2 | EmmetInstall
 let g:user_emmet_leader_key=','
 inoremap jf <Esc>f>a
-autocmd FileType yaml set tabstop=2 | set shiftwidth=2
-"make undo U
-"nnoremap U u
-"map u <Nop>
+autocmd FileType yaml setlocal tabstop=2 shiftwidth=2
 
 augroup snake_syn
     autocmd!
         autocmd Syntax snakemake syn keyword pythonBuiltinObj paths
-        autocmd Syntax snakemake set tabstop=4 | set shiftwidth=4
+        autocmd Syntax snakemake setlocal tabstop=4 shiftwidth=4
 augroup end
 
 function! SyntasticCheckHook(errors)
@@ -238,11 +238,15 @@ command! Shuf 2,$!shuf
 set path+=**
 set wildmenu
 
+set fo-=orc
+set fo+=j
+augroup md_format
+    autocmd!
+        autocmd Syntax markdown setlocal fo+=tcn
+augroup end
 " macros
 " python docstring
 let @c="o''''''O"
-" join lines
-let @j=':s/ \+$//eJr:noh'
 " break args
 let @a='0f,lr'
 " add None return to end of line

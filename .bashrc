@@ -37,7 +37,6 @@ export LC_ALL=en_US.utf-8
 export LANG=en_US.utf-8
 #PS1="\W \[\e[31m\]❯\[\e[m\]\[\e[33m\]❯\[\e[m\]\[\e[32m\]❯\[\e[m\] "
 PS1='$(printf ''%-11.10s'' ${PWD##*/})\[\e[31m\]❯\[\e[m\]\[\e[33m\]❯\[\e[m\]\[\e[32m\]❯\[\e[m\] '
-export DISPLAY=:0.0
 export LESS="-R -S"
 
 alias som-src="cd /tigress/AKEY/akey_vol2/GTExSomaticMutations/src"
@@ -68,7 +67,7 @@ tmuxsplit () {
 
 umask 002
 
-PATH="$PATH:$HOME/.local/bin"
+PATH="$HOME/.local/bin:$PATH"
 PATH="$PATH:$HOME/scripts"
 
 alias rs="reportseff --format=jobid,state,elapsed,timeeff,cpueff,memeff --modified-sort"
@@ -81,3 +80,23 @@ weather () { while true; do
     curl -s wttr.in/princeton;
     sleep 3600;
 done }
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/tigress/tcomi/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/tigress/tcomi/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/tigress/tcomi/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/tigress/tcomi/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+if [[ $- == *i* ]]
+then
+    conda activate mybase
+fi
