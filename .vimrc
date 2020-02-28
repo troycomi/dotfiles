@@ -33,6 +33,7 @@ Plugin 'JamshedVesuna/vim-markdown-preview'
 Plugin 'tmux-plugins/vim-tmux-focus-events'
 Plugin 'tmux-plugins/vim-tmux'
 Plugin 'editorconfig/editorconfig-vim'
+Plugin 'tpope/vim-commentary'
 Plugin 'vim-python/python-syntax'
 Plugin 'lepture/vim-jinja'
 
@@ -51,6 +52,7 @@ Plugin 'mattn/emmet-vim'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'chrisbra/csv.vim'
 Plugin 'craigemery/vim-autotag'
+Plugin 'michaeljsmith/vim-indent-object'
 
 Plugin 'https://github.com/snakemake/snakemake.git', {'rtp': 'misc/vim/'}
 
@@ -138,7 +140,6 @@ autocmd BufRead,BufNewFile *.rst setlocal spell
 autocmd FileType gitcommit setlocal spell
 autocmd FileType gitcommit call setpos('.', [0, 1, 1, 0])
 
-let g:airline_theme='simple'
 let g:csv_autocmd_arrange = 1
 let g:csv_autocmd_arrange_size = 1024*1024
 
@@ -182,8 +183,12 @@ let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 
-" Populate the g:airline_symbols dictionary with powerline symbols {{{1
+" airline_{{{1
+let g:airline_theme='simple'
 let g:airline_powerline_fonts = 1
+let g:airline_section_B=''
+let g:airline_skip_empty_sections = 1
+
 
 " Setup syntax highlighting for Snakemake snakefiles {{{1
 au BufNewFile,BufRead Snakefile set syntax=snakemake filetype=snakemake
@@ -224,7 +229,7 @@ let g:jedi#popup_on_dot = 0
 
 " other filetypes {{{1
 let g:user_emmet_install_global = 0
-autocmd FileType html,css,jinja.html set tabstop=2 | set shiftwidth=2 | EmmetInstall
+autocmd FileType html,css,jinja.html setlocal tabstop=2 shiftwidth=2 | EmmetInstall
 let g:user_emmet_leader_key=','
 inoremap jf <Esc>f>a
 autocmd FileType yaml set tabstop=2 | set shiftwidth=2
@@ -232,8 +237,6 @@ autocmd FileType yaml set tabstop=2 | set shiftwidth=2
 " macros {{{1
 " python docstring
 let @c="o''''''O"
-" join lines
-let @j=':s/ \+$//eJr:noh'
 " break args
 let @a='0f,lr'
 " add None return to end of line

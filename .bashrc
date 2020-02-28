@@ -40,7 +40,6 @@ export LC_ALL=en_US.utf-8
 export LANG=en_US.utf-8
 #PS1="\W \[\e[31m\]❯\[\e[m\]\[\e[33m\]❯\[\e[m\]\[\e[32m\]❯\[\e[m\] "
 PS1='$(printf ''%-11.10s'' "${PWD##*/}")\[\e[31m\]❯\[\e[m\]\[\e[33m\]❯\[\e[m\]\[\e[32m\]❯\[\e[m\] '
-export DISPLAY=:0.0
 export LESS="-R -S"
 
 alias som-src="cd /tigress/AKEY/akey_vol2/GTExSomaticMutations/src"
@@ -71,7 +70,7 @@ tmuxsplit () {
 
 umask 002
 
-PATH="$PATH:$HOME/.local/bin"
+PATH="$HOME/.local/bin:$PATH"
 PATH="$PATH:$HOME/scripts"
 
 alias rs="reportseff --format=jobid,state,elapsed,timeeff,cpueff,memeff --modified-sort"
