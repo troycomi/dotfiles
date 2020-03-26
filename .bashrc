@@ -18,7 +18,10 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../../'
 alias ~='cd ~'
-alias todo='vim ~/todo.md -c "set nospell"'
+alias todo='vim ~/todo.md -c "set nospell" -c "norm zR"'
+export VISUAL=nvim
+alias vi=nvim
+alias vim=nvim
 function tless()
 {
     if (( $# == 0 )) ; then
@@ -35,7 +38,6 @@ function mkcd
 # startup commands
 export LC_ALL=en_US.utf-8
 export LANG=en_US.utf-8
-#PS1="\W \[\e[31m\]❯\[\e[m\]\[\e[33m\]❯\[\e[m\]\[\e[32m\]❯\[\e[m\] "
 PS1='$(printf ''%-11.10s'' "${PWD##*/}")\[\e[31m\]❯\[\e[m\]\[\e[33m\]❯\[\e[m\]\[\e[32m\]❯\[\e[m\] '
 export LESS="-R -S"
 
