@@ -38,6 +38,7 @@ mkdir -p ${HOME}/.config/nvim
 ln -sf ${BASEDIR}/init.vim ${HOME}/.config/nvim/init.vim
 ln -sf ${BASEDIR}/vim_after/ftplugin ${HOME}/.config/nvim/ftplugin
 nvim -es -u init.vim -i NONE -c "PlugInstall" -c "qa"
+nvim -es -u init.vim -i NONE -c "PlugUpdate" -c "qa"
 
 # Setup Vundle
 mkdir -p "${HOME}/.vim"
