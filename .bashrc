@@ -6,6 +6,7 @@ if [ -f /etc/bashrc ]; then
 fi
 
 # User specific aliases and functions
+alias rm='rm -i'
 alias df='df -H'
 alias du='du -ch'
 alias ls='ls --color=auto'
@@ -14,7 +15,10 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../../'
 alias ~='cd ~'
-alias todo='vim ~/todo.txt'
+alias todo='vim ~/todo.md -c "set nospell" -c "norm zR"'
+export VISUAL=nvim
+alias vi=nvim
+alias vim=nvim
 function tless()
 {
     if (( $# == 0 )) ; then
@@ -31,15 +35,23 @@ function mkcd
 # startup commands
 export LC_ALL=en_US.utf-8
 export LANG=en_US.utf-8
-PS1='$(printf ''%-11.10s'' ${PWD##*/})\[\e[31m\]❯\[\e[m\]\[\e[33m\]❯\[\e[m\]\[\e[32m\]❯\[\e[m\] '
-export DISPLAY=:0.0
+PS1='$(printf ''%-11.10s'' "${PWD##*/}")\[\e[31m\]❯\[\e[m\]\[\e[33m\]❯\[\e[m\]\[\e[32m\]❯\[\e[m\] '
 export LESS="-R -S"
 
-sq () { printf "\t%d -- Jobs Running\n" $(squeue -u tcomi -h | wc -l); squeue -u tcomi -S $1; }
+sq () {
+    printf "\t%d / %d -- Jobs Running\n" $(squeue -u tcomi -h -t R | wc -l) $(squeue -u tcomi -h | wc -l)
+    squeue -u tcomi -S $1; }
 export -f sq
 alias sqhi="watch -n 120 'sq -M'"
 alias sqlo="watch -n 120 'sq +M'"
-alias calc="bc -l"
+alias calc="bc -lq"
+tgz () {
+    tar -czf ${1%/}.tar.gz --remove-files ${1} &
+}
+
+tarm () {
+    tar -tf $1 | grep -v /$ | tr '\n' '\0' | xargs -0 -n1 rm &
+}
 
 tmuxsplit () { 
     tmux split-window -h
@@ -58,10 +70,6 @@ fi
 
 PATH="$PATH:$HOME/.local/bin"
 PATH="$PATH:$HOME/projects/scripts"
-
-PS1='$(printf ''%-11.10s'' ${PWD##*/})\[\e[31m\]❯\[\e[m\]\[\e[33m\]❯\[\e[m\]\[\e[32m\]❯\[\e[m\] '
-export DISPLAY=:0.0
-export LESS="-R -S"
 
 weather () { while true; do
     /usr/bin/clear;

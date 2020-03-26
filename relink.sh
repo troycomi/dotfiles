@@ -32,3 +32,5 @@ ln -sf ${BASEDIR}/.hgrc ~/.hgrc
 rm ~/.tmux.conf
 ln -sf ${BASEDIR}/.tmux.conf ~/.tmux.conf
 
+mkdir -p ~/.vim/after
+rsync -a ${BASEDIR}/vim_after/ ~/.vim/after
