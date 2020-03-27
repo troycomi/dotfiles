@@ -14,28 +14,30 @@ Plugin 'gmarik/Vundle.vim'
 " My Plugins here: {{{1
 "
 " plugins
-Plugin 'vim-syntastic/syntastic'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'scrooloose/nerdtree'
-Plugin 'tpope/vim-surround'
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'tpope/vim-markdown'
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
-Plugin 'dense-analysis/ale'
-Plugin 'kien/ctrlp.vim'
-Plugin 'LaTeX-Box-Team/LaTeX-Box'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'crusoexia/vim-monokai'
-Plugin 'tpope/vim-fugitive'
-Plugin 'JamshedVesuna/vim-markdown-preview'
-Plugin 'tmux-plugins/vim-tmux-focus-events'
-Plugin 'tmux-plugins/vim-tmux'
+Plugin 'dense-analysis/ale'
 Plugin 'editorconfig/editorconfig-vim'
-Plugin 'tpope/vim-commentary'
-Plugin 'vim-python/python-syntax'
+Plugin 'honza/vim-snippets'
+Plugin 'JamshedVesuna/vim-markdown-preview'
+Plugin 'kien/ctrlp.vim'
+Plugin 'LaTeX-Box-Team/LaTeX-Box'
 Plugin 'lepture/vim-jinja'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'nelstrom/vim-visual-star-search'
+Plugin 'scrooloose/nerdtree'
+Plugin 'SirVer/ultisnips'
+Plugin 'tmux-plugins/vim-tmux'
+Plugin 'tmux-plugins/vim-tmux-focus-events'
+Plugin 'tommcdo/vim-exchange'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-markdown'
+Plugin 'tpope/vim-surround'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'vim-python/python-syntax'
+Plugin 'vim-syntastic/syntastic'
 
 " vim-scripts repos
 Plugin 'desert256.vim'
@@ -89,10 +91,12 @@ set shiftwidth=4 "Number of spaces to use for each step of (auto)indent"
 set textwidth=0
 let mapleader = "\<Space>"
 set hlsearch
+set incsearch
+set hidden
 
 augroup FastEscape
     autocmd!
-    au InsertEnter * set timeoutlen=10
+    au InsertEnter * set timeoutlen=100
     au InsertLeave * set timeoutlen=1000
 augroup End
 
@@ -179,8 +183,8 @@ endfunction
 
 " UtiliSnips {{{1
 let g:UltiSnipsExpandTrigger="<leader><tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsJumpForwardTrigger="<C-j>"
+let g:UltiSnipsJumpBackwardTrigger="<C-k>"
 
 
 " airline_{{{1
@@ -207,16 +211,33 @@ let vim_markdown_preview_github=1
 let vim_markdown_preview_browser='Google Chrome'
 let vim_markdown_preview_hotkey='<C-m>'
 
-" fastfold {{{1
+let g:markdown_fenced_languages = ['bash=sh', 'python']
+let g:markdown_folding = 1
+autocmd FileType markdown setlocal foldtext=NeatFoldText()
+
+" folding {{{1
 nmap zuz <Plug>(FastFoldUpdate)
 let g:fastfold_savehook = 1
 let g:fastfold_fold_command_suffixes =  ['x','X','a','A','o','O','c','C']
 let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
 
+function! NeatFoldText()
+    let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
+    let lines_count = v:foldend - v:foldstart + 1
+    let lines_count_text = '| ' . printf("%10s", lines_count . ' lines') . ' |'
+    let foldchar = matchstr(&fillchars, 'fold:\zs.')
+    let foldtextstart = strpart('+' . repeat(foldchar, v:foldlevel) . line, 0, (winwidth(0)*2)/3)
+    let foldtextend = lines_count_text . repeat(foldchar, 8)
+    let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
+    return foldtextstart . repeat(foldchar, winwidth(0)-foldtextlength) . foldtextend
+endfunction
+set foldtext=NeatFoldText()
+
 " python {{{1
 let g:autotagCtagsCmd="ctags -R --python-kinds=-i"
-autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4
+autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4 foldtext=NeatFoldText()
 let g:SimpylFold_docstring_preview = 1
+let g:SimpylFold_fold_docstring = 0
 
 augroup python
     autocmd!
@@ -232,7 +253,7 @@ let g:user_emmet_install_global = 0
 autocmd FileType html,css,jinja.html setlocal tabstop=2 shiftwidth=2 | EmmetInstall
 let g:user_emmet_leader_key=','
 inoremap jf <Esc>f>a
-autocmd FileType yaml set tabstop=2 | set shiftwidth=2
+autocmd FileType yaml setlocal tabstop=2 shiftwidth=2
 
 " macros {{{1
 " python docstring

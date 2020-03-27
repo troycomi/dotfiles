@@ -25,7 +25,7 @@
 [core]
 	autocrlf = input
 	safecrlf = true
-    editor = /usr/bin/vim
+    editor = ~/.local/bin/nvim
     excludesfile = ~/.gitignore_global
 	eol = lf
 [credential]
