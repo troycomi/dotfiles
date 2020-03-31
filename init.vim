@@ -11,15 +11,21 @@ endif
 call plug#begin(stdpath('data') . '/plugged')
 Plug 'junegunn/vim-plug'
 
+Plug 'airblade/vim-gitgutter'
 Plug 'chrisbra/csv.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'crusoexia/vim-monokai'
+Plug 'dense-analysis/ale'
 Plug 'honza/vim-snippets'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'mattn/emmet-vim'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'scrooloose/nerdtree'
 Plug 'SirVer/ultisnips'
 Plug 'tommcdo/vim-exchange'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
@@ -28,7 +34,6 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'vim-python/python-syntax'
-Plug 'vim-syntastic/syntastic'
 
 Plug 'https://github.com/snakemake/snakemake.git', {'rtp': 'misc/vim/'}
 
@@ -56,6 +61,7 @@ nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
 
 " other settings {{{1
 let mapleader = ","
+set fo-=ro
 
 " init.vim mappings
 nmap <leader>v :tabedit $MYVIMRC<CR>
@@ -93,7 +99,6 @@ autocmd FileType gitcommit setlocal spell
 autocmd FileType gitcommit call setpos('.', [0, 1, 1, 0])
 
 " NerdTREE setup {{{1
-"map <leader>n :NERDTreeToggle<CR>
 map <F2> :NERDTreeToggle<CR>
 " Close if NerdTREE is only buffer left
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -101,8 +106,33 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " airline {{{1
 let g:airline_theme='simple'
 let g:airline_powerline_fonts = 1
-let g:airline_section_B=''
-let g:airline_skip_empty_sections = 1
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.whitespace = 'Ξ'
+
+" airline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
 
 " folding {{{1
 function! NeatFoldText()
@@ -125,7 +155,6 @@ augroup python
 augroup end
 
 autocmd FileType yaml setlocal tabstop=2 shiftwidth=2
-autocmd FileType html,css,jinja.html setlocal tabstop=2 shiftwidth=2
 
 " macros {{{1
 " add self at start of word
@@ -150,28 +179,14 @@ let g:UltiSnipsExpandTrigger="<leader><tab>"
 let g:UltiSnipsJumpForwardTrigger="<C-j>"
 let g:UltiSnipsJumpBackwardTrigger="<C-k>"
 
-" Setup Syntastic {{{1
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" emmet vim {{{1
+let g:user_emmet_leader_key='<leader>'
+let g:user_emmet_install_global = 0
+autocmd FileType html,css,jinja.html setlocal tabstop=2 shiftwidth=2 | EmmetInstall
 
-let g:syntastic_always_populate_loc_list = 0
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-let g:syntastic_error_symbol = "✗"
+" fzf {{{1
+nnoremap <C-p> :Files<CR>
 
-let g:python_highlight_all = 1
-let g:python_highlight_builtin_objs = 1
-let g:syntastic_python_checkers=['flake8']
-let g:syntastic_yaml_checkers=['yamllint']
-let g:syntastic_cpp_compiler_options=' -std=c++11'
-
-map <leader>c :SyntasticCheck<CR>
-
-function! SyntasticCheckHook(errors)
-    if !empty(a:errors)
-        let g:syntastic_loc_list_height = min([len(a:errors)+1, 10])
-    endif
-endfunction
-
+" gitgutter {{{1
+nmap ]h <Plug>(GitGutterNextHunk)
+nmap [h <Plug>(GitGutterPrevHunk)
