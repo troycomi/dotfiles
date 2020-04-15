@@ -11,24 +11,30 @@ endif
 call plug#begin(stdpath('data') . '/plugged')
 Plug 'junegunn/vim-plug'
 
+Plug 'SirVer/ultisnips'
+Plug 'Vimjas/vim-python-pep8-indent'
+Plug 'airblade/vim-gitgutter'
 Plug 'chrisbra/csv.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'crusoexia/vim-monokai'
+Plug 'dense-analysis/ale'
+Plug 'editorconfig/editorconfig-vim'
 Plug 'honza/vim-snippets'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'mattn/emmet-vim'
 Plug 'michaeljsmith/vim-indent-object'
+Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 Plug 'scrooloose/nerdtree'
-Plug 'SirVer/ultisnips'
 Plug 'tommcdo/vim-exchange'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'Vimjas/vim-python-pep8-indent'
-Plug 'vim-python/python-syntax'
-Plug 'vim-syntastic/syntastic'
 
 Plug 'https://github.com/snakemake/snakemake.git', {'rtp': 'misc/vim/'}
 
@@ -37,6 +43,7 @@ call plug#end()
 " PlugClean to remove
 
 " window navigation {{{1
+set noequalalways
 map <M-j> <c-w>j
 map <M-k> <c-w>k
 map <M-l> <c-w>l
@@ -54,22 +61,28 @@ nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
 nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
 nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
 
-" other settings {{{1
+tnoremap <silent> <M-j> <C-\><C-n>:TmuxNavigateDown<cr>
+tnoremap <silent> <M-k> <C-\><C-n>:TmuxNavigateUp<cr>
+tnoremap <silent> <M-l> <C-\><C-n>:TmuxNavigateRight<cr>
+tnoremap <silent> <M-h> <C-\><C-n>:TmuxNavigateLeft<cr>
+
+" general settings {{{1
 let mapleader = ","
+autocmd FileType * set fo-=ro
 
 " init.vim mappings
-nmap <leader>v :tabedit $MYVIMRC<CR>
-autocmd bufwritepost init.vim source $MYVIMRC
+nmap <leader>v :vs $MYVIMRC<CR>
+nmap <leader>V :source $MYVIMRC<CR>
+nmap <leader>b :vs ~/.bashrc<CR>
 
 colorscheme monokai
 
 set number relativenumber
 set expandtab
-set tabstop=4 shiftwidth=4 textwidth=0
+set textwidth=0
 
 set hlsearch
 set incsearch
-set hidden
 set laststatus=2   " Always show the statusline
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 "
@@ -84,6 +97,12 @@ set colorcolumn=80
 
 set path+=**
 set wildmenu
+autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+
+" terminal mappings {{{1
+tnoremap <Esc> <C-\><C-n>
+tnoremap <C-v><Esc> <Esc>
+:highlight! TermCursorNC guibg=red guifg=white ctermbg=4 ctermfg=15
 
 " Spell Check {{{1
 set spelllang=en_us
@@ -93,7 +112,6 @@ autocmd FileType gitcommit setlocal spell
 autocmd FileType gitcommit call setpos('.', [0, 1, 1, 0])
 
 " NerdTREE setup {{{1
-"map <leader>n :NERDTreeToggle<CR>
 map <F2> :NERDTreeToggle<CR>
 " Close if NerdTREE is only buffer left
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -101,8 +119,33 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " airline {{{1
 let g:airline_theme='simple'
 let g:airline_powerline_fonts = 1
-let g:airline_section_B=''
-let g:airline_skip_empty_sections = 1
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.whitespace = 'Ξ'
+
+" airline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
 
 " folding {{{1
 function! NeatFoldText()
@@ -118,14 +161,12 @@ endfunction
 set foldtext=NeatFoldText()
 
 " file specific {{{1
-autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4 foldtext=NeatFoldText()
+autocmd Filetype python setlocal foldtext=NeatFoldText()
 augroup python
     autocmd!
     autocmd FileType python syn keyword pythonBuiltinObj self
 augroup end
 
-autocmd FileType yaml setlocal tabstop=2 shiftwidth=2
-autocmd FileType html,css,jinja.html setlocal tabstop=2 shiftwidth=2
 
 " macros {{{1
 " add self at start of word
@@ -142,7 +183,6 @@ au BufNewFile,BufRead *.snake set syntax=snakemake filetype=snakemake
 augroup snake_syn
     autocmd!
         autocmd Syntax snakemake syn keyword pythonBuiltinObj paths
-        autocmd Syntax snakemake set tabstop=4 | set shiftwidth=4
 augroup end
 
 " UtiliSnips {{{1
@@ -150,28 +190,20 @@ let g:UltiSnipsExpandTrigger="<leader><tab>"
 let g:UltiSnipsJumpForwardTrigger="<C-j>"
 let g:UltiSnipsJumpBackwardTrigger="<C-k>"
 
-" Setup Syntastic {{{1
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" emmet vim {{{1
+let g:user_emmet_leader_key='<leader>'
+let g:user_emmet_install_global = 0
+autocmd FileType html,css,jinja.html EmmetInstall
 
-let g:syntastic_always_populate_loc_list = 0
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-let g:syntastic_error_symbol = "✗"
+" fzf {{{1
+nnoremap <C-p> :Files<CR>
 
-let g:python_highlight_all = 1
-let g:python_highlight_builtin_objs = 1
-let g:syntastic_python_checkers=['flake8']
-let g:syntastic_yaml_checkers=['yamllint']
-let g:syntastic_cpp_compiler_options=' -std=c++11'
+" gitgutter {{{1
+nmap ]h <Plug>(GitGutterNextHunk)
+nmap [h <Plug>(GitGutterPrevHunk)
 
-map <leader>c :SyntasticCheck<CR>
-
-function! SyntasticCheckHook(errors)
-    if !empty(a:errors)
-        let g:syntastic_loc_list_height = min([len(a:errors)+1, 10])
-    endif
-endfunction
-
+" ALE {{{1
+nmap <silent> [W <Plug>(ale_first)
+nmap <silent> [w <Plug>(ale_previous)
+nmap <silent> ]w <Plug>(ale_next)
+nmap <silent> ]W <Plug>(ale_last)

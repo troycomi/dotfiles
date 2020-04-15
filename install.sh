@@ -8,6 +8,7 @@ BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ln -sf ${BASEDIR}/.vimrc ~/.vimrc
 mkdir -p ~/.vim/after
 ln -sf ${BASEDIR}/vim_after/ ~/.vim/after
+ln -sf ${BASEDIR}/.editorconfig ~/.editorconfig
 
 # bash
 cp ~/.bashrc ~/.bashrc_dotfile_bak
