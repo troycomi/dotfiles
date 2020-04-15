@@ -11,18 +11,21 @@ endif
 call plug#begin(stdpath('data') . '/plugged')
 Plug 'junegunn/vim-plug'
 
+Plug 'SirVer/ultisnips'
+Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'airblade/vim-gitgutter'
 Plug 'chrisbra/csv.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'crusoexia/vim-monokai'
 Plug 'dense-analysis/ale'
+Plug 'editorconfig/editorconfig-vim'
 Plug 'honza/vim-snippets'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'mattn/emmet-vim'
 Plug 'michaeljsmith/vim-indent-object'
+Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 Plug 'scrooloose/nerdtree'
-Plug 'SirVer/ultisnips'
 Plug 'tommcdo/vim-exchange'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
@@ -32,8 +35,6 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'Vimjas/vim-python-pep8-indent'
-Plug 'vim-python/python-syntax'
 
 Plug 'https://github.com/snakemake/snakemake.git', {'rtp': 'misc/vim/'}
 
@@ -42,6 +43,7 @@ call plug#end()
 " PlugClean to remove
 
 " window navigation {{{1
+set noequalalways
 map <M-j> <c-w>j
 map <M-k> <c-w>k
 map <M-l> <c-w>l
@@ -59,23 +61,28 @@ nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
 nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
 nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
 
-" other settings {{{1
+tnoremap <silent> <M-j> <C-\><C-n>:TmuxNavigateDown<cr>
+tnoremap <silent> <M-k> <C-\><C-n>:TmuxNavigateUp<cr>
+tnoremap <silent> <M-l> <C-\><C-n>:TmuxNavigateRight<cr>
+tnoremap <silent> <M-h> <C-\><C-n>:TmuxNavigateLeft<cr>
+
+" general settings {{{1
 let mapleader = ","
-set fo-=ro
+autocmd FileType * set fo-=ro
 
 " init.vim mappings
-nmap <leader>v :tabedit $MYVIMRC<CR>
-autocmd bufwritepost init.vim source $MYVIMRC
+nmap <leader>v :vs $MYVIMRC<CR>
+nmap <leader>V :source $MYVIMRC<CR>
+nmap <leader>b :vs ~/.bashrc<CR>
 
 colorscheme monokai
 
 set number relativenumber
 set expandtab
-set tabstop=4 shiftwidth=4 textwidth=0
+set textwidth=0
 
 set hlsearch
 set incsearch
-set hidden
 set laststatus=2   " Always show the statusline
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 "
@@ -90,6 +97,12 @@ set colorcolumn=80
 
 set path+=**
 set wildmenu
+autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+
+" terminal mappings {{{1
+tnoremap <Esc> <C-\><C-n>
+tnoremap <C-v><Esc> <Esc>
+:highlight! TermCursorNC guibg=red guifg=white ctermbg=4 ctermfg=15
 
 " Spell Check {{{1
 set spelllang=en_us
@@ -148,13 +161,12 @@ endfunction
 set foldtext=NeatFoldText()
 
 " file specific {{{1
-autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4 foldtext=NeatFoldText()
+autocmd Filetype python setlocal foldtext=NeatFoldText()
 augroup python
     autocmd!
     autocmd FileType python syn keyword pythonBuiltinObj self
 augroup end
 
-autocmd FileType yaml setlocal tabstop=2 shiftwidth=2
 
 " macros {{{1
 " add self at start of word
@@ -171,7 +183,6 @@ au BufNewFile,BufRead *.snake set syntax=snakemake filetype=snakemake
 augroup snake_syn
     autocmd!
         autocmd Syntax snakemake syn keyword pythonBuiltinObj paths
-        autocmd Syntax snakemake set tabstop=4 | set shiftwidth=4
 augroup end
 
 " UtiliSnips {{{1
@@ -182,7 +193,7 @@ let g:UltiSnipsJumpBackwardTrigger="<C-k>"
 " emmet vim {{{1
 let g:user_emmet_leader_key='<leader>'
 let g:user_emmet_install_global = 0
-autocmd FileType html,css,jinja.html setlocal tabstop=2 shiftwidth=2 | EmmetInstall
+autocmd FileType html,css,jinja.html EmmetInstall
 
 " fzf {{{1
 nnoremap <C-p> :Files<CR>
@@ -190,3 +201,9 @@ nnoremap <C-p> :Files<CR>
 " gitgutter {{{1
 nmap ]h <Plug>(GitGutterNextHunk)
 nmap [h <Plug>(GitGutterPrevHunk)
+
+" ALE {{{1
+nmap <silent> [W <Plug>(ale_first)
+nmap <silent> [w <Plug>(ale_previous)
+nmap <silent> ]w <Plug>(ale_next)
+nmap <silent> ]W <Plug>(ale_last)

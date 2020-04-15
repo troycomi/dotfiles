@@ -7,6 +7,8 @@ BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # vim
 rm ~/.vimrc
 ln -sf ${BASEDIR}/.vimrc ~/.vimrc
+rm ~/.editorconfig
+ln -sf ${BASEDIR}/.editorconfig ~/.editorconfig
 
 # input
 rm ~/.inputrc
