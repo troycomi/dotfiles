@@ -70,13 +70,36 @@ tarm () {
     tar -tf $1 | grep -v /$ | tr '\n' '\0' | xargs -0 -n1 rm &
 }
 
-tmuxsplit () { 
+tmuxsplit () {
     tmux split-window -h
-    tmux selectp -t 0 
+    tmux selectp -t 0
     tmux split-window -h
     tmux split-window -v
-    tmux selectp -t 0 
+    tmux selectp -t 0
     tmux split-window -v
+}
+
+tmuxstatus () {
+    tmux rename-window STATUS
+    tmux split-window -h
+
+    tmux split-window -h
+    tmux selectp -t 1
+
+    tmux resize-pane -x 127
+    tmux selectp -t 0
+
+    tmux split-window -h
+    tmux selectp -t 0
+
+    tmux split-window -v
+    tmux selectp -t 0
+
+    tmux send-keys -t 0 C-z 'sqhi' C-m
+    tmux send-keys -t 1 C-z 'htop -d 600' C-m
+    tmux send-keys -t 2 C-z 'seffstatus' C-m
+    tmux send-keys -t 3 C-z 'weather' C-m
+    tmux send-keys -t 4 C-z 'smap --iterate 60' C-m
 }
 
 umask 002

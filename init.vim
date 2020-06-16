@@ -19,6 +19,9 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'crusoexia/vim-monokai'
 Plug 'dense-analysis/ale'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'google/vim-maktaba'
+Plug 'google/vim-codefmt'
+Plug 'google/vim-glaive'
 Plug 'honza/vim-snippets'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -30,17 +33,21 @@ Plug 'tommcdo/vim-exchange'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-python/python-syntax'
 
-Plug 'https://github.com/snakemake/snakemake.git', {'rtp': 'misc/vim/'}
+Plug 'snakemake/snakemake', {'rtp': 'misc/vim/'}
 
 call plug#end()
 " PlugUpdate to install/upgrade
 " PlugClean to remove
+
+call glaive#Install()
 
 " window navigation {{{1
 set noequalalways
@@ -68,7 +75,7 @@ tnoremap <silent> <M-h> <C-\><C-n>:TmuxNavigateLeft<cr>
 
 " general settings {{{1
 let mapleader = ","
-autocmd FileType * set fo-=ro
+autocmd BufNewFile,BufRead * setlocal fo-=rot
 
 " init.vim mappings
 nmap <leader>v :vs $MYVIMRC<CR>
@@ -98,6 +105,13 @@ set colorcolumn=80
 set path+=**
 set wildmenu
 autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+let g:python3_host_prog = '/tigress/tcomi/.conda/mybase/bin/python'
+function! s:cFileEdit(filename)
+    execute 'Tsrc ' . a:filename
+    execute 'Vhead ' . a:filename
+    execute 'Stest ' . a:filename
+endfunction
+command! -nargs=1 CE call s:cFileEdit(<f-args>)
 
 " terminal mappings {{{1
 tnoremap <Esc> <C-\><C-n>
@@ -110,6 +124,8 @@ autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd BufRead,BufNewFile *.rst setlocal spell
 autocmd FileType gitcommit setlocal spell
 autocmd FileType gitcommit call setpos('.', [0, 1, 1, 0])
+autocmd FileType gitcommit setlocal colorcolumn=72 textwidth=72
+autocmd FileType gitcommit setlocal fo +=t
 
 " NerdTREE setup {{{1
 map <F2> :NERDTreeToggle<CR>
@@ -162,10 +178,8 @@ set foldtext=NeatFoldText()
 
 " file specific {{{1
 autocmd Filetype python setlocal foldtext=NeatFoldText()
-augroup python
-    autocmd!
-    autocmd FileType python syn keyword pythonBuiltinObj self
-augroup end
+autocmd Filetype python let g:semshi#mark_selected_nodes=0
+autocmd Filetype cpp setlocal commentstring=//\ %s
 
 
 " macros {{{1
@@ -175,10 +189,10 @@ let @s='viwoiself.'
 let @i='Yp'
 
 " Setup syntax highlighting for Snakemake snakefiles {{{1
-au BufNewFile,BufRead Snakefile set syntax=snakemake filetype=snakemake
-au BufNewFile,BufRead *.rules set syntax=snakemake filetype=snakemake
-au BufNewFile,BufRead *.snakefile set syntax=snakemake filetype=snakemake
-au BufNewFile,BufRead *.snake set syntax=snakemake filetype=snakemake
+au BufNewFile,BufRead Snakefile let b:python_highlight_all = 1 | set syntax=python syntax=snakemake filetype=snakemake
+au BufNewFile,BufRead *.rules let b:python_highlight_all = 1 | set syntax=python syntax=snakemake filetype=snakemake
+au BufNewFile,BufRead *.snakefile let b:python_highlight_all = 1 | set syntax=python syntax=snakemake filetype=snakemake
+au BufNewFile,BufRead *.snake let b:python_highlight_all = 1 | set syntax=python syntax=snakemake filetype=snakemake
 
 augroup snake_syn
     autocmd!
@@ -201,9 +215,29 @@ nnoremap <C-p> :Files<CR>
 " gitgutter {{{1
 nmap ]h <Plug>(GitGutterNextHunk)
 nmap [h <Plug>(GitGutterPrevHunk)
+highlight GitGutterAdd    guifg=#009900 ctermfg=2
+highlight GitGutterChange guifg=#bbbb00 ctermfg=3
+highlight GitGutterDelete guifg=#ff2222 ctermfg=1
 
 " ALE {{{1
 nmap <silent> [W <Plug>(ale_first)
 nmap <silent> [w <Plug>(ale_previous)
 nmap <silent> ]w <Plug>(ale_next)
 nmap <silent> ]W <Plug>(ale_last)
+
+" autoformatting {{{1
+augroup autoformat_settings
+  autocmd FileType bzl AutoFormatBuffer buildifier
+  autocmd FileType c,cpp,proto,javascript,arduino AutoFormatBuffer clang-format
+  autocmd FileType dart AutoFormatBuffer dartfmt
+  autocmd FileType go AutoFormatBuffer gofmt
+  autocmd FileType gn AutoFormatBuffer gn
+  autocmd FileType html,css,sass,scss,less,json AutoFormatBuffer js-beautify
+  " autocmd FileType java AutoFormatBuffer google-java-format
+  autocmd FileType python AutoFormatBuffer yapf
+  " Alternative: autocmd FileType python AutoFormatBuffer autopep8
+  autocmd FileType rust AutoFormatBuffer rustfmt
+  autocmd FileType vue AutoFormatBuffer prettier
+augroup END
+
+Glaive codefmt clang_format_style='{BasedOnStyle: Google}'
