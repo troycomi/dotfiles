@@ -18,7 +18,6 @@ Plug 'chrisbra/csv.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'crusoexia/vim-monokai'
 Plug 'dense-analysis/ale'
-Plug 'editorconfig/editorconfig-vim'
 Plug 'honza/vim-snippets'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -44,10 +43,10 @@ call plug#end()
 
 " window navigation {{{1
 set noequalalways
-map <M-j> <c-w>j
-map <M-k> <c-w>k
-map <M-l> <c-w>l
-map <M-h> <c-w>h
+noremap <M-j> <c-w>j
+noremap <M-k> <c-w>k
+noremap <M-l> <c-w>l
+noremap <M-h> <c-w>h
 
 let g:tmux_navigator_no_mappings = 1
 
@@ -71,18 +70,20 @@ let mapleader = ","
 autocmd FileType * set fo-=ro
 
 " init.vim mappings
-nmap <leader>v :vs $MYVIMRC<CR>
-nmap <leader>V :source $MYVIMRC<CR>
-nmap <leader>b :vs ~/.bashrc<CR>
+nnoremap <leader>v :edit $MYVIMRC<CR>
+nnoremap <leader>V :source $MYVIMRC<CR>
+nnoremap <leader>b :edit ~/.bashrc<CR>
 
 colorscheme monokai
 
 set number relativenumber
 set expandtab
 set textwidth=0
+set shiftround
 
 set hlsearch
 set incsearch
+nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 set laststatus=2   " Always show the statusline
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 "
@@ -95,6 +96,7 @@ set foldmethod=syntax
 set foldcolumn=3
 set colorcolumn=80
 
+let g:python3_host_prog='/home/tcomi/miniconda3/bin/python'
 set path+=**
 set wildmenu
 autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
@@ -112,7 +114,7 @@ autocmd FileType gitcommit setlocal spell
 autocmd FileType gitcommit call setpos('.', [0, 1, 1, 0])
 
 " NerdTREE setup {{{1
-map <F2> :NERDTreeToggle<CR>
+noremap <F2> :NERDTreeToggle<CR>
 " Close if NerdTREE is only buffer left
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
@@ -199,11 +201,12 @@ autocmd FileType html,css,jinja.html EmmetInstall
 nnoremap <C-p> :Files<CR>
 
 " gitgutter {{{1
-nmap ]h <Plug>(GitGutterNextHunk)
-nmap [h <Plug>(GitGutterPrevHunk)
+nnoremap ]h <Plug>(GitGutterNextHunk)
+nnoremap [h <Plug>(GitGutterPrevHunk)
 
 " ALE {{{1
-nmap <silent> [W <Plug>(ale_first)
-nmap <silent> [w <Plug>(ale_previous)
-nmap <silent> ]w <Plug>(ale_next)
-nmap <silent> ]W <Plug>(ale_last)
+nnoremap <silent> [W <Plug>(ale_first)
+nnoremap <silent> [w <Plug>(ale_previous)
+nnoremap <silent> ]w <Plug>(ale_next)
+nnoremap <silent> ]W <Plug>(ale_last)
+
