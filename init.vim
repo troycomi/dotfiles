@@ -108,6 +108,7 @@ set foldmethod=syntax
 set foldcolumn=3
 set colorcolumn=80
 
+let g:python3_host_prog='/home/tcomi/miniconda3/bin/python'
 set path+=**
 set wildmenu
 autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
@@ -205,7 +206,6 @@ let @s='viwoiself.'
 let @i='Yp'
 
 " Setup syntax highlighting for Snakemake snakefiles {{{1
-
 augroup snake_syn
     autocmd!
     autocmd BufNewFile,BufRead Snakefile setlocal syntax=snakemake filetype=snakemake commentstring=#\ %s
