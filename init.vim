@@ -18,6 +18,7 @@ Plug 'chrisbra/csv.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'crusoexia/vim-monokai'
 Plug 'dense-analysis/ale'
+Plug 'google/vim-maktaba'
 Plug 'honza/vim-snippets'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -29,13 +30,15 @@ Plug 'tommcdo/vim-exchange'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-python/python-syntax'
 
-Plug 'https://github.com/snakemake/snakemake.git', {'rtp': 'misc/vim/'}
+Plug 'snakemake/snakemake', {'rtp': 'misc/vim/'}
 
 call plug#end()
 " PlugUpdate to install/upgrade
@@ -67,7 +70,7 @@ tnoremap <silent> <M-h> <C-\><C-n>:TmuxNavigateLeft<cr>
 
 " general settings {{{1
 let mapleader = ","
-autocmd FileType * set fo-=ro
+autocmd BufNewFile,BufRead * setlocal fo-=rot
 
 " init.vim mappings
 nnoremap <leader>v :edit $MYVIMRC<CR>
@@ -112,6 +115,8 @@ autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd BufRead,BufNewFile *.rst setlocal spell
 autocmd FileType gitcommit setlocal spell
 autocmd FileType gitcommit call setpos('.', [0, 1, 1, 0])
+autocmd FileType gitcommit setlocal colorcolumn=72 textwidth=72
+autocmd FileType gitcommit setlocal fo +=t
 
 " NerdTREE setup {{{1
 noremap <F2> :NERDTreeToggle<CR>
@@ -167,6 +172,8 @@ autocmd Filetype python setlocal foldtext=NeatFoldText()
 augroup python
     autocmd!
     autocmd FileType python syn keyword pythonBuiltinObj self
+        autocmd Filetype python let g:semshi#mark_selected_nodes=0
+        autocmd Filetype cpp setlocal commentstring=//\ %s
 augroup end
 
 
@@ -177,10 +184,10 @@ let @s='viwoiself.'
 let @i='Yp'
 
 " Setup syntax highlighting for Snakemake snakefiles {{{1
-au BufNewFile,BufRead Snakefile set syntax=snakemake filetype=snakemake
-au BufNewFile,BufRead *.rules set syntax=snakemake filetype=snakemake
-au BufNewFile,BufRead *.snakefile set syntax=snakemake filetype=snakemake
-au BufNewFile,BufRead *.snake set syntax=snakemake filetype=snakemake
+au BufNewFile,BufRead Snakefile let b:python_highlight_all = 1 | set syntax=python syntax=snakemake filetype=snakemake
+au BufNewFile,BufRead *.rules let b:python_highlight_all = 1 | set syntax=python syntax=snakemake filetype=snakemake
+au BufNewFile,BufRead *.snakefile let b:python_highlight_all = 1 | set syntax=python syntax=snakemake filetype=snakemake
+au BufNewFile,BufRead *.snake let b:python_highlight_all = 1 | set syntax=python syntax=snakemake filetype=snakemake
 
 augroup snake_syn
     autocmd!
@@ -203,6 +210,9 @@ nnoremap <C-p> :Files<CR>
 " gitgutter {{{1
 nnoremap ]h <Plug>(GitGutterNextHunk)
 nnoremap [h <Plug>(GitGutterPrevHunk)
+highlight GitGutterAdd    guifg=#009900 ctermfg=2
+highlight GitGutterChange guifg=#bbbb00 ctermfg=3
+highlight GitGutterDelete guifg=#ff2222 ctermfg=1
 
 " ALE {{{1
 nnoremap <silent> [W <Plug>(ale_first)
