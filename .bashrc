@@ -99,7 +99,6 @@ tmuxstatus () {
     tmux send-keys -t 1 C-z 'htop -d 600' C-m
     tmux send-keys -t 2 C-z 'seffstatus' C-m
     tmux send-keys -t 3 C-z 'weather' C-m
-    tmux send-keys -t 4 C-z 'smap --iterate 60' C-m
 }
 
 umask 002

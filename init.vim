@@ -18,10 +18,7 @@ Plug 'chrisbra/csv.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'crusoexia/vim-monokai'
 Plug 'dense-analysis/ale'
-Plug 'editorconfig/editorconfig-vim'
 Plug 'google/vim-maktaba'
-Plug 'google/vim-codefmt'
-Plug 'google/vim-glaive'
 Plug 'honza/vim-snippets'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -47,14 +44,12 @@ call plug#end()
 " PlugUpdate to install/upgrade
 " PlugClean to remove
 
-call glaive#Install()
-
 " window navigation {{{1
 set noequalalways
-map <M-j> <c-w>j
-map <M-k> <c-w>k
-map <M-l> <c-w>l
-map <M-h> <c-w>h
+noremap <M-j> <c-w>j
+noremap <M-k> <c-w>k
+noremap <M-l> <c-w>l
+noremap <M-h> <c-w>h
 
 let g:tmux_navigator_no_mappings = 1
 
@@ -78,18 +73,20 @@ let mapleader = ","
 autocmd BufNewFile,BufRead * setlocal fo-=rot
 
 " init.vim mappings
-nmap <leader>v :vs $MYVIMRC<CR>
-nmap <leader>V :source $MYVIMRC<CR>
-nmap <leader>b :vs ~/.bashrc<CR>
+nnoremap <leader>v :edit $MYVIMRC<CR>
+nnoremap <leader>V :source $MYVIMRC<CR>
+nnoremap <leader>b :edit ~/.bashrc<CR>
 
 colorscheme monokai
 
 set number relativenumber
 set expandtab
 set textwidth=0
+set shiftround
 
 set hlsearch
 set incsearch
+nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 set laststatus=2   " Always show the statusline
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 "
@@ -128,7 +125,7 @@ autocmd FileType gitcommit setlocal colorcolumn=72 textwidth=72
 autocmd FileType gitcommit setlocal fo +=t
 
 " NerdTREE setup {{{1
-map <F2> :NERDTreeToggle<CR>
+noremap <F2> :NERDTreeToggle<CR>
 " Close if NerdTREE is only buffer left
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
@@ -177,9 +174,13 @@ endfunction
 set foldtext=NeatFoldText()
 
 " file specific {{{1
-autocmd Filetype python setlocal foldtext=NeatFoldText()
-autocmd Filetype python let g:semshi#mark_selected_nodes=0
-autocmd Filetype cpp setlocal commentstring=//\ %s
+augroup python
+    autocmd!
+        autocmd FileType python syn keyword pythonBuiltinObj self
+        autocmd Filetype python setlocal foldtext=NeatFoldText()
+        autocmd Filetype python let g:semshi#mark_selected_nodes=0
+        autocmd Filetype cpp setlocal commentstring=//\ %s
+augroup end
 
 
 " macros {{{1
@@ -213,31 +214,15 @@ autocmd FileType html,css,jinja.html EmmetInstall
 nnoremap <C-p> :Files<CR>
 
 " gitgutter {{{1
-nmap ]h <Plug>(GitGutterNextHunk)
-nmap [h <Plug>(GitGutterPrevHunk)
+nnoremap ]h <Plug>(GitGutterNextHunk)
+nnoremap [h <Plug>(GitGutterPrevHunk)
 highlight GitGutterAdd    guifg=#009900 ctermfg=2
 highlight GitGutterChange guifg=#bbbb00 ctermfg=3
 highlight GitGutterDelete guifg=#ff2222 ctermfg=1
 
 " ALE {{{1
-nmap <silent> [W <Plug>(ale_first)
-nmap <silent> [w <Plug>(ale_previous)
-nmap <silent> ]w <Plug>(ale_next)
-nmap <silent> ]W <Plug>(ale_last)
+nnoremap <silent> [W <Plug>(ale_first)
+nnoremap <silent> [w <Plug>(ale_previous)
+nnoremap <silent> ]w <Plug>(ale_next)
+nnoremap <silent> ]W <Plug>(ale_last)
 
-" autoformatting {{{1
-augroup autoformat_settings
-  autocmd FileType bzl AutoFormatBuffer buildifier
-  autocmd FileType c,cpp,proto,javascript,arduino AutoFormatBuffer clang-format
-  autocmd FileType dart AutoFormatBuffer dartfmt
-  autocmd FileType go AutoFormatBuffer gofmt
-  autocmd FileType gn AutoFormatBuffer gn
-  autocmd FileType html,css,sass,scss,less,json AutoFormatBuffer js-beautify
-  " autocmd FileType java AutoFormatBuffer google-java-format
-  autocmd FileType python AutoFormatBuffer yapf
-  " Alternative: autocmd FileType python AutoFormatBuffer autopep8
-  autocmd FileType rust AutoFormatBuffer rustfmt
-  autocmd FileType vue AutoFormatBuffer prettier
-augroup END
-
-Glaive codefmt clang_format_style='{BasedOnStyle: Google}'
