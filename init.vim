@@ -11,41 +11,45 @@ endif
 call plug#begin(stdpath('data') . '/plugged')
 Plug 'junegunn/vim-plug'
 
+Plug 'SirVer/ultisnips'
+Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'airblade/vim-gitgutter'
 Plug 'chrisbra/csv.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'crusoexia/vim-monokai'
 Plug 'dense-analysis/ale'
+Plug 'google/vim-maktaba'
 Plug 'honza/vim-snippets'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'mattn/emmet-vim'
 Plug 'michaeljsmith/vim-indent-object'
+Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 Plug 'scrooloose/nerdtree'
-Plug 'SirVer/ultisnips'
 Plug 'tommcdo/vim-exchange'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'vim-python/python-syntax'
 
-Plug 'https://github.com/snakemake/snakemake.git', {'rtp': 'misc/vim/'}
+Plug 'snakemake/snakemake', {'rtp': 'misc/vim/'}
 
 call plug#end()
 " PlugUpdate to install/upgrade
 " PlugClean to remove
 
 " window navigation {{{1
-map <M-j> <c-w>j
-map <M-k> <c-w>k
-map <M-l> <c-w>l
-map <M-h> <c-w>h
+set noequalalways
+noremap <M-j> <c-w>j
+noremap <M-k> <c-w>k
+noremap <M-l> <c-w>l
+noremap <M-h> <c-w>h
 
 let g:tmux_navigator_no_mappings = 1
 
@@ -59,18 +63,26 @@ nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
 nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
 nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
 
-" other settings {{{1
+tnoremap <silent> <M-j> <C-\><C-n>:TmuxNavigateDown<cr>
+tnoremap <silent> <M-k> <C-\><C-n>:TmuxNavigateUp<cr>
+tnoremap <silent> <M-l> <C-\><C-n>:TmuxNavigateRight<cr>
+tnoremap <silent> <M-h> <C-\><C-n>:TmuxNavigateLeft<cr>
+
+" general settings {{{1
 let mapleader = ","
-set fo-=ro
+autocmd BufNewFile,BufRead * setlocal fo-=rot
 
 " init.vim mappings
-nmap <leader>v :tabedit $MYVIMRC<CR>
+nnoremap <leader>v :edit $MYVIMRC<CR>
+nnoremap <leader>V :source $MYVIMRC<CR>
+nnoremap <leader>b :edit ~/.bashrc<CR>
 
 colorscheme monokai
 
 set number relativenumber
 set expandtab
 set tabstop=4 shiftwidth=4 textwidth=0
+set shiftround
 
 set hlsearch
 set incsearch
@@ -96,10 +108,21 @@ set foldmethod=syntax
 set foldcolumn=3
 set colorcolumn=80
 
+let g:python3_host_prog='/home/tcomi/miniconda3/bin/python'
 set path+=**
 set wildmenu
+autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+function! s:cFileEdit(filename)
+    execute 'Tsrc ' . a:filename
+    execute 'Vhead ' . a:filename
+    execute 'Stest ' . a:filename
+endfunction
+command! -nargs=1 CE call s:cFileEdit(<f-args>)
 
-let g:python3_host_prog = '/home/troy/miniconda3/bin/python'
+" terminal mappings {{{1
+tnoremap <Esc> <C-\><C-n>
+tnoremap <C-v><Esc> <Esc>
+:highlight! TermCursorNC guibg=red guifg=white ctermbg=4 ctermfg=15
 
 " Spell Check {{{1
 set spelllang=en_us
@@ -109,10 +132,12 @@ augroup spell_group
     autocmd BufRead,BufNewFile *.rst setlocal spell
     autocmd FileType gitcommit setlocal spell
     autocmd FileType gitcommit call setpos('.', [0, 1, 1, 0])
+    autocmd FileType gitcommit setlocal colorcolumn=72 textwidth=72
+    autocmd FileType gitcommit setlocal fo +=t
 augroup END
 
 " NerdTREE setup {{{1
-map <F2> :NERDTreeToggle<CR>
+noremap <F2> :NERDTreeToggle<CR>
 " Close if NerdTREE is only buffer left
 augroup nerd_group
     autocmd!
@@ -166,9 +191,11 @@ set foldtext=NeatFoldText()
 " file specific {{{1
 augroup specifics_Group
     autocmd!
-    autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4 foldtext=NeatFoldText()
-    autocmd FileType python syn keyword pythonBuiltinObj self
-    autocmd FileType yaml setlocal tabstop=2 shiftwidth=2
+        autocmd FileType python syn keyword pythonBuiltinObj self
+        autocmd Filetype python setlocal foldtext=NeatFoldText()
+        autocmd Filetype python let g:semshi#mark_selected_nodes=0
+        autocmd Filetype cpp setlocal commentstring=//\ %s
+        autocmd FileType yaml setlocal tabstop=2 shiftwidth=2
 augroup end
 
 " macros {{{1
@@ -178,7 +205,6 @@ let @s='viwoiself.'
 let @i='Yp'
 
 " Setup syntax highlighting for Snakemake snakefiles {{{1
-
 augroup snake_syn
     autocmd!
     autocmd BufNewFile,BufRead Snakefile setlocal syntax=snakemake filetype=snakemake commentstring=#\ %s
@@ -206,8 +232,17 @@ augroup END
 nnoremap <C-p> :Files<CR>
 
 " gitgutter {{{1
-nmap ]h <Plug>(GitGutterNextHunk)
-nmap [h <Plug>(GitGutterPrevHunk)
+nnoremap ]h <Plug>(GitGutterNextHunk)
+nnoremap [h <Plug>(GitGutterPrevHunk)
+highlight GitGutterAdd    guifg=#009900 ctermfg=2
+highlight GitGutterChange guifg=#bbbb00 ctermfg=3
+highlight GitGutterDelete guifg=#ff2222 ctermfg=1
+
+" ALE {{{1
+nnoremap <silent> [W <Plug>(ale_first)
+nnoremap <silent> [w <Plug>(ale_previous)
+nnoremap <silent> ]w <Plug>(ale_next)
+nnoremap <silent> ]W <Plug>(ale_last)
 
 " Inclusive syntax {{{1
 augroup BlocklintALE

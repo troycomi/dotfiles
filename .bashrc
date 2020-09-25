@@ -22,7 +22,7 @@ export VISUAL=nvim
 alias vi=nvim
 alias vim=nvim
 alias less=zless
-function tless()
+tless()
 {
     if (( $# == 0 )) ; then
         column -t -s $'\t' /dev/stdin | less --chop-long-lines
@@ -68,12 +68,12 @@ tarm () {
     tar -tf $1 | grep -v /$ | tr '\n' '\0' | xargs -0 -n1 rm &
 }
 
-tmuxsplit () { 
+tmuxsplit () {
     tmux split-window -h
-    tmux selectp -t 0 
+    tmux selectp -t 0
     tmux split-window -h
     tmux split-window -v
-    tmux selectp -t 0 
+    tmux selectp -t 0
     tmux split-window -v
 }
 
@@ -102,3 +102,7 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+if [[ $- == *i* ]]
+then
+    conda activate mybase
+fi
