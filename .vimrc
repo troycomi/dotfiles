@@ -268,3 +268,17 @@ let @b='cc'
 let @s='viwoiself.'
 " paste and increment first letter
 let @i='Yp'
+
+" Inclusive syntax {{{1
+fun! SetInclusiveSyntax()
+  for pat in ['master', 'slave', 'whitelist', 'blacklist']
+    let pat = '\c\v' . join(split(pat, '\zs'), '[^\a]?')
+    execute 'syntax match inclusiveError "' . pat . '" containedin=ALL contained '
+    execute 'syntax match inclusiveError "' . pat . '"'
+  endfor
+
+  highlight link inclusiveError Error
+endfu
+
+autocmd bufenter * :call SetInclusiveSyntax()
+autocmd filetype * :call SetInclusiveSyntax()

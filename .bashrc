@@ -5,15 +5,14 @@ if [ -f /etc/bashrc ]; then
     . /etc/bashrc
 fi
 
-# Uncomment the following line if you don't like systemctl's auto-paging feature:
-# export SYSTEMD_PAGER=
 export EDITOR=/usr/bin/vim
 
 # User specific aliases and functions
 alias rm='rm -i'
 alias df='df -H'
 alias du='du -ch'
-alias l='ls -lhtr --color'
+alias ls='ls --color=auto'
+alias l='ls -lhtr'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../../'
@@ -22,6 +21,7 @@ alias todo='vim ~/todo.md -c "set nospell" -c "norm zR"'
 export VISUAL=nvim
 alias vi=nvim
 alias vim=nvim
+alias less=zless
 tless()
 {
     if (( $# == 0 )) ; then
@@ -53,8 +53,6 @@ export LANG=en_US.utf-8
 PS1='$(printf ''%-11.10s'' "${PWD##*/}")\[\e[31m\]❯\[\e[m\]\[\e[33m\]❯\[\e[m\]\[\e[32m\]❯\[\e[m\] '
 export LESS="-R -S"
 
-alias som-src="cd /tigress/AKEY/akey_vol2/GTExSomaticMutations/src"
-
 sq () {
     printf "\t%d / %d -- Jobs Running\n" $(squeue -u tcomi -h -t R | wc -l) $(squeue -u tcomi -h | wc -l)
     squeue -u tcomi -S $1; }
@@ -70,24 +68,18 @@ tarm () {
     tar -tf $1 | grep -v /$ | tr '\n' '\0' | xargs -0 -n1 rm &
 }
 
-tmuxsplit () { 
+tmuxsplit () {
     tmux split-window -h
-    tmux selectp -t 0 
+    tmux selectp -t 0
     tmux split-window -h
     tmux split-window -v
-    tmux selectp -t 0 
+    tmux selectp -t 0
     tmux split-window -v
 }
 
-umask 002
+PATH="$PATH:$HOME/.local/bin"
+PATH="$PATH:$HOME/projects/scripts"
 
-PATH="$HOME/.local/bin:$PATH"
-PATH="$PATH:$HOME/scripts"
-
-alias rs="reportseff --format=jobid,state,elapsed,timeeff,cpueff,memeff --modified-sort"
-seffwatch () { watch -cn 300 reportseff --modified-sort --format=jobid,state,elapsed,timeeff,cpueff,memeff; }
-seffstatus () { watch -cn 600 reportseff --user $USER --modified-sort --format=jobid,jobname,state,elapsed,timeeff,cpueff,memeff; }
-scrubmonitor() { watch -n 3600 scrub_new.sh ; }
 weather () { while true; do
     /usr/bin/clear;
     date +"%A, %B %d, %Y  %r"
@@ -110,7 +102,6 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/home/tcomi/google-cloud-sdk/path.bash.inc' ]; then . '/home/tcomi/google-cloud-sdk/path.bash.inc'; fi
 
@@ -118,5 +109,7 @@ if [ -f '/home/tcomi/google-cloud-sdk/path.bash.inc' ]; then . '/home/tcomi/goog
 if [ -f '/home/tcomi/google-cloud-sdk/completion.bash.inc' ]; then . '/home/tcomi/google-cloud-sdk/completion.bash.inc'; fi
 
 if [[ $- == *i* ]] ; then
+if [[ $- == *i* ]]
+then
     conda activate mybase
 fi
