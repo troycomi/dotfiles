@@ -80,9 +80,10 @@ nnoremap <leader>b :edit ~/.bashrc<CR>
 colorscheme monokai
 
 set number relativenumber
-set expandtab
-set tabstop=4 shiftwidth=4 textwidth=0
 set shiftround
+set nowrap
+set expandtab
+set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=0
 
 set hlsearch
 set incsearch
@@ -106,13 +107,12 @@ cnoremap <expr> noh getcmdtype() == ':' ? "NO NO NO" : 'noh'
 highlight Folded ctermfg=White
 set foldmethod=syntax
 set foldcolumn=3
-set colorcolumn=80
+set colorcolumn=79
 
-let g:python3_host_prog='/home/tcomi/miniconda3/bin/python'
+let g:python3_host_prog = '/tigress/tcomi/.conda/mybase/bin/python'
 set path+=**
 set wildmenu
 autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-let g:python3_host_prog = '/tigress/tcomi/.conda/mybase/bin/python'
 function! s:cFileEdit(filename)
     execute 'Tsrc ' . a:filename
     execute 'Vhead ' . a:filename

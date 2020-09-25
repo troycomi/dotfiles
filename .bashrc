@@ -2,7 +2,7 @@
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
+    . /etc/bashrc
 fi
 
 export EDITOR=/usr/bin/vim
@@ -22,7 +22,7 @@ export VISUAL=nvim
 alias vi=nvim
 alias vim=nvim
 alias less=zless
-function tless()
+tless()
 {
     if (( $# == 0 )) ; then
         column -t -s $'\t' /dev/stdin | less --chop-long-lines
