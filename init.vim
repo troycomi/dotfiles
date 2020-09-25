@@ -80,9 +80,10 @@ nnoremap <leader>b :edit ~/.bashrc<CR>
 colorscheme monokai
 
 set number relativenumber
-set expandtab
-set textwidth=0
 set shiftround
+set nowrap
+set expandtab
+set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=0
 
 set hlsearch
 set incsearch
@@ -97,7 +98,7 @@ nnoremap <S-Tab> gT
 highlight Folded ctermfg=White
 set foldmethod=syntax
 set foldcolumn=3
-set colorcolumn=80
+set colorcolumn=79
 
 let g:python3_host_prog='/home/tcomi/miniconda3/bin/python'
 set path+=**

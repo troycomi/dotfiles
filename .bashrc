@@ -2,7 +2,7 @@
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
+    . /etc/bashrc
 fi
 
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
@@ -22,7 +22,7 @@ alias todo='vim ~/todo.md -c "set nospell" -c "norm zR"'
 export VISUAL=nvim
 alias vi=nvim
 alias vim=nvim
-function tless()
+tless()
 {
     if (( $# == 0 )) ; then
         column -t -s $'\t' /dev/stdin | less --chop-long-lines
@@ -116,3 +116,7 @@ if [ -f '/home/tcomi/google-cloud-sdk/path.bash.inc' ]; then . '/home/tcomi/goog
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/tcomi/google-cloud-sdk/completion.bash.inc' ]; then . '/home/tcomi/google-cloud-sdk/completion.bash.inc'; fi
+
+if [[ $- == *i* ]] ; then
+    conda activate mybase
+fi
