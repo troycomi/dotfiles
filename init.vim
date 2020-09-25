@@ -81,18 +81,27 @@ colorscheme monokai
 
 set number relativenumber
 set expandtab
-set textwidth=0
+set tabstop=4 shiftwidth=4 textwidth=0
 set shiftround
 
 set hlsearch
 set incsearch
-nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
+set hidden
 set laststatus=2   " Always show the statusline
+" replace %% with current folder
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
-"
+
 " cycle through tabs
 nnoremap <Tab> gt
 nnoremap <S-Tab> gT
+
+" prepend searches with very magic
+nnoremap / /\v
+nnoremap ? ?\v
+
+" control + L makes no highlight
+nnoremap <silent> <C-l> :nohl<CR><C-l>
+cnoremap <expr> noh getcmdtype() == ':' ? "NO NO NO" : 'noh'
 
 highlight Folded ctermfg=White
 set foldmethod=syntax
@@ -117,17 +126,23 @@ tnoremap <C-v><Esc> <Esc>
 
 " Spell Check {{{1
 set spelllang=en_us
-autocmd BufRead,BufNewFile *.md setlocal spell
-autocmd BufRead,BufNewFile *.rst setlocal spell
-autocmd FileType gitcommit setlocal spell
-autocmd FileType gitcommit call setpos('.', [0, 1, 1, 0])
-autocmd FileType gitcommit setlocal colorcolumn=72 textwidth=72
-autocmd FileType gitcommit setlocal fo +=t
+augroup spell_group
+    autocmd!
+    autocmd BufRead,BufNewFile *.md setlocal spell
+    autocmd BufRead,BufNewFile *.rst setlocal spell
+    autocmd FileType gitcommit setlocal spell
+    autocmd FileType gitcommit call setpos('.', [0, 1, 1, 0])
+    autocmd FileType gitcommit setlocal colorcolumn=72 textwidth=72
+    autocmd FileType gitcommit setlocal fo +=t
+augroup END
 
 " NerdTREE setup {{{1
 noremap <F2> :NERDTreeToggle<CR>
 " Close if NerdTREE is only buffer left
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+augroup nerd_group
+    autocmd!
+    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+augroup END
 
 " airline {{{1
 let g:airline_theme='simple'
@@ -174,14 +189,14 @@ endfunction
 set foldtext=NeatFoldText()
 
 " file specific {{{1
-augroup python
+augroup specifics_Group
     autocmd!
         autocmd FileType python syn keyword pythonBuiltinObj self
         autocmd Filetype python setlocal foldtext=NeatFoldText()
         autocmd Filetype python let g:semshi#mark_selected_nodes=0
         autocmd Filetype cpp setlocal commentstring=//\ %s
+        autocmd FileType yaml setlocal tabstop=2 shiftwidth=2
 augroup end
-
 
 " macros {{{1
 " add self at start of word
@@ -190,14 +205,15 @@ let @s='viwoiself.'
 let @i='Yp'
 
 " Setup syntax highlighting for Snakemake snakefiles {{{1
-au BufNewFile,BufRead Snakefile let b:python_highlight_all = 1 | set syntax=python syntax=snakemake filetype=snakemake
-au BufNewFile,BufRead *.rules let b:python_highlight_all = 1 | set syntax=python syntax=snakemake filetype=snakemake
-au BufNewFile,BufRead *.snakefile let b:python_highlight_all = 1 | set syntax=python syntax=snakemake filetype=snakemake
-au BufNewFile,BufRead *.snake let b:python_highlight_all = 1 | set syntax=python syntax=snakemake filetype=snakemake
 
 augroup snake_syn
     autocmd!
-        autocmd Syntax snakemake syn keyword pythonBuiltinObj paths
+    autocmd BufNewFile,BufRead Snakefile setlocal syntax=snakemake filetype=snakemake commentstring=#\ %s
+    autocmd BufNewFile,BufRead *.rules setlocal syntax=snakemake filetype=snakemake commentstring=#\ %s
+    autocmd BufNewFile,BufRead *.snakefile setlocal syntax=snakemake filetype=snakemake commentstring=#\ %s
+    autocmd BufNewFile,BufRead *.snake setlocal syntax=snakemake filetype=snakemake commentstring=#\ %s
+    autocmd Syntax snakemake syn keyword pythonBuiltinObj paths
+    autocmd Syntax snakemake set tabstop=4 | set shiftwidth=4
 augroup end
 
 " UtiliSnips {{{1
@@ -208,7 +224,10 @@ let g:UltiSnipsJumpBackwardTrigger="<C-k>"
 " emmet vim {{{1
 let g:user_emmet_leader_key='<leader>'
 let g:user_emmet_install_global = 0
-autocmd FileType html,css,jinja.html EmmetInstall
+augroup emmet_group
+    autocmd!
+    autocmd FileType html,css,jinja.html setlocal tabstop=2 shiftwidth=2 | EmmetInstall
+augroup END
 
 " fzf {{{1
 nnoremap <C-p> :Files<CR>
@@ -226,3 +245,30 @@ nnoremap <silent> [w <Plug>(ale_previous)
 nnoremap <silent> ]w <Plug>(ale_next)
 nnoremap <silent> ]W <Plug>(ale_last)
 
+" Inclusive syntax {{{1
+augroup BlocklintALE
+    autocmd!
+    autocmd User ALEWantResults call BlocklintHook(g:ale_want_results_buffer)
+augroup END
+
+function! BlocklintHook(buffer) abort
+    " Tell ALE we're going to check this buffer.
+    call ale#other_source#StartChecking(a:buffer, 'blocklint')
+    call ale#command#Run(a:buffer, 'blocklint -e --stdin',
+                \ function('BlocklintWorkDone'), {'read_buffer': 1})
+endfunction
+
+function! BlocklintWorkDone(buffer, results, metadata) abort
+    " Send results to ALE after they have been collected.
+    let l:pattern = '\v^[^:]+:(\d+):(\d+):(\d+): (.+)$'
+    let l:output = []
+    for l:match in ale#util#GetMatches(a:results, l:pattern)
+        call add(l:output, {
+                    \ 'lnum': l:match[1],
+                    \ 'col': l:match[2],
+                    \ 'end_col': l:match[3],
+                    \ 'text': l:match[4],
+                    \ 'type': 'E'})
+    endfor
+    call ale#other_source#ShowResults(a:buffer, 'blocklint', l:output)
+endfunction
