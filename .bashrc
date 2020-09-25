@@ -5,6 +5,8 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
+export EDITOR=/usr/bin/vim
+
 # User specific aliases and functions
 alias rm='rm -i'
 alias df='df -H'
@@ -19,6 +21,7 @@ alias todo='vim ~/todo.md -c "set nospell" -c "norm zR"'
 export VISUAL=nvim
 alias vi=nvim
 alias vim=nvim
+alias less=zless
 function tless()
 {
     if (( $# == 0 )) ; then
@@ -30,6 +33,18 @@ function tless()
 function mkcd
 {
   command mkdir -pv $1 && cd $1 && echo "Now in `pwd`"
+}
+
+entr_exe(){
+    ls $1 | entr -c bash -c "sleep 1 && ./$1"
+}
+
+entr_ctest(){
+    find .. -name '*.cc' -o -name '*.h' | entr -c bash -c 'sleep 1 && cmake --build . && ctest'
+}
+
+entr_pytest(){
+    find -name '*.py' | entr -c bash -c 'sleep 1 && pytest'
 }
 
 # startup commands
