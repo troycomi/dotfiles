@@ -5,7 +5,7 @@ if [ -f /etc/bashrc ]; then
     . /etc/bashrc
 fi
 
-export EDITOR=/usr/bin/vim
+export EDITOR=/home/tcomi/.local/bin/nvim
 
 # User specific aliases and functions
 alias rm='rm -i'
@@ -114,21 +114,6 @@ weather () { while true; do
     curl -s wttr.in/princeton;
     sleep 3600;
 done }
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/tigress/tcomi/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/tigress/tcomi/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/tigress/tcomi/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/tigress/tcomi/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
 
 if [[ $- == *i* ]]
 then
