@@ -119,6 +119,11 @@ function! s:cFileEdit(filename)
 endfunction
 command! -nargs=1 CE call s:cFileEdit(<f-args>)
 
+function! SynGroup()
+    let l:s = synID(line('.'), col('.'), 1)
+    echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
+endfun
+
 " terminal mappings {{{1
 tnoremap <Esc> <C-\><C-n>
 tnoremap <C-v><Esc> <Esc>
@@ -191,7 +196,6 @@ set foldtext=NeatFoldText()
 " file specific {{{1
 augroup specifics_Group
     autocmd!
-        autocmd FileType python syn keyword pythonBuiltinObj self
         autocmd Filetype python setlocal foldtext=NeatFoldText()
         autocmd Filetype python let g:semshi#mark_selected_nodes=0
         autocmd Filetype cpp setlocal commentstring=//\ %s
@@ -204,15 +208,14 @@ let @s='viwoiself.'
 " paste and increment first letter
 let @i='Yp'
 
-" Setup syntax highlighting for Snakemake snakefiles {{{1
+" Setup syntax highlighting for Snakemake {{{1
 augroup snake_syn
     autocmd!
-    autocmd BufNewFile,BufRead Snakefile setlocal syntax=snakemake filetype=snakemake commentstring=#\ %s
-    autocmd BufNewFile,BufRead *.rules setlocal syntax=snakemake filetype=snakemake commentstring=#\ %s
-    autocmd BufNewFile,BufRead *.snakefile setlocal syntax=snakemake filetype=snakemake commentstring=#\ %s
-    autocmd BufNewFile,BufRead *.snake setlocal syntax=snakemake filetype=snakemake commentstring=#\ %s
-    autocmd Syntax snakemake syn keyword pythonBuiltinObj paths
-    autocmd Syntax snakemake set tabstop=4 | set shiftwidth=4
+    autocmd Filetype snakemake set tabstop=4 shiftwidth=4 commentstring=#\ %s
+    autocmd Filetype snakemake syn keyword pythonBuiltinObj paths
+    autocmd Filetype snakemake highlight link pythonBuiltinObj Identifier
+    autocmd Filetype snakemake highlight link pythonBuiltinFunc Function
+    autocmd Filetype snakemake highlight link pythonBuiltinType Structure
 augroup end
 
 " UtiliSnips {{{1
