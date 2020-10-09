@@ -239,6 +239,11 @@ highlight GitGutterAdd    guifg=#009900 ctermfg=2
 highlight GitGutterChange guifg=#bbbb00 ctermfg=3
 highlight GitGutterDelete guifg=#ff2222 ctermfg=1
 
+" fugitive {{{1
+command Gconf Gvdiffsplit!
+command DGL diffget //2
+command DGR diffget //3
+
 " ALE {{{1
 nnoremap <silent> [W <Plug>(ale_first)
 nnoremap <silent> [w <Plug>(ale_previous)
