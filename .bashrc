@@ -5,7 +5,7 @@ if [ -f /etc/bashrc ]; then
     . /etc/bashrc
 fi
 
-export EDITOR=/usr/bin/vim
+export EDITOR=/home/tcomi/.local/bin/nvim
 
 # User specific aliases and functions
 alias rm='rm -i'
