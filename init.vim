@@ -79,6 +79,7 @@ nnoremap <leader>b :edit ~/.bashrc<CR>
 
 let g:gruvbox_contrast_dark = 'hard'
 colorscheme gruvbox
+highlight clear SignColumn
 
 set number relativenumber
 set nowrap
@@ -151,7 +152,7 @@ augroup nerd_group
 augroup END
 
 " airline {{{1
-let g:airline_theme='simple'
+let g:airline_theme='gruvbox'
 let g:airline_powerline_fonts = 1
 
 if !exists('g:airline_symbols')
