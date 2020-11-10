@@ -52,3 +52,5 @@ echo "   blocklint"
 echo "   mypy"
 echo "   flake8"
 echo "And update the paths to python provider and default environment"
+
+echo "Maybe also update terminal colors: https://github.com/Mayccoll/Gogh"
