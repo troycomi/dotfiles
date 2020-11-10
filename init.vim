@@ -16,9 +16,9 @@ Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'airblade/vim-gitgutter'
 Plug 'chrisbra/csv.vim'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'crusoexia/vim-monokai'
 Plug 'dense-analysis/ale'
 Plug 'google/vim-maktaba'
+Plug 'gruvbox-community/gruvbox'
 Plug 'honza/vim-snippets'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -77,10 +77,12 @@ nnoremap <leader>v :edit $MYVIMRC<CR>
 nnoremap <leader>V :source $MYVIMRC<CR>
 nnoremap <leader>b :edit ~/.bashrc<CR>
 
-colorscheme monokai
+let g:gruvbox_contrast_dark = 'hard'
+colorscheme gruvbox
+highlight clear SignColumn
+highlight clear FoldColumn
 
 set number relativenumber
-set shiftround
 set nowrap
 set expandtab
 set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=0
@@ -151,7 +153,7 @@ augroup nerd_group
 augroup END
 
 " airline {{{1
-let g:airline_theme='simple'
+let g:airline_theme='gruvbox'
 let g:airline_powerline_fonts = 1
 
 if !exists('g:airline_symbols')
@@ -243,9 +245,9 @@ highlight GitGutterChange guifg=#bbbb00 ctermfg=3
 highlight GitGutterDelete guifg=#ff2222 ctermfg=1
 
 " fugitive {{{1
-command Gconf Gvdiffsplit!
-command DGL diffget //2
-command DGR diffget //3
+command! Gconf Gvdiffsplit!
+command! DGL diffget //2
+command! DGR diffget //3
 
 " ALE {{{1
 nnoremap <silent> [W <Plug>(ale_first)
