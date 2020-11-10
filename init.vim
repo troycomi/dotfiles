@@ -79,6 +79,7 @@ nnoremap <leader>b :edit ~/.bashrc<CR>
 
 let g:gruvbox_contrast_dark = 'hard'
 colorscheme gruvbox
+highlight clear SignColumn
 
 set number relativenumber
 set nowrap
