@@ -16,9 +16,9 @@ Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'airblade/vim-gitgutter'
 Plug 'chrisbra/csv.vim'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'crusoexia/vim-monokai'
 Plug 'dense-analysis/ale'
 Plug 'google/vim-maktaba'
+Plug 'gruvbox-community/gruvbox'
 Plug 'honza/vim-snippets'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -77,10 +77,10 @@ nnoremap <leader>v :edit $MYVIMRC<CR>
 nnoremap <leader>V :source $MYVIMRC<CR>
 nnoremap <leader>b :edit ~/.bashrc<CR>
 
-colorscheme monokai
+let g:gruvbox_contrast_dark = 'hard'
+colorscheme gruvbox
 
 set number relativenumber
-set shiftround
 set nowrap
 set expandtab
 set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=0
@@ -119,6 +119,11 @@ function! s:cFileEdit(filename)
     execute 'Stest ' . a:filename
 endfunction
 command! -nargs=1 CE call s:cFileEdit(<f-args>)
+
+function! SynGroup()
+    let l:s = synID(line('.'), col('.'), 1)
+    echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
+endfun
 
 " terminal mappings {{{1
 tnoremap <Esc> <C-\><C-n>
@@ -192,7 +197,6 @@ set foldtext=NeatFoldText()
 " file specific {{{1
 augroup specifics_Group
     autocmd!
-        autocmd FileType python syn keyword pythonBuiltinObj self
         autocmd Filetype python setlocal foldtext=NeatFoldText()
         autocmd Filetype python let g:semshi#mark_selected_nodes=0
         autocmd Filetype cpp setlocal commentstring=//\ %s
@@ -205,15 +209,14 @@ let @s='viwoiself.'
 " paste and increment first letter
 let @i='Yp'
 
-" Setup syntax highlighting for Snakemake snakefiles {{{1
+" Setup syntax highlighting for Snakemake {{{1
 augroup snake_syn
     autocmd!
-    autocmd BufNewFile,BufRead Snakefile setlocal syntax=snakemake filetype=snakemake commentstring=#\ %s
-    autocmd BufNewFile,BufRead *.rules setlocal syntax=snakemake filetype=snakemake commentstring=#\ %s
-    autocmd BufNewFile,BufRead *.snakefile setlocal syntax=snakemake filetype=snakemake commentstring=#\ %s
-    autocmd BufNewFile,BufRead *.snake setlocal syntax=snakemake filetype=snakemake commentstring=#\ %s
-    autocmd Syntax snakemake syn keyword pythonBuiltinObj paths
-    autocmd Syntax snakemake set tabstop=4 | set shiftwidth=4
+    autocmd Filetype snakemake set tabstop=4 shiftwidth=4 commentstring=#\ %s
+    autocmd Filetype snakemake syn keyword pythonBuiltinObj paths
+    autocmd Filetype snakemake highlight link pythonBuiltinObj Identifier
+    autocmd Filetype snakemake highlight link pythonBuiltinFunc Function
+    autocmd Filetype snakemake highlight link pythonBuiltinType Structure
 augroup end
 
 " UtiliSnips {{{1
@@ -238,6 +241,11 @@ nnoremap [h <Plug>(GitGutterPrevHunk)
 highlight GitGutterAdd    guifg=#009900 ctermfg=2
 highlight GitGutterChange guifg=#bbbb00 ctermfg=3
 highlight GitGutterDelete guifg=#ff2222 ctermfg=1
+
+" fugitive {{{1
+command! Gconf Gvdiffsplit!
+command! DGL diffget //2
+command! DGR diffget //3
 
 " ALE {{{1
 nnoremap <silent> [W <Plug>(ale_first)

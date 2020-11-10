@@ -5,7 +5,7 @@ if [ -f /etc/bashrc ]; then
     . /etc/bashrc
 fi
 
-export EDITOR=/usr/bin/vim
+export EDITOR=$HOME/.local/bin/nvim
 
 # User specific aliases and functions
 alias rm='rm -i'
@@ -108,7 +108,6 @@ if [ -f '/home/tcomi/google-cloud-sdk/path.bash.inc' ]; then . '/home/tcomi/goog
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/tcomi/google-cloud-sdk/completion.bash.inc' ]; then . '/home/tcomi/google-cloud-sdk/completion.bash.inc'; fi
 
-if [[ $- == *i* ]] ; then
 if [[ $- == *i* ]]
 then
     conda activate mybase

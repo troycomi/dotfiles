@@ -44,3 +44,13 @@ nvim -es -u init.vim -i NONE -c "PlugUpdate" -c "qa"
 mkdir -p "${HOME}/.vim"
 git clone https://github.com/VundleVim/Vundle.vim.git "${HOME}/.vim/bundle/Vundle.vim"
 vim +PluginUpdate +qall
+
+echo "Be sure to install the following with conda:"
+echo "   neovim"
+echo "   reportseff"
+echo "   blocklint"
+echo "   mypy"
+echo "   flake8"
+echo "And update the paths to python provider and default environment"
+
+echo "Maybe also update terminal colors: https://github.com/Mayccoll/Gogh"
