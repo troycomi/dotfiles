@@ -101,8 +101,3 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-
-if [[ $- == *i* ]]
-then
-    conda activate mybase
-fi
