@@ -250,10 +250,10 @@ command! DGL diffget //2
 command! DGR diffget //3
 
 " ALE {{{1
-nnoremap <silent> [W <Plug>(ale_first)
-nnoremap <silent> [w <Plug>(ale_previous)
-nnoremap <silent> ]w <Plug>(ale_next)
-nnoremap <silent> ]W <Plug>(ale_last)
+nmap <silent> [W <Plug>(ale_first)
+nmap <silent> [w <Plug>(ale_previous)
+nmap <silent> ]w <Plug>(ale_next)
+nmap <silent> ]W <Plug>(ale_last)
 
 " Inclusive syntax {{{1
 augroup BlocklintALE
