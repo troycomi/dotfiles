@@ -5,6 +5,9 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
+PATH="$PATH:$HOME/.local/bin"
+PATH="$PATH:$HOME/projects/scripts"
+
 if [[ ! -z $(which nvim) ]]; then
     export EDITOR=$(which nvim)
 else
@@ -80,9 +83,6 @@ tmuxsplit () {
     tmux selectp -t 0
     tmux split-window -v
 }
-
-PATH="$PATH:$HOME/.local/bin"
-PATH="$PATH:$HOME/projects/scripts"
 
 weather () { while true; do
     /usr/bin/clear;
