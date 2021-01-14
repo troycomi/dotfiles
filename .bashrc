@@ -5,7 +5,14 @@ if [ -f /etc/bashrc ]; then
     . /etc/bashrc
 fi
 
-export EDITOR=$HOME/.local/bin/nvim
+PATH="$PATH:$HOME/.local/bin"
+PATH="$PATH:$HOME/projects/scripts"
+
+if [[ ! -z $(which nvim) ]]; then
+    export EDITOR=$(which nvim)
+else
+    export EDITOR=/usr/bin/vim
+fi
 
 # User specific aliases and functions
 alias rm='rm -i'
@@ -18,9 +25,9 @@ alias ...='cd ../..'
 alias ....='cd ../../../'
 alias ~='cd ~'
 alias todo='vim ~/todo.md -c "set nospell" -c "norm zR"'
-export VISUAL=nvim
-alias vi=nvim
-alias vim=nvim
+export VISUAL=$EDITOR
+alias vi=$EDITOR
+alias vim=$EDITOR
 alias less=zless
 tless()
 {
