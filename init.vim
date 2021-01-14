@@ -214,6 +214,7 @@ let @i='Yp'
 " Setup syntax highlighting for Snakemake {{{1
 augroup snake_syn
     autocmd!
+    autocmd BufNewFile,BufRead *.snake set filetype=snakemake
     autocmd Filetype snakemake set tabstop=4 shiftwidth=4 commentstring=#\ %s
     autocmd Filetype snakemake syn keyword pythonBuiltinObj paths
     autocmd Filetype snakemake highlight link pythonBuiltinObj Identifier
