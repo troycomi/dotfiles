@@ -5,6 +5,9 @@ if [ -f /etc/bashrc ]; then
     . /etc/bashrc
 fi
 
+PATH="$PATH:$HOME/.local/bin"
+PATH="$PATH:$HOME/projects/scripts"
+
 if [[ ! -z $(which nvim) ]]; then
     export EDITOR=$(which nvim)
 else
