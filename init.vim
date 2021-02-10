@@ -25,7 +25,9 @@ Plug 'junegunn/fzf.vim'
 Plug 'mattn/emmet-vim'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+Plug 'puremourning/vimspector'
 Plug 'scrooloose/nerdtree'
+Plug 'szw/vim-maximizer'
 Plug 'tommcdo/vim-exchange'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
@@ -80,6 +82,7 @@ nnoremap <leader>b :edit ~/.bashrc<CR>
 let g:gruvbox_contrast_dark = 'hard'
 colorscheme gruvbox
 highlight clear SignColumn
+highlight clear FoldColumn
 
 set number relativenumber
 set nowrap
@@ -230,7 +233,7 @@ let g:user_emmet_leader_key='<leader>'
 let g:user_emmet_install_global = 0
 augroup emmet_group
     autocmd!
-    autocmd FileType html,css,jinja.html setlocal tabstop=2 shiftwidth=2 | EmmetInstall
+    autocmd FileType php,html,css,jinja.html setlocal tabstop=2 shiftwidth=2 | EmmetInstall
 augroup END
 
 " fzf {{{1
@@ -248,11 +251,29 @@ command! Gconf Gvdiffsplit!
 command! DGL diffget //2
 command! DGR diffget //3
 
+" vim-maximizer {{{1
+nnoremap <leader>m :MaximizerToggle!<CR>
+
+" vimspector {{{1
+nnoremap <leader>dd :call vimspector#Launch()<CR>
+nnoremap <leader>de :call vimspector#Reset()<CR>
+
+nnoremap <leader>dcb :call vimspector#CleanLineBreakpoint()<CR>
+nmap <leader>drc <Plug>VimspectorRunToCursor
+nmap <leader>dbp <Plug>VimspectorToggleBreakpoint
+nmap <leader>dcbp <Plug>VimspectorToggleConditionalBreakpoint
+
+nmap <leader>dl <Plug>VimspectorStepInto
+nmap <leader>dj <Plug>VimspectorStepOver
+nmap <leader>dk <Plug>VimspectorStepOut
+nmap <leader>d_ <Plug>VimspectorRestart
+nnoremap <leader>d<space> :call vimspector#Continue()<CR>
+
 " ALE {{{1
-nnoremap <silent> [W <Plug>(ale_first)
-nnoremap <silent> [w <Plug>(ale_previous)
-nnoremap <silent> ]w <Plug>(ale_next)
-nnoremap <silent> ]W <Plug>(ale_last)
+nmap <silent> [W <Plug>(ale_first)
+nmap <silent> [w <Plug>(ale_previous)
+nmap <silent> ]w <Plug>(ale_next)
+nmap <silent> ]W <Plug>(ale_last)
 
 " Inclusive syntax {{{1
 augroup BlocklintALE
