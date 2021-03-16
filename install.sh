@@ -46,11 +46,8 @@ git clone https://github.com/VundleVim/Vundle.vim.git "${HOME}/.vim/bundle/Vundl
 vim +PluginUpdate +qall
 
 echo "Be sure to install the following with conda:"
-echo "   neovim"
-echo "   reportseff"
-echo "   blocklint"
-echo "   mypy"
-echo "   flake8"
+echo "   conda env create -f mybase.yaml"
+
 echo "And update the paths to python provider and default environment"
 
 echo "Maybe also update terminal colors: https://github.com/Mayccoll/Gogh"
