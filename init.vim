@@ -20,6 +20,7 @@ Plug 'dense-analysis/ale'
 Plug 'google/vim-maktaba'
 Plug 'gruvbox-community/gruvbox'
 Plug 'honza/vim-snippets'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'mattn/emmet-vim'
@@ -70,6 +71,12 @@ tnoremap <silent> <M-k> <C-\><C-n>:TmuxNavigateUp<cr>
 tnoremap <silent> <M-l> <C-\><C-n>:TmuxNavigateRight<cr>
 tnoremap <silent> <M-h> <C-\><C-n>:TmuxNavigateLeft<cr>
 
+" TO CHANGE {{{1
+" let g:python3_host_prog='/home/troy/miniconda3/envs/mybase/bin/python'
+" let g:ale_python_mypy_executable='/home/troy/miniconda3/envs/mybase/bin/mypy'
+" let g:ale_python_flake8_executable='/home/troy/miniconda3/envs/mybase/bin/flake8'
+" let g:ale_python_pylint_executable='/home/troy/miniconda3/envs/mybase/bin/pylint'
+
 " general settings {{{1
 let mapleader = ","
 autocmd BufNewFile,BufRead * setlocal fo-=rot
@@ -113,7 +120,6 @@ set foldmethod=syntax
 set foldcolumn=3
 set colorcolumn=79
 
-" let g:python3_host_prog = ''
 set path+=**
 set wildmenu
 autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
@@ -253,6 +259,9 @@ command! DGR diffget //3
 
 " vim-maximizer {{{1
 nnoremap <leader>m :MaximizerToggle!<CR>
+
+" markdown-preview {{{1
+nmap <C-m> <Plug>MarkdownPreviewToggle
 
 " vimspector {{{1
 nnoremap <leader>dd :call vimspector#Launch()<CR>
