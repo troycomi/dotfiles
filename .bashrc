@@ -52,7 +52,7 @@ entr_ctest(){
 
 # copy pipe to tmux buffer
 tmuxb(){
-    /tigress/tcomi/.conda/mybase/bin/tmux loadb -
+    tmux loadb -
 }
 
 # copy pipe to tmux buffer without newlines
@@ -117,9 +117,6 @@ tmuxstatus () {
 }
 
 umask 002
-
-PATH="$HOME/.local/bin:$PATH"
-PATH="$PATH:$HOME/scripts"
 
 alias rs="reportseff --format=jobid,state,elapsed,timeeff,cpueff,memeff --modified-sort"
 seffwatch () { watch -cn 300 reportseff --modified-sort --format=jobid,state,elapsed,timeeff,cpueff,memeff; }

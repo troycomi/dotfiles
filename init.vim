@@ -122,7 +122,6 @@ set foldmethod=syntax
 set foldcolumn=3
 set colorcolumn=79
 
-let g:python3_host_prog = '/tigress/tcomi/.conda/mybase/bin/python'
 set path+=**
 set wildmenu
 autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
