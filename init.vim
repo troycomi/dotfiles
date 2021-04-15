@@ -122,6 +122,7 @@ set foldmethod=syntax
 set foldcolumn=3
 set colorcolumn=79
 
+let g:python3_host_prog = '/tigress/tcomi/.conda/mybase/bin/python'
 set path+=**
 set wildmenu
 autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
@@ -224,6 +225,7 @@ let @i='Yp'
 " Setup syntax highlighting for Snakemake {{{1
 augroup snake_syn
     autocmd!
+    autocmd BufNewFile,BufRead *.snake set filetype=snakemake
     autocmd Filetype snakemake set tabstop=4 shiftwidth=4 commentstring=#\ %s
     autocmd Filetype snakemake syn keyword pythonBuiltinObj paths
     autocmd Filetype snakemake highlight link pythonBuiltinObj Identifier
