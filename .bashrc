@@ -2,7 +2,7 @@
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
+    . /etc/bashrc
 fi
 
 PATH="$PATH:$HOME/.local/bin"
@@ -50,6 +50,16 @@ entr_ctest(){
     find .. -name '*.cc' -o -name '*.h' | entr -c bash -c 'sleep 1 && cmake --build . && ctest'
 }
 
+# copy pipe to tmux buffer
+tmuxb(){
+    /tigress/tcomi/.conda/mybase/bin/tmux loadb -
+}
+
+# copy pipe to tmux buffer without newlines
+tmuxn(){
+    tr -d '\n' | tmuxb
+}
+
 entr_pytest(){
     find -name '*.py' | entr -c bash -c 'sleep 1 && pytest'
 }
@@ -84,6 +94,37 @@ tmuxsplit () {
     tmux split-window -v
 }
 
+tmuxstatus () {
+    tmux rename-window STATUS
+    tmux split-window -h
+
+    tmux split-window -h
+    tmux selectp -t 1
+
+    tmux resize-pane -x 127
+    tmux selectp -t 0
+
+    tmux split-window -h
+    tmux selectp -t 0
+
+    tmux split-window -v
+    tmux selectp -t 0
+
+    tmux send-keys -t 0 C-z 'sqhi' C-m
+    tmux send-keys -t 1 C-z 'htop -d 600' C-m
+    tmux send-keys -t 2 C-z 'seffstatus' C-m
+    tmux send-keys -t 3 C-z 'weather' C-m
+}
+
+umask 002
+
+PATH="$HOME/.local/bin:$PATH"
+PATH="$PATH:$HOME/scripts"
+
+alias rs="reportseff --format=jobid,state,elapsed,timeeff,cpueff,memeff --modified-sort"
+seffwatch () { watch -cn 300 reportseff --modified-sort --format=jobid,state,elapsed,timeeff,cpueff,memeff; }
+seffstatus () { watch -cn 600 reportseff --user $USER --modified-sort --format=jobid,jobname,state,elapsed,timeeff,cpueff,memeff; }
+scrubmonitor() { watch -n 3600 scrub_new.sh ; }
 weather () { while true; do
     /usr/bin/clear;
     date +"%A, %B %d, %Y  %r"
@@ -93,14 +134,14 @@ done }
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/troy/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+__conda_setup="$('/tigress/tcomi/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/troy/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/troy/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "/tigress/tcomi/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/tigress/tcomi/miniconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/home/troy/miniconda3/bin:$PATH"
+        export PATH="/tigress/tcomi/miniconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup

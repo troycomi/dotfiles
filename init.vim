@@ -73,11 +73,11 @@ tnoremap <silent> <M-l> <C-\><C-n>:TmuxNavigateRight<cr>
 tnoremap <silent> <M-h> <C-\><C-n>:TmuxNavigateLeft<cr>
 
 " TO CHANGE {{{1
-let g:python3_host_prog='/home/troy/miniconda3/envs/mybase/bin/python'
-let g:ale_python_mypy_executable='/home/troy/miniconda3/envs/mybase/bin/mypy'
-let g:ale_python_flake8_executable='/home/troy/miniconda3/envs/mybase/bin/flake8'
-let g:ale_python_pylint_executable='/home/troy/miniconda3/envs/mybase/bin/pylint'
-let g:blocklint_command='/home/troy/miniconda3/envs/mybase/bin/blocklint'
+" let g:python3_host_prog='/home/troy/miniconda3/envs/mybase/bin/python'
+" let g:ale_python_mypy_executable='/home/troy/miniconda3/envs/mybase/bin/mypy'
+" let g:ale_python_flake8_executable='/home/troy/miniconda3/envs/mybase/bin/flake8'
+" let g:ale_python_pylint_executable='/home/troy/miniconda3/envs/mybase/bin/pylint'
+" let g:blocklint_command='/home/troy/miniconda3/envs/mybase/bin/blocklint'
 
 " general settings {{{1
 let mapleader = ","
@@ -224,6 +224,7 @@ let @i='Yp'
 " Setup syntax highlighting for Snakemake {{{1
 augroup snake_syn
     autocmd!
+    autocmd BufNewFile,BufRead *.snake set filetype=snakemake
     autocmd Filetype snakemake set tabstop=4 shiftwidth=4 commentstring=#\ %s
     autocmd Filetype snakemake syn keyword pythonBuiltinObj paths
     autocmd Filetype snakemake highlight link pythonBuiltinObj Identifier
