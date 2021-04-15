@@ -42,6 +42,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-python/python-syntax'
 
 Plug 'snakemake/snakemake', {'rtp': 'misc/vim/'}
+Plug 'PrincetonUniversity/blocklint', {'rtp': 'integration/vim/'}
 
 call plug#end()
 " PlugUpdate to install/upgrade
@@ -76,6 +77,7 @@ let g:python3_host_prog='/home/troy/miniconda3/envs/mybase/bin/python'
 let g:ale_python_mypy_executable='/home/troy/miniconda3/envs/mybase/bin/mypy'
 let g:ale_python_flake8_executable='/home/troy/miniconda3/envs/mybase/bin/flake8'
 let g:ale_python_pylint_executable='/home/troy/miniconda3/envs/mybase/bin/pylint'
+let g:blocklint_command='/home/troy/miniconda3/envs/mybase/bin/blocklint'
 
 " general settings {{{1
 let mapleader = ","
@@ -284,30 +286,5 @@ nmap <silent> [w <Plug>(ale_previous)
 nmap <silent> ]w <Plug>(ale_next)
 nmap <silent> ]W <Plug>(ale_last)
 
-" Inclusive syntax {{{1
-augroup BlocklintALE
-    autocmd!
-    autocmd User ALEWantResults call BlocklintHook(g:ale_want_results_buffer)
-augroup END
-
-function! BlocklintHook(buffer) abort
-    " Tell ALE we're going to check this buffer.
-    call ale#other_source#StartChecking(a:buffer, 'blocklint')
-    call ale#command#Run(a:buffer, 'blocklint -e --stdin',
-                \ function('BlocklintWorkDone'), {'read_buffer': 1})
-endfunction
-
-function! BlocklintWorkDone(buffer, results, metadata) abort
-    " Send results to ALE after they have been collected.
-    let l:pattern = '\v^[^:]+:(\d+):(\d+):(\d+): (.+)$'
-    let l:output = []
-    for l:match in ale#util#GetMatches(a:results, l:pattern)
-        call add(l:output, {
-                    \ 'lnum': l:match[1],
-                    \ 'col': l:match[2],
-                    \ 'end_col': l:match[3],
-                    \ 'text': l:match[4],
-                    \ 'type': 'E'})
-    endfor
-    call ale#other_source#ShowResults(a:buffer, 'blocklint', l:output)
-endfunction
+let g:ale_python_mypy_options='--strict'
+let g:ale_echo_msg_format='[%linter%] %s'
