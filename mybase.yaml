@@ -1,0 +1,13 @@
+name: mybase
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - neovim
+  - mypy
+  - flake8
+  - pylint
+  - pip
+  - pip:
+    - blocklint
+    - git+https://github.com/troycomi/reportseff
