@@ -50,6 +50,16 @@ entr_ctest(){
     find .. -name '*.cc' -o -name '*.h' | entr -c bash -c 'sleep 1 && cmake --build . && ctest'
 }
 
+# copy pipe to tmux buffer
+tmuxb(){
+    tmux loadb -
+}
+
+# copy pipe to tmux buffer without newlines
+tmuxn(){
+    tr -d '\n' | tmuxb
+}
+
 entr_pytest(){
     find -name '*.py' | entr -c bash -c 'sleep 1 && pytest'
 }
@@ -83,8 +93,6 @@ tmuxsplit () {
     tmux selectp -t 0
     tmux split-window -v
 }
-
-PATH="$PATH:$HOME/projects/scripts"
 
 weather () { while true; do
     /usr/bin/clear;
