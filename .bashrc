@@ -58,7 +58,7 @@ entr_ctest(){
 
 # copy pipe to tmux buffer
 tmuxb(){
-    /tigress/tcomi/.conda/mybase/bin/tmux loadb -
+    tmux loadb -
 }
 
 # copy pipe to tmux buffer without newlines
