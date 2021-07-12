@@ -16,6 +16,7 @@ Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'airblade/vim-gitgutter'
 Plug 'chrisbra/csv.vim'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'dart-lang/dart-vim-plugin'
 Plug 'dense-analysis/ale'
 Plug 'google/vim-maktaba'
 Plug 'gruvbox-community/gruvbox'
@@ -30,6 +31,7 @@ Plug 'puremourning/vimspector'
 Plug 'scrooloose/nerdtree'
 Plug 'szw/vim-maximizer'
 Plug 'tommcdo/vim-exchange'
+Plug 'thosakwe/vim-flutter'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
@@ -73,11 +75,11 @@ tnoremap <silent> <M-l> <C-\><C-n>:TmuxNavigateRight<cr>
 tnoremap <silent> <M-h> <C-\><C-n>:TmuxNavigateLeft<cr>
 
 " TO CHANGE {{{1
-" let g:python3_host_prog='/home/troy/miniconda3/envs/mybase/bin/python'
-" let g:ale_python_mypy_executable='/home/troy/miniconda3/envs/mybase/bin/mypy'
-" let g:ale_python_flake8_executable='/home/troy/miniconda3/envs/mybase/bin/flake8'
-" let g:ale_python_pylint_executable='/home/troy/miniconda3/envs/mybase/bin/pylint'
-" let g:blocklint_command='/home/troy/miniconda3/envs/mybase/bin/blocklint'
+let g:python3_host_prog='/home/troy/miniconda3/envs/mybase/bin/python'
+let g:ale_python_mypy_executable='/home/troy/miniconda3/envs/mybase/bin/mypy'
+let g:ale_python_flake8_executable='/home/troy/miniconda3/envs/mybase/bin/flake8'
+let g:ale_python_pylint_executable='/home/troy/miniconda3/envs/mybase/bin/pylint'
+let g:blocklint_command='/home/troy/miniconda3/envs/mybase/bin/blocklint'
 
 " general settings {{{1
 let mapleader = ","
@@ -213,7 +215,13 @@ augroup specifics_Group
         autocmd Filetype python let g:semshi#mark_selected_nodes=0
         autocmd Filetype cpp setlocal commentstring=//\ %s
         autocmd FileType yaml setlocal tabstop=2 shiftwidth=2
+        autocmd FileType fortran setlocal tabstop=2 shiftwidth=2
+        autocmd FileType dart setlocal tabstop=2 shiftwidth=2
 augroup end
+
+let fortran_free_source=1
+let fortran_do_enddo=1
+let fortran_more_precise=1
 
 " macros {{{1
 " add self at start of word
