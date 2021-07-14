@@ -5,7 +5,11 @@ if [ -f /etc/bashrc ]; then
     . /etc/bashrc
 fi
 
-source .bashrc.local
+SOURCE=${BASH_SOURCE[0]}
+if [ -h "$SOURCE" ] ; then
+    SOURCE="$(readlink $SOURCE)"
+fi
+source ${SOURCE}.local
 
 PATH="$PATH:$HOME/.local/bin"
 PATH="$PATH:$HOME/projects/scripts"
