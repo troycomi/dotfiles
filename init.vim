@@ -73,11 +73,11 @@ tnoremap <silent> <M-l> <C-\><C-n>:TmuxNavigateRight<cr>
 tnoremap <silent> <M-h> <C-\><C-n>:TmuxNavigateLeft<cr>
 
 " TO CHANGE {{{1
-" let g:python3_host_prog='/home/troy/miniconda3/envs/mybase/bin/python'
-" let g:ale_python_mypy_executable='/home/troy/miniconda3/envs/mybase/bin/mypy'
-" let g:ale_python_flake8_executable='/home/troy/miniconda3/envs/mybase/bin/flake8'
-" let g:ale_python_pylint_executable='/home/troy/miniconda3/envs/mybase/bin/pylint'
-" let g:blocklint_command='/home/troy/miniconda3/envs/mybase/bin/blocklint'
+let g:python3_host_prog='/tigress/tcomi/.conda/mybase/bin/python'
+let g:ale_python_mypy_executable='/tigress/tcomi/.conda/mybase/bin/mypy'
+let g:ale_python_flake8_executable='/tigress/tcomi/.conda/mybase/bin/flake8'
+let g:ale_python_pylint_executable='/tigress/tcomi/.conda/mybase/bin/pylint'
+let g:blocklint_command='/tigress/tcomi/.conda/mybase/bin/blocklint'
 
 " general settings {{{1
 let mapleader = ","
@@ -122,7 +122,6 @@ set foldmethod=syntax
 set foldcolumn=3
 set colorcolumn=79
 
-let g:python3_host_prog = '/tigress/tcomi/.conda/mybase/bin/python'
 set path+=**
 set wildmenu
 autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
@@ -216,6 +215,10 @@ augroup specifics_Group
         autocmd FileType yaml setlocal tabstop=2 shiftwidth=2
 augroup end
 
+" vim-surround {{{1
+" set "d" as a command to convert object to python dictionary ['']
+let g:surround_100 = "['\r']"
+
 " macros {{{1
 " add self at start of word
 let @s='viwoiself.'
@@ -288,5 +291,4 @@ nmap <silent> [w <Plug>(ale_previous)
 nmap <silent> ]w <Plug>(ale_next)
 nmap <silent> ]W <Plug>(ale_last)
 
-let g:ale_python_mypy_options='--strict'
 let g:ale_echo_msg_format='[%linter%] %s'
