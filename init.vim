@@ -215,6 +215,10 @@ augroup specifics_Group
         autocmd FileType yaml setlocal tabstop=2 shiftwidth=2
 augroup end
 
+" vim-surround {{{1
+" set "d" as a command to convert object to python dictionary ['']
+let g:surround_100 = "['\r']"
+
 " macros {{{1
 " add self at start of word
 let @s='viwoiself.'
@@ -287,5 +291,4 @@ nmap <silent> [w <Plug>(ale_previous)
 nmap <silent> ]w <Plug>(ale_next)
 nmap <silent> ]W <Plug>(ale_last)
 
-let g:ale_python_mypy_options='--strict'
 let g:ale_echo_msg_format='[%linter%] %s'
