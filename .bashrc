@@ -5,14 +5,10 @@ if [ -f /etc/bashrc ]; then
     . /etc/bashrc
 fi
 
-PATH="$PATH:/usr/local/cuda-11.3/bin"
-PATH="$PATH:/opt/oracle/instantclient_21_1"
+source .bashrc.local
 
 PATH="$PATH:$HOME/.local/bin"
 PATH="$PATH:$HOME/projects/scripts"
-
-export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda-11.3/lib64"
-export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/opt/oracle/instantclient_21_1"
 
 if [[ ! -z $(which nvim) ]]; then
     export EDITOR=$(which nvim)
@@ -29,8 +25,6 @@ alias l='ls -lhtr'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../../'
-alias ~='cd ~'
-alias todo='vim ~/todo.md -c "set nospell" -c "norm zR"'
 export VISUAL=$EDITOR
 alias vi=$EDITOR
 alias vim=$EDITOR
@@ -58,7 +52,7 @@ entr_ctest(){
 
 # copy pipe to tmux buffer
 tmuxb(){
-    tmux loadb -
+    $TMUX_EXE loadb -
 }
 
 # copy pipe to tmux buffer without newlines
@@ -70,10 +64,6 @@ entr_pytest(){
     find -name '*.py' | entr -c bash -c 'sleep 1 && pytest'
 }
 
-randt(){
-    python ~/projects/task_rand/basic.py "$@"
-}
-
 # startup commands
 export LC_ALL=en_US.utf-8
 export LANG=en_US.utf-8
@@ -81,8 +71,9 @@ PS1='$(printf ''%-11.10s'' "${PWD##*/}")\[\e[31m\]❯\[\e[m\]\[\e[33m\]❯\[\e[m
 export LESS="-R -S"
 
 sq () {
-    printf "\t%d / %d -- Jobs Running\n" $(squeue -u tcomi -h -t R | wc -l) $(squeue -u tcomi -h | wc -l)
-    squeue -u tcomi -S $1; }
+    printf "\t%d / %d -- Jobs Running\n" $(squeue -u $USER -h -t R | wc -l) $(squeue -u $USER -h | wc -l)
+    squeue -u $USER -S $1;
+}
 export -f sq
 alias sqhi="watch -n 120 'sq -M'"
 alias sqlo="watch -n 120 'sq +M'"
@@ -131,28 +122,12 @@ umask 002
 alias rs="reportseff --format=jobid,state,elapsed,timeeff,cpueff,memeff --modified-sort"
 seffwatch () { watch -cn 300 reportseff --modified-sort --format=jobid,state,elapsed,timeeff,cpueff,memeff; }
 seffstatus () { watch -cn 600 reportseff --user $USER --modified-sort --format=jobid,jobname,state,elapsed,timeeff,cpueff,memeff; }
-scrubmonitor() { watch -n 3600 scrub_new.sh ; }
 weather () { while true; do
     /usr/bin/clear;
     date +"%A, %B %d, %Y  %r"
     curl -s wttr.in/princeton;
     sleep 3600;
 done }
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/troy/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/troy/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/troy/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/troy/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
 
 if [[ $- == *i* ]]
 then

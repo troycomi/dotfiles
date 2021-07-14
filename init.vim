@@ -50,6 +50,9 @@ call plug#end()
 " PlugUpdate to install/upgrade
 " PlugClean to remove
 
+" load local vars {{{1
+execute 'source ' . fnamemodify(resolve(expand('<sfile>')), ':h') . '/local.vim'
+
 " window navigation {{{1
 set noequalalways
 noremap <M-j> <c-w>j
@@ -73,13 +76,6 @@ tnoremap <silent> <M-j> <C-\><C-n>:TmuxNavigateDown<cr>
 tnoremap <silent> <M-k> <C-\><C-n>:TmuxNavigateUp<cr>
 tnoremap <silent> <M-l> <C-\><C-n>:TmuxNavigateRight<cr>
 tnoremap <silent> <M-h> <C-\><C-n>:TmuxNavigateLeft<cr>
-
-" TO CHANGE {{{1
-let g:python3_host_prog='/home/troy/miniconda3/envs/mybase/bin/python'
-let g:ale_python_mypy_executable='/home/troy/miniconda3/envs/mybase/bin/mypy'
-let g:ale_python_flake8_executable='/home/troy/miniconda3/envs/mybase/bin/flake8'
-let g:ale_python_pylint_executable='/home/troy/miniconda3/envs/mybase/bin/pylint'
-let g:blocklint_command='/home/troy/miniconda3/envs/mybase/bin/blocklint'
 
 " general settings {{{1
 let mapleader = ","
@@ -215,13 +211,11 @@ augroup specifics_Group
         autocmd Filetype python let g:semshi#mark_selected_nodes=0
         autocmd Filetype cpp setlocal commentstring=//\ %s
         autocmd FileType yaml setlocal tabstop=2 shiftwidth=2
-        autocmd FileType fortran setlocal tabstop=2 shiftwidth=2
-        autocmd FileType dart setlocal tabstop=2 shiftwidth=2
 augroup end
 
-let fortran_free_source=1
-let fortran_do_enddo=1
-let fortran_more_precise=1
+" vim-surround {{{1
+" set "d" as a command to convert object to python dictionary ['']
+let g:surround_100 = "['\r']"
 
 " macros {{{1
 " add self at start of word
@@ -295,5 +289,4 @@ nmap <silent> [w <Plug>(ale_previous)
 nmap <silent> ]w <Plug>(ale_next)
 nmap <silent> ]W <Plug>(ale_last)
 
-let g:ale_python_mypy_options='--strict'
 let g:ale_echo_msg_format='[%linter%] %s'
