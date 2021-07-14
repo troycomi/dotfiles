@@ -48,6 +48,9 @@ call plug#end()
 " PlugUpdate to install/upgrade
 " PlugClean to remove
 
+" load local vars {{{1
+execute 'source ' . fnamemodify(resolve(expand('<sfile>')), ':h') . '/local.vim'
+
 " window navigation {{{1
 set noequalalways
 noremap <M-j> <c-w>j
@@ -71,13 +74,6 @@ tnoremap <silent> <M-j> <C-\><C-n>:TmuxNavigateDown<cr>
 tnoremap <silent> <M-k> <C-\><C-n>:TmuxNavigateUp<cr>
 tnoremap <silent> <M-l> <C-\><C-n>:TmuxNavigateRight<cr>
 tnoremap <silent> <M-h> <C-\><C-n>:TmuxNavigateLeft<cr>
-
-" TO CHANGE {{{1
-let g:python3_host_prog='/tigress/tcomi/.conda/mybase/bin/python'
-let g:ale_python_mypy_executable='/tigress/tcomi/.conda/mybase/bin/mypy'
-let g:ale_python_flake8_executable='/tigress/tcomi/.conda/mybase/bin/flake8'
-let g:ale_python_pylint_executable='/tigress/tcomi/.conda/mybase/bin/pylint'
-let g:blocklint_command='/tigress/tcomi/.conda/mybase/bin/blocklint'
 
 " general settings {{{1
 let mapleader = ","
