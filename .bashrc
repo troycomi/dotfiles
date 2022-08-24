@@ -35,7 +35,7 @@ alias vim=$EDITOR
 alias less=zless
 tless()
 {
-    if (( $# == 0 )) ; then
+    if (( $# == 0 )) ; then 
         column -t -s $'\t' /dev/stdin | less --chop-long-lines
     else
         column -t -s $'\t' $1 | less --chop-long-lines
@@ -133,7 +133,3 @@ weather () { while true; do
     sleep 3600;
 done }
 
-if [[ $- == *i* ]]
-then
-    conda activate mybase
-fi

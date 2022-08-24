@@ -1,0 +1,19 @@
+vim.g.mapleader = " "
+
+vim.opt.equalalways = true  -- resize windows automatically
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.wrap = false
+vim.opt.expandtab = true
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.textwidth = 0
+vim.opt.hlsearch = true
+vim.opt.incsearch = true
+vim.opt.hidden = true
+vim.opt.termguicolors = true
+vim.opt.laststatus = 2
+vim.opt.foldcolumn = '3'
+vim.opt.colorcolumn = '79'
+vim.opt.foldmethod = "syntax"
