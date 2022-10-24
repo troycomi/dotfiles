@@ -5,6 +5,10 @@ if [ -f /etc/bashrc ]; then
     . /etc/bashrc
 fi
 
+if [[ $- == *i* ]]; then
+    [ -x /bin/fish ] && SHELL=/bin/fish exec fish
+fi
+
 SOURCE=${BASH_SOURCE[0]}
 if [ -h "$SOURCE" ] ; then
     SOURCE="$(readlink $SOURCE)"
@@ -133,3 +137,6 @@ weather () { while true; do
     sleep 3600;
 done }
 
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+. "$HOME/.cargo/env"

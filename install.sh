@@ -21,10 +21,7 @@ ln -sf ${BASEDIR}/.gitconfig ~/.gitconfig
 ln -sf ${BASEDIR}/.gittemplate ~/.gittemplate
 ln -sf ${BASEDIR}/.gitignore_global ~/.gitignore_global
 
-# hg
-ln -sf ${BASEDIR}/.hgrc ~/.hgrc
-
-# git
+# tmux
 ln -sf ${BASEDIR}/.tmux.conf ~/.tmux.conf
 
 # setup neovim
@@ -34,29 +31,19 @@ curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim.appimag
 mv nvim.appimage nvim
 chmod u+x nvim
 
-mkdir -p ${HOME}/.config/nvim
-ln -sf ${BASEDIR}/vim_after/ftplugin ${HOME}/.config/nvim/ftplugin
-nvim -es -u init.vim -i NONE -c "PlugInstall" -c "qa"
-nvim -es -u init.vim -i NONE -c "PlugUpdate" -c "qa"
-
 # link configs
 ln -s ${BASEDIR}/.config/* ${HOME}/.config/
+
+# headless install of nvim packages
+nvim  --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+
+# git clone https://github.com/AstroNvim/AstroNvim ~/.config/nvim
+# TODO add in user configs
 
 # Setup Vundle
 mkdir -p "${HOME}/.vim"
 git clone https://github.com/VundleVim/Vundle.vim.git "${HOME}/.vim/bundle/Vundle.vim"
 vim +PluginUpdate +qall
-
-# Setup font
-font="Mononoki"
-mkdir -p "${HOME}/.local/share/fonts"
-cd "${HOME}/.local/share/fonts"
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/$font.zip
-unzip $font.zip
-rm $font.zip
-fc-cache -fv
-cd -
-
 
 echo "Be sure to install the following with conda:"
 echo "   conda env create -f mybase.yaml"
@@ -64,6 +51,16 @@ echo "   conda env create -f mybase.yaml"
 echo "And update the paths to python provider and default environment"
 
 echo "Maybe also update terminal colors: https://github.com/Mayccoll/Gogh"
+
+echo Setup font
+echo "font='Mononoki'"
+echo "mkdir -p ${HOME}/.local/share/fonts"
+echo "cd ${HOME}/.local/share/fonts"
+echo "wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/$font.zip"
+echo "unzip $font.zip"
+echo "rm $font.zip"
+echo "fc-cache -fv"
+echo "cd -"
 
 echo "To install fish locally:"
 echo "mkdir -p ~/projects"

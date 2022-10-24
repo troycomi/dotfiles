@@ -1,14 +1,18 @@
--- https://www.notonlycode.org/neovim-lua-config/
 -- https://github.com/rockerBOO/awesome-neovim
 --[[
 -- TODO
--- setup completion with nvim-cmp https://github.com/LunarVim/Neovim-from-scratch/tree/05-completion
+-- go through config to ensure I know what it does
+-- grammar checking in text, comments, and markdown
+-- git gutter and integration
+-- check alpha vim keys
+-- autocommands
+-- replace keybinds with new syntax
+-- check on updating nvim
+-- look into using blocklint with null lsp
 --]]
-require "user.plugins"
 
-require "user.options"
-require "user.autocmd"
-require "user.keymaps"
+require("user.options")
+require("user.plugins")
 
 --[[
 Plug 'snakemake/snakemake', {'rtp': 'misc/vim/'}

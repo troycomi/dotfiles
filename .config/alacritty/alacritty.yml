@@ -35,8 +35,8 @@ window:
   # Blank space added around the window in pixels. This padding is scaled
   # by DPI and the specified value is always added at both opposing sides.
   padding:
-    x: 5
-    y: 5
+    x: 3
+    y: 3
 
   # Spread additional padding evenly around the terminal content.
   #dynamic_padding: false
@@ -122,8 +122,36 @@ font:
     x: 0
     y: -1
 
-# Colors (Gruvbox Material Dark Medium)
+# Colors
 colors:
+  # tokyo night
+  # primary:
+  #   background: '#1a1b26'
+  #   foreground: '#a9b1d6'
+  #
+  # # Normal colors
+  # normal:
+  #   black:   '#32344a'
+  #   red:     '#f7768e'
+  #   green:   '#9ece6a'
+  #   yellow:  '#e0af68'
+  #   blue:    '#7aa2f7'
+  #   magenta: '#ad8ee6'
+  #   cyan:    '#449dab'
+  #   white:   '#787c99'
+  #
+  # # Bright colors
+  # bright:
+  #   black:   '#444b6a'
+  #   red:     '#ff7a93'
+  #   green:   '#b9f27c'
+  #   yellow:  '#ff9e64'
+  #   blue:    '#7da6ff'
+  #   magenta: '#bb9af7'
+  #   cyan:    '#0db9d7'
+  #   white:   '#acb0d0'
+
+  # Gruvbox Material Dark Medium
   primary:
     background: '#1d2021'
     foreground: '#ebdbb2'
@@ -156,3 +184,12 @@ key_bindings:
   - { key: Equals, mods: Control,       action: IncreaseFontSize }
   - { key: Minus,  mods: Control,       action: DecreaseFontSize }
   - { key: F11,                         action: ToggleFullscreen }
+
+hints:
+  enabled:
+    - regex: "(mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)[^\u0000-\u001F\u007F-\u009F<>\" {-}\\^⟨⟩`]+"
+      command: xdg-open
+      post_processing: true
+      mouse:
+        enabled: true
+        mods: Control

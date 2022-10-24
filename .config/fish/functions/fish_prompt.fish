@@ -1,5 +1,5 @@
 function fish_prompt
-    echo -n (set_color blue)(printf '%-11.10s' (basename $PWD))
+    echo -n (set_color brblue)(printf '%-11.10s' (basename $PWD))
 
     set_color -o
 

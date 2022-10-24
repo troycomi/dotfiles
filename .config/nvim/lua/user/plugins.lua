@@ -1,75 +1,208 @@
 local fn = vim.fn
-
-local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-
--- returns the require for use in `config` parameter of packer's use
--- expects the name of the config file
-local function get_config(name)
-  return string.format('require("user/plugin_config/%s")', name)
-end
-
--- bootstrap packer if not installed
+local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
-  fn.system({
-    "git",
-    "clone",
-    "--depth",
-    "1",
-    "https://github.com/wbthomason/packer.nvim",
-    install_path,
-  })
-  print("Installing packer...")
-  vim.api.nvim_command("packadd packer.nvim")
+  packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+  vim.cmd [[packadd packer.nvim]]
 end
 
--- initialize and configure packer
-local packer = require("packer")
+vim.cmd [[
+augroup packer_user_config
+  autocmd!
+  autocmd BufWritePost plugins.lua source <afile> | PackerSync
+augroup end
+]]
 
-packer.init({
-  enable = true, -- enable profiling via :PackerCompile profile=true
-  threshold = 0, -- the amount in ms that a plugins load time must be over for it to be included in the profile
-  max_jobs = 20, -- Limit the number of simultaneous jobs. nil means no limit. Set to 20 in order to prevent PackerSync form being "stuck" -> https://github.com/wbthomason/packer.nvim/issues/746
+local conf = {
+  threshold = 0,
+  max_jobs = 20,
   -- Have packer use a popup window
   display = {
     open_fn = function()
       return require("packer.util").float({ border = "rounded" })
     end,
   },
-})
+}
 
-packer.startup(function(use)
+local packer = require("packer")
+packer.init(conf)
+
+return packer.startup(function(use)
+
   use 'wbthomason/packer.nvim'
 
-  use {'ellisonleao/gruvbox.nvim', config = get_config('gruvbox')}
-  use {'NvChad/nvim-colorizer.lua', config = get_config('nvim-colorizer')}
+  -- color scheme
+  use {
+    'ellisonleao/gruvbox.nvim',
+    config = require('user.config.gruvbox').setup(),
+  }
 
-  use {'tpope/vim-commentary'}
+  -- show colors of hex values
+  use {
+    'norcalli/nvim-colorizer.lua',
+    config = function()
+      require('user.config.nvim-colorizer').setup()
+    end,
+  }
+
+  -- startup screen
+  use {
+    'goolord/alpha-nvim',
+    requires = { 'kyazdani42/nvim-web-devicons' },
+    config = function()
+      require('user.config.alpha-nvim')
+    end,
+  }
+
+  -- essentials
+  use {
+    'numToStr/Comment.nvim',
+    config = function()
+        require('Comment').setup()
+    end
+  }
   use {'tpope/vim-eunuch'}
   use {'tpope/vim-repeat'}
-  use {'tpope/vim-surround', config = get_config('vim-surround')}
+  use {
+    'tpope/vim-surround',
+    config = function()
+      require('user.config.vim-surround').setup()
+    end,
+  }
   use {'tpope/vim-unimpaired'}
+  use {'farmergreg/vim-lastplace'}
+  use {
+    'Darazaki/indent-o-matic',
+    config = function()
+      require('indent-o-matic').setup{
+        max_lines = 1024,
+        standard_widths = {2, 4, 8},
+        skip_multiline = true,
+      }
+    end,
+  }
 
-  use {'numToStr/Navigator.nvim', config = get_config('Navigator')}
+  -- tmux navigation
+  use {
+    'numToStr/Navigator.nvim',
+    config = function()
+      require('user.config.Navigator').setup()
+    end,
+  }
 
   -- statusline
   use {
-      'nvim-lualine/lualine.nvim',
-      requires = { 'kyazdani42/nvim-web-devicons', opt = true },
-      config = get_config('lualine'),
+    'nvim-lualine/lualine.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+    config = function()
+      require('user.config.lualine').setup()
+    end,
   }
 
   -- nvim-tree
   use {
-      'kyazdani42/nvim-tree.lua',
-      requires = {
-          'kyazdani42/nvim-web-devicons', -- optional, for file icons
-      },
-      tag = 'nightly', -- optional, updated every week. (see issue #1193)
-      config = get_config('nvim-tree'),
+    'kyazdani42/nvim-tree.lua',
+    requires = {
+      'kyazdani42/nvim-web-devicons', -- optional, for file icons
+    },
+    tag = 'nightly', -- optional, updated every week. (see issue #1193)
+    config = function()
+      require('user.config.nvim-tree').setup()
+    end,
   }
 
-  if PACKER_BOOTSTRAP then
-      require("packer").sync()
-  end
+  -- treesitter
+  use {
+    "nvim-treesitter/nvim-treesitter",
+    run = ":TSUpdate",
+    config = function()
+      require("user.config.treesitter").setup()
+    end,
+    requires = {
+      {
+        "nvim-treesitter/nvim-treesitter-textobjects" ,
+        "andymass/vim-matchup",
+        "windwp/nvim-ts-autotag",  -- Auto tag
+      },
+    },
+  }
 
+  use {
+    "lewis6991/spellsitter.nvim",  --spell checking, merged in 0.8
+    config = function()
+      require('spellsitter').setup({enable=true})
+    end
+  }
+
+  use {
+    "nvim-telescope/telescope.nvim",
+    opt = true,
+    config = function()
+      require("user.config.telescope").setup()
+    end,
+    cmd = { "Telescope" },
+    module = "telescope",
+    keys = { "<leader>f", "<leader>p" },
+    wants = {
+      "plenary.nvim",
+      "popup.nvim",
+      "telescope-fzf-native.nvim",
+      "telescope-project.nvim",
+      "telescope-repo.nvim",
+      "telescope-file-browser.nvim",
+      "project.nvim",
+    },
+    requires = {
+      "nvim-lua/popup.nvim",
+      "nvim-lua/plenary.nvim",
+      { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
+      "nvim-telescope/telescope-project.nvim",
+      "cljoly/telescope-repo.nvim",
+      "nvim-telescope/telescope-file-browser.nvim",
+      {
+        "ahmedkhalf/project.nvim",
+        config = function()
+          require("project_nvim").setup {}
+        end,
+      },
+      { "junegunn/fzf", run = "./install --all" },
+    },
+  }
+
+  -- WhichKey
+  use {
+    "folke/which-key.nvim",
+    config = function()
+      require("user.config.whichkey").setup()
+    end,
+  }
+
+  -- markdown preview
+  use {
+    "iamcco/markdown-preview.nvim",
+    run = "cd app && npm install",
+    setup = function() vim.g.mkdp_filetypes = { "markdown" } end,
+    ft = { "markdown" },
+  }
+
+  -- motions
+  use {
+    "ggandor/lightspeed.nvim",
+    keys = { "s", "S"},
+    config = function()
+      require("lightspeed").setup {}
+    end,
+  }
+  use {"wellle/targets.vim"}  -- adds more text objects
+  use {"unblevable/quick-scope"}  -- highlight matches on line
+
+  -- ft specific
+  use {'sam4llis/nvim-lua-gf'}
+  use {'broadinstitute/vim-wdl'}
+  -- work around rtp to make snakemake work...
+  use {'snakemake/snakemake', rtp='misc/vim'}
+  use '~/.local/share/nvim/site/pack/packer/start/snakemake/misc/vim'
+
+  if packer_bootstrap then
+    require('packer').sync()
+  end
 end)

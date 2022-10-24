@@ -1,25 +1,26 @@
 local keymap = vim.api.nvim_set_keymap
-opts = { noremap = true, silent = true }
+local opts = { noremap = true, silent = true }
 
 -- NORMAL --
--- shortcuts to common files
-keymap("n", "<Leader>v", ":edit $MYVIMRC<CR>", opts)
-keymap("n", "<Leader>V", ":source $MYVIMRC<CR>", opts)
-keymap("n", "<Leader>b", ":edit ~/.bashrc<CR>", opts)
-
 -- cycle tabs with tab
 keymap("n", "<Tab>", "gt", opts)
 keymap("n", "<S-Tab>", "gT", opts)
+
+-- center search results
+keymap("n", "n", "nzz", opts)
+keymap("n", "N", "Nzz", opts)
 
 -- prepend searches with very magic (slow with keymap?)
 vim.cmd([[nnoremap / /\v]])
 vim.cmd([[nnoremap ? ?\v]])
 
--- VISUAL --
--- stay in visual mode during indent
-keymap("v", "<", "<gv", opts)
-keymap("v", ">", ">gv", opts)
+-- Resizing panes
+keymap("n", "<Left>", ":vertical resize -1<CR>", opts)
+keymap("n", "<Right>", ":vertical resize +1<CR>", opts)
+keymap("n", "<Up>", ":resize -1<CR>", opts)
+keymap("n", "<Down>", ":resize +1<CR>", opts)
 
+-- VISUAL --
 -- keep copy register with paste
 keymap("v", "p", [["_dP]], opts)
 
