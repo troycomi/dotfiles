@@ -5,10 +5,6 @@ if [ -f /etc/bashrc ]; then
     . /etc/bashrc
 fi
 
-if [[ $- == *i* ]]; then
-    [ -x /bin/fish ] && SHELL=/bin/fish exec fish
-fi
-
 SOURCE=${BASH_SOURCE[0]}
 if [ -h "$SOURCE" ] ; then
     SOURCE="$(readlink $SOURCE)"

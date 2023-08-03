@@ -42,7 +42,10 @@ function M.setup()
       },
     },
 
-    indent = { enable = true },
+    indent = {
+      enable = true,
+      disable={"python"},
+    },
 
     -- vim-matchup
     matchup = {

@@ -2,14 +2,20 @@
 --[[
 -- TODO
 -- go through config to ensure I know what it does
--- grammar checking in text, comments, and markdown
 -- git gutter and integration
+    -- https://github.com/lewis6991/gitsigns.nvim
+    -- https://github.com/tpope/vim-fugitive
+    -- https://github.com/pwntester/octo.nvim/issues
+    -- https://github.com/akinsho/git-conflict.nvim
 -- check alpha vim keys
 -- autocommands
--- replace keybinds with new syntax
 -- check on updating nvim
 -- look into using blocklint with null lsp
+-- use alt for window stuff (closing, etc)
+-- bufferline (and more maps for closing buffers?)
+-- vimbegood
 --]]
+-- probably replace most config/packer like this https://github.com/ThePrimeagen/init.lua/
 
 require("user.options")
 require("user.plugins")

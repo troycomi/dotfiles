@@ -25,7 +25,6 @@
 [core]
 	autocrlf = input
 	safecrlf = true
-    editor = ~/.local/bin/nvim
     excludesfile = ~/.gitignore_global
 	eol = lf
 [credential]
@@ -34,3 +33,5 @@
     template = ~/.gittemplate
 [pager]
 	branch = false
+[init]
+	defaultBranch = main

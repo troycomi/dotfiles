@@ -57,11 +57,12 @@ return packer.startup(function(use)
   use {
     'numToStr/Comment.nvim',
     config = function()
-        require('Comment').setup()
+      require('user.config.comment').setup()
     end
   }
   use {'tpope/vim-eunuch'}
   use {'tpope/vim-repeat'}
+  use {'tpope/vim-abolish'}  -- S, crs
   use {
     'tpope/vim-surround',
     config = function()
@@ -75,7 +76,7 @@ return packer.startup(function(use)
     config = function()
       require('indent-o-matic').setup{
         max_lines = 1024,
-        standard_widths = {2, 4, 8},
+        standard_widths = {2, 4},
         skip_multiline = true,
       }
     end,
@@ -124,13 +125,6 @@ return packer.startup(function(use)
         "windwp/nvim-ts-autotag",  -- Auto tag
       },
     },
-  }
-
-  use {
-    "lewis6991/spellsitter.nvim",  --spell checking, merged in 0.8
-    config = function()
-      require('spellsitter').setup({enable=true})
-    end
   }
 
   use {
@@ -185,19 +179,13 @@ return packer.startup(function(use)
   }
 
   -- motions
-  use {
-    "ggandor/lightspeed.nvim",
-    keys = { "s", "S"},
-    config = function()
-      require("lightspeed").setup {}
-    end,
-  }
   use {"wellle/targets.vim"}  -- adds more text objects
   use {"unblevable/quick-scope"}  -- highlight matches on line
 
   -- ft specific
   use {'sam4llis/nvim-lua-gf'}
   use {'broadinstitute/vim-wdl'}
+  use {'Vimjas/vim-python-pep8-indent'}
   -- work around rtp to make snakemake work...
   use {'snakemake/snakemake', rtp='misc/vim'}
   use '~/.local/share/nvim/site/pack/packer/start/snakemake/misc/vim'

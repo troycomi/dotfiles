@@ -63,7 +63,7 @@ function M.setup()
 
     g = {
       name = "Git",
-      s = { "<cmd>Neogit<CR>", "Status" },
+      s = { "TODO", "Status" },
     },
 
     m = {

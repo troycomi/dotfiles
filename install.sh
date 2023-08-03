@@ -13,6 +13,9 @@ ln -sf ${BASEDIR}/vim_after/ ~/.vim/after
 cp ~/.bashrc ~/.bashrc_dotfile_bak
 ln -sf ${BASEDIR}/.bashrc ~/.bashrc
 
+# zsh
+ln -sf ${BASEDIR}/.zshrc ~/.zshrc
+
 # input
 ln -sf ${BASEDIR}/.inputrc ~/.inputrc
 

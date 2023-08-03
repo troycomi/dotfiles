@@ -42,6 +42,7 @@ opt.textwidth = 0
 opt.timeoutlen = 300
 opt.undofile = true
 opt.wrap = false
+opt.mouse = ""
 
 opt.encoding = "utf-8"
 opt.hidden = true -- Hide unloaded buffer

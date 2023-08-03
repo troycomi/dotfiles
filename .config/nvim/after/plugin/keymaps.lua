@@ -1,4 +1,4 @@
-local keymap = vim.api.nvim_set_keymap
+local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
 -- NORMAL --
@@ -9,6 +9,8 @@ keymap("n", "<S-Tab>", "gT", opts)
 -- center search results
 keymap("n", "n", "nzz", opts)
 keymap("n", "N", "Nzz", opts)
+keymap("n", "<C-d>", "<C-d>zz", opts)
+keymap("n", "<C-u>", "<C-u>zz", opts)
 
 -- prepend searches with very magic (slow with keymap?)
 vim.cmd([[nnoremap / /\v]])
@@ -21,8 +23,8 @@ keymap("n", "<Up>", ":resize -1<CR>", opts)
 keymap("n", "<Down>", ":resize +1<CR>", opts)
 
 -- VISUAL --
--- keep copy register with paste
-keymap("v", "p", [["_dP]], opts)
+-- keep copy register with leader paste
+keymap("v", "<leader>p", [["_dP]], opts)
 
 -- COMMAND --
 -- replace %% with current directory
