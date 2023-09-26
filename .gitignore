@@ -1,1 +1,7 @@
 private.fish
+.config/fish/completions/nvm.fish
+.config/fish/conf.d/nvm.fish
+.config/fish/functions/_*
+.config/fish/functions/fish_user_key_bindings.fish
+.config/fish/functions/fzf_key_bindings.fish
+.config/fish/functions/nvm.fish
