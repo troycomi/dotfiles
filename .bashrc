@@ -1,5 +1,4 @@
 # .bashrc
-
 # Source global definitions
 if [ -f /etc/bashrc ]; then
     . /etc/bashrc
@@ -9,9 +8,8 @@ SOURCE=${BASH_SOURCE[0]}
 if [ -h "$SOURCE" ] ; then
     SOURCE="$(readlink $SOURCE)"
 fi
-source ${SOURCE}.local
 
-PATH="$PATH:$HOME/.local/bin"
+PATH="$HOME/.local/bin:$PATH"
 PATH="$PATH:$HOME/projects/scripts"
 
 if [[ ! -z $(which nvim) ]]; then
@@ -90,6 +88,18 @@ tarm () {
     tar -tf $1 | grep -v /$ | tr '\n' '\0' | xargs -0 -n1 rm &
 }
 
+lowrie_cp () {
+    SMB_PATH=$1
+    LOCAL_PATH=$2
+
+    mkdir -p $2
+
+    smbclient \
+        //lowrie.princeton.edu/Brangwynne/ \
+        -U princeton\\$USER \
+        -c "cd \"${SMB_PATH}\"; lcd \"${LOCAL_PATH}\"; prompt; recurse; mget *"
+}
+
 tmuxsplit () {
     tmux split-window -h
     tmux selectp -t 0
@@ -100,6 +110,7 @@ tmuxsplit () {
 }
 
 tmuxstatus () {
+    gpg-agent  # need to start on server restart
     tmux rename-window STATUS
     tmux split-window -h
 
@@ -123,16 +134,18 @@ tmuxstatus () {
 
 umask 002
 
-alias rs="reportseff --format=jobid,state,elapsed,timeeff,cpueff,memeff --modified-sort"
-seffwatch () { watch -cn 300 reportseff --modified-sort --format=jobid,state,elapsed,timeeff,cpueff,memeff; }
-seffstatus () { watch -cn 600 reportseff --user $USER --modified-sort --format=jobid,jobname,state,elapsed,timeeff,cpueff,memeff; }
+alias rs="reportseff --color --format=jobid,state,elapsed,timeeff,cpueff,memeff --modified-sort"
+seffwatch () { watch -cn 300 reportseff --color --modified-sort --format=jobid,state,elapsed,timeeff,cpueff,memeff; }
+seffstatus () { watch -cn 600 reportseff --color --user $USER --modified-sort --format=jobid,jobname,state,elapsed,timeeff,cpueff,memeff; }
 weather () { while true; do
     /usr/bin/clear;
     date +"%A, %B %d, %Y  %r"
-    curl -s wttr.in/princeton;
+    curl -s wttr.in/lexington;
     sleep 3600;
 done }
 
+source ${SOURCE}.local
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
-. "$HOME/.cargo/env"
+
+

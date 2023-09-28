@@ -1,6 +1,7 @@
 [user]
 	name = Troy Comi
 	email = "troycomi@gmail.com"
+	signingkey = 450285B1BC4AE6C4
 [color]
     diff = auto
     status = auto
