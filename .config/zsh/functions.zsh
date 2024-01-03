@@ -100,7 +100,8 @@ reveal () {
 }
 
 make_big(){
-    wmctrl -R make_big -e 0,0,0,3840,1200  # bedroom monitors
+    # wmctrl -R make_big -e 0,0,0,3840,1200  # bedroom monitors
+    wmctrl -R make_big -e 0,0,0,3840,1080  # office monitors
 }
 
 ssh_reset(){
@@ -108,15 +109,16 @@ ssh_reset(){
 }
 
 pomo(){
-  (&>/dev/null pomo_help &)
+  WORK=${1:-25}
+  (&>/dev/null pomo_help $WORK &)
 }
 pomo_help(){
-  pomo_work
+  pomo_work $1
   pomo_break
 }
 pomo_work(){
   aplay -q ~/sounds/powerup.wav
-  sleep 25m
+  sleep ${1}m
   aplay -q ~/sounds/beep.wav
 }
 pomo_break(){
@@ -130,3 +132,13 @@ pomo_break(){
 }
 
 alias scp_prox='scp -o "ProxyJump=tigressgateway" -o "ControlPath=~/.ssh/sockets/%p-%h-%r"'
+
+yubi_swap(){
+  if [[ "$1" == "large" ]] || [[ "$1" == "small" ]] ; then
+    cp -r ~/.gnupg/private-keys-v1.d.$1/* ~/.gnupg/private-keys-v1.d
+    gpgconf --kill gpg-agent
+    gpg --card-status
+  else
+    echo Unknown argument "$1"
+  fi
+}

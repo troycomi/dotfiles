@@ -10,3 +10,7 @@ vim.keymap.set("i", "<down>", "<nop>", { noremap = true })
 
 -- replace %% with current dir
 vim.keymap.set("c", "%%", [[getcmdtype() == ':' ? expand('%:h').'/' : '%%']], { noremap = true, expr = true })
+
+-- disable lazyvim indenting to keep visual selection
+vim.keymap.del("v", "<")
+vim.keymap.del("v", ">")
