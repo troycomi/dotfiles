@@ -36,3 +36,5 @@
 	branch = false
 [init]
 	defaultBranch = main
+[safe]
+	directory = /projects/BRANGWYNNE/projects/genomics/primary_data/Lindsay_Sofi/SPRITE/231029_SonOpt_0p5_4and7aliquots/sprite2.0-pipeline

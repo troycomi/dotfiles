@@ -146,6 +146,3 @@ done }
 
 source ${SOURCE}.local
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
-
