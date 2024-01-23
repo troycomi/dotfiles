@@ -33,4 +33,6 @@ vim.opt.wildignore = {
   ".gif",
   ".jpg",
 }
-vim.opt.wildmode = "longest,full"
+
+vim.opt.ignorecase = false
+vim.opt.smartcase = false
