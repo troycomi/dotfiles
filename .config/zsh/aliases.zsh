@@ -24,3 +24,7 @@ alias mount_lowrie="sudo mount -v -t cifs //lowrie.princeton.edu/Brangwynne/ /mn
 
 alias gpg_enc="gpg --enrypt --armor --recipient 0x450285B1BC4AE6C4" # -o output input
 alias gpg_dec="gpg --decrypt --armor"  # filename
+
+alias gcs="gh copilot suggest -t shell"
+alias gcg="gh copilot suggest -t git"
+alias gce="gh copilot explain"
